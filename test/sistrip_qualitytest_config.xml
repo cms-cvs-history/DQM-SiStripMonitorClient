@@ -1,0 +1,20 @@
+<TESTSCONFIGURATION> 
+<QTEST name="XrangeWithin:0-3"> 
+     <TYPE>ContentsXRangeROOT</TYPE> 
+     <PARAM name="error">0.4</PARAM> 
+     <PARAM name="warning">0.6</PARAM> 
+     <PARAM name="xmin">0</PARAM> 
+     <PARAM name="xmax">3.0</PARAM> 
+</QTEST>
+<QTEST name="MeanWithinExpected:RMS"> 
+     <TYPE>MeanWithinExpectedROOT</TYPE> 
+     <PARAM name="error">0.05</PARAM> 
+     <PARAM name="warning">0.5</PARAM> 
+     <PARAM name="mean">3.0</PARAM> 
+     <PARAM name="useRMS">1</PARAM> 
+     <PARAM name="useSigma">0</PARAM> 
+</QTEST>
+<LINK name="histo"> 
+  <TestName activate="true">XrangeWithin:0-3</TestName> 
+</LINK>
+</TESTCONFIGURATION>

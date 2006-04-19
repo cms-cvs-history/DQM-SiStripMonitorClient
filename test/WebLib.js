@@ -53,7 +53,6 @@ function makeCurrent(display_frame_name)
     }
   }
   current_display = displays_l[i];
-  alert("current display switched to " + current_display);
 }
 
 
@@ -76,6 +75,9 @@ function getApplicationURL()
   {
     url = url.substring(0, index);
   }
+
+  index = url.lastIndexOf("general");
+  url = url.substring(0, index);
 
   // remove the trailing '/' from the end of the string
   index = url.lastIndexOf("/");
@@ -123,6 +125,9 @@ function makeRequest(url, receiver_function)
   return;
 }
 
+function dummy()
+{
+}
 
 //*************************************************************/
 //*************************NAVIGATOR***************************/
@@ -143,20 +148,23 @@ function getNavigatorRequestURL()
 
   if (open.value != "")
   {
-    url = url + "/Open";
-    url = url + "?" + "Current=" + navigator_current;
+    url = url + "/Request"
+    url = url + "?" + "RequestID=Open";
+    url = url + "&" + "Current=" + navigator_current;
     url = url + "&" + "Open=" + open.value;
   }
   else if (subscribe.value != "")
   {
-    url = url + "/Subscribe";
-    url = url + "?" + "Current=" + navigator_current;
+    url = url + "/Request";
+    url = url + "?" + "RequestID=Subscribe";
+    url = url + "&" + "Current=" + navigator_current;
     url = url + "&" + "SubscribeTo=" + subscribe.value;
   }
   else if (unsubscribe.value != "")
   {
-    url = url + "/Unsubscribe";
-    url = url + "?" + "Current=" + navigator_current;
+    url = url + "/Request";
+    url = url + "?" + "RequestID=Unsubscribe";
+    url = url + "&" + "Current=" + navigator_current;
     url = url + "&" + "UnsubscribeFrom=" + unsubscribe.value;
   }
   return url;
@@ -248,8 +256,9 @@ function makeNavigatorRequest()
 function submitConfigure(url, myform)
 {
   navigator_form = false;
-  url = url + "/Configure";
-  url = url + "?" + "Hostname=" + myform.Hostname.value;
+  url = url + "/Request";
+  url = url + "?" + "RequestID=Configure";
+  url = url + "&" + "Hostname=" + myform.Hostname.value;
   url = url + "&" + "Port=" + myform.Port.value;
   url = url + "&" + "Clientname=" + myform.Name.value;
 
@@ -372,10 +381,9 @@ function getGifURL(display_frame_name)
 function getDisplayRequestURL(display_frame_name)  
 {
   url = getApplicationURL();
-  url = url + "/Draw?"
-
-  url = url + "Current=" + contentViewer_current;
-
+  url = url + "/Request"
+  url = url + "?" + "RequestID=Draw"
+  url = url + "&" + "Current=" + contentViewer_current;
   url = url + "&" + "DisplayFrameName=" + display_frame_name;
 
   var display_frame = getDisplayFrame(display_frame_name);
@@ -514,8 +522,9 @@ function getContentViewerRequestURL()
 
   if (open.value != "")
   {
-    url = url + "/ContentsOpen";
-    url = url + "?" + "Current=" + contentViewer_current;
+    url = url + "/Request";
+    url = url + "?RequestID=ContentsOpen";
+    url = url + "&" + "Current=" + contentViewer_current;
     url = url + "&" + "Open=" + open.value;
   }
 
