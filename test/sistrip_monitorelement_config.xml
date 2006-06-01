@@ -1,0 +1,12 @@
+<MonElementConfiguration> 
+<TkMap name="Summary Map"> 
+     <MonElement name="DigisPerDetector"></MonElement> 
+     <MonElement name="ClustersPerDetector"></MonElement> 
+     <MonElement name="ClusterWidth"></MonElement> 
+</TkMap>
+<SummaryPlot>
+<SubStructureLevel name="string_"> 
+    <MonElement name="DigisPerDetector"></MonElement> 
+    <MonElement name="ClustersPerDetector"></MonElement> 
+</SummaryPlot>
+<MECONFIGURATION> 
