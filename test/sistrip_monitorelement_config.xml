@@ -1,12 +1,13 @@
 <MonElementConfiguration> 
-<TkMap name="Summary Map"> 
+<TkMap name="Summary Map" update_frequency="200">
      <MonElement name="DigisPerDetector"></MonElement> 
      <MonElement name="ClustersPerDetector"></MonElement> 
      <MonElement name="ClusterWidth"></MonElement> 
 </TkMap>
 <SummaryPlot>
-<SubStructureLevel name="string_"> 
+<SubStructureLevel name="string_" update_frequency="300"> 
     <MonElement name="DigisPerDetector"></MonElement> 
     <MonElement name="ClustersPerDetector"></MonElement> 
+</SubStructureLevel> 
 </SummaryPlot>
 <MECONFIGURATION> 
