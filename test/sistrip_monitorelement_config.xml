@@ -10,4 +10,4 @@
     <MonElement name="ClustersPerDetector"></MonElement> 
 </SubStructureLevel> 
 </SummaryPlot>
-<MECONFIGURATION> 
+</MonElementConfiguration> 
