@@ -1,19 +1,19 @@
 <TESTSCONFIGURATION> 
-<QTEST name="XrangeWithin:0-2.0"> 
+<QTEST name="XrangeWithin:0-2.0" activate="true"> 
      <TYPE>ContentsXRangeROOT</TYPE> 
      <PARAM name="error">0.4</PARAM> 
      <PARAM name="warning">0.6</PARAM> 
      <PARAM name="xmin">0</PARAM> 
      <PARAM name="xmax">2.0</PARAM> 
 </QTEST>
-<QTEST name="XrangeWithin:0-2.5"> 
+<QTEST name="XrangeWithin:0-2.5" activate="true"> 
      <TYPE>ContentsXRangeROOT</TYPE> 
      <PARAM name="error">0.4</PARAM> 
      <PARAM name="warning">0.6</PARAM> 
      <PARAM name="xmin">0</PARAM> 
      <PARAM name="xmax">2.5</PARAM> 
 </QTEST>
-<QTEST name="MeanWithinExpected:RMS"> 
+<QTEST name="MeanWithinExpected:RMS" activate="true"> 
      <TYPE>MeanWithinExpectedROOT</TYPE> 
      <PARAM name="error">0.05</PARAM> 
      <PARAM name="warning">0.5</PARAM> 
