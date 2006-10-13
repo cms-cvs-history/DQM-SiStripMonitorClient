@@ -19,18 +19,18 @@
      <PARAM name="warning">0.5</PARAM> 
      <PARAM name="mean">1.0</PARAM> 
      <PARAM name="useRMS">1</PARAM> 
-     <PARAM name="useSigma">0</PARAM> 
+     <PARAM name="useSigma">0</PARAM>
      <PARAM name="useRange">0</PARAM> 
      <PARAM name="xmin">0</PARAM> 
      <PARAM name="xmax">0</PARAM> 
 </QTEST>
-<LINK name="DigisPerDetector"> 
+<LINK name="NumberOfDigis"> 
   <TestName activate="true">MeanWithinExpected:RMS</TestName> 
 </LINK>
-<LINK name="ClustersPerDetector"> 
+<LINK name="NumberOfClusters"> 
   <TestName activate="true">XrangeWithin:0-2.0</TestName> 
 </LINK>
-<LINK name="ClusterWidth"> 
+<LINK name="NrOfClusterizedStrips"> 
   <TestName activate="true">XrangeWithin:0-2.5</TestName> 
 </LINK>
 </TESTCONFIGURATION>
