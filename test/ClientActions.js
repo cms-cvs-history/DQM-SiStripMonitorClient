@@ -97,3 +97,14 @@ function ReadResponseAndOpenTkMap() {
     }
   }
 }
+//
+// Check Quality Test Results
+//
+function CollateME() {
+  var queryString = "RequestID=CollateME";
+  var url = getApplicationParentURL();
+  url = url + "/Request?";
+  url = url + queryString; 
+  
+  makeRequest(url, dummy);     
+}
