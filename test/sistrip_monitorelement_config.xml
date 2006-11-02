@@ -5,7 +5,7 @@
      <MonElement name="ClusterWidth"></MonElement> 
 </TkMap>
 <SummaryPlot>
-<SubStructureLevel name="string_" update_frequency="300"> 
+<SubStructureLevel name="string_" update_frequency="50"> 
     <MonElement name="NumberOfDigis"></MonElement> 
     <MonElement name="NumberOfClusters"></MonElement> 
 </SubStructureLevel> 

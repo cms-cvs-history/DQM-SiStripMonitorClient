@@ -81,7 +81,7 @@ function makeRequest(url, receiver_function)
   } 
 
   if (http_request) { 
-    initReq("GET", url, true, receiver_function); 
+    initReq("GET", url, true, receiver_function);     
   }
   else { 
     alert('Giving up :( Cannot create an XMLHTTP instance');
@@ -120,13 +120,13 @@ function initReq(reqType, url, bool, respHandle) {
 }
 
 
-document.write('<script src="http://lxplus007.cern.ch:1972/temporary/Navigator.js"><\/script>');
-document.write('<script src="http://lxplus007.cern.ch:1972/temporary/GifDisplay.js"><\/script>');
-document.write('<script src="http://lxplus007.cern.ch:1972/temporary/ContentViewer.js"><\/script>');
-document.write('<script src="http://lxplus007.cern.ch:1972/temporary/ConfigBox.js"><\/script>');
-document.write('<script src="http://lxplus007.cern.ch:1972/temporary/Select.js"><\/script>');
-document.write('<script src="http://lxplus007.cern.ch:1972/temporary/Messages.js"><\/script>');
-document.write('<script src="http://lxplus007.cern.ch:1972/temporary/RequestHistos.js"><\/script>');
-document.write('<script src="http://lxplus007.cern.ch:1972/temporary/CommonActions.js"><\/script>');
-document.write('<script src="http://lxplus007.cern.ch:1972/temporary/RequestPlot.js"><\/script>');
-document.write('<script src="http://lxplus007.cern.ch:1972/temporary/ClientActions.js"><\/script>');
+document.write('<script src="http://lxplus064.cern.ch:1972/temporary/Navigator.js"><\/script>');
+document.write('<script src="http://lxplus064.cern.ch:1972/temporary/GifDisplay.js"><\/script>');
+document.write('<script src="http://lxplus064.cern.ch:1972/temporary/ContentViewer.js"><\/script>');
+document.write('<script src="http://lxplus064.cern.ch:1972/temporary/ConfigBox.js"><\/script>');
+document.write('<script src="http://lxplus064.cern.ch:1972/temporary/Select.js"><\/script>');
+document.write('<script src="http://lxplus064.cern.ch:1972/temporary/Messages.js"><\/script>');
+document.write('<script src="http://lxplus064.cern.ch:1972/temporary/RequestHistos.js"><\/script>');
+document.write('<script src="http://lxplus064.cern.ch:1972/temporary/CommonActions.js"><\/script>');
+document.write('<script src="http://lxplus064.cern.ch:1972/temporary/RequestPlot.js"><\/script>');
+document.write('<script src="http://lxplus064.cern.ch:1972/temporary/ClientActions.js"><\/script>');
