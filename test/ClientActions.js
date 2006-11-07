@@ -1,7 +1,7 @@
 // Subscribe All MEs 
 function SubscribeAll() {
   var queryString = "RequestID=SubscribeAll";
-  var url = getApplicationParentURL();
+  var url = getApplicationURL2();
   url = url + "/Request?";
   url = url + queryString; 
   
@@ -12,7 +12,7 @@ function SubscribeAll() {
 //
 function CheckQualityTestResults() {
   var queryString = "RequestID=CheckQTResults";
-  var url = getApplicationParentURL();
+  var url = getApplicationURL2();
   url = url + "/Request?";
   url = url + queryString; 
   
@@ -23,7 +23,7 @@ function CheckQualityTestResults() {
 //
 function CreateSummary() {
   var queryString = "RequestID=CreateSummary";
-  var url = getApplicationParentURL();
+  var url = getApplicationURL2();
   url = url + "/Request?";
   url = url + queryString; 
   
@@ -34,7 +34,7 @@ function CreateSummary() {
 //
 function SaveToFile() {
   var queryString = "RequestID=SaveToFile";
-  var url = getApplicationParentURL();
+  var url = getApplicationURL2();
   url = url + "/Request?";
   url = url + queryString;   
   makeRequest(url, dummy);     
@@ -48,7 +48,7 @@ function CreateTrackerMap() {
   var sname =  obj.options[obj.selectedIndex].value;
   queryString += '&Argument='+sname;
 
-  var url = getApplicationParentURL();
+  var url = getApplicationURL2();
   url = url + "/Request?";
   url = url + queryString;
    
@@ -62,7 +62,7 @@ function CreateTrackerMap() {
 function OpenTrackerMap() {
   var queryString = "RequestID=OpenTkMap";
 
-  var url = getApplicationParentURL();
+  var url = getApplicationURL2();
   url = url + "/Request?";
   url = url + queryString;
    
@@ -102,7 +102,7 @@ function ReadResponseAndOpenTkMap() {
 //
 function CollateME() {
   var queryString = "RequestID=CollateME";
-  var url = getApplicationParentURL();
+  var url = getApplicationURL2();
   url = url + "/Request?";
   url = url + queryString; 
   

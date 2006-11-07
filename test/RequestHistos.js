@@ -1,6 +1,6 @@
 function RequestHistoList() {
   var queryString;
-  var url = getApplicationParentURL();
+  var url = getApplicationURL2();
   url += "/Request?";
   if (document.getElementById("SingleModuleHisto").checked) {
     queryString = "RequestID=SingleModuleHistoList";

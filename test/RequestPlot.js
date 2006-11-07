@@ -1,6 +1,6 @@
 function DrawSelectedHistos() {
   var queryString;
-  var url = getApplicationParentURL();
+  var url = getApplicationURL2();
   url += "/Request?";
   if (document.getElementById("SingleModuleHisto").checked) {
     queryString = 'RequestID=PlotAsModule';
@@ -96,7 +96,7 @@ function UpdatePlot() {
   var canvas = document.getElementById("drawingcanvas");
 
   var queryString = "RequestID=UpdatePlot";
-  var url = getApplicationParentURL();
+  var url = getApplicationURL2();
   url = url + "/Request?";
   url = url + queryString;
   url = url + '&t=' + Math.random();
