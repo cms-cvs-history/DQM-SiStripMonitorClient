@@ -1,0 +1,4 @@
+# SiStripOfflineDQM
+module SiStripOfflineDQM = SiStripOfflineDQM {
+  bool verbose = false
+}
