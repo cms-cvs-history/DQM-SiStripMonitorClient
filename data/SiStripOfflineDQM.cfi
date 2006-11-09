@@ -1,4 +1,4 @@
 # SiStripOfflineDQM
 module SiStripOfflineDQM = SiStripOfflineDQM {
-  bool verbose = false
+  untracked bool verbose = false
 }
