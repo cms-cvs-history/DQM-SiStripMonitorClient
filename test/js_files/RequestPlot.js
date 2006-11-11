@@ -2,20 +2,11 @@ function DrawSelectedHistos() {
   var queryString;
   var url = getApplicationURL2();
   url += "/Request?";
-  if (document.getElementById("SingleModuleHisto").checked) {
-    queryString = 'RequestID=PlotAsModule';
-    // Get Module Number
-    var obj = document.getElementById("module_numbers");
-    var value =  obj.options[obj.selectedIndex].value;
-    queryString += '&ModId='+value;
-  } 
-  else if (document.getElementById("SummaryHisto").checked) {
-    queryString = 'RequestID=PlotSummaryHistos';
-    // Get Selected Tracker Structure
-    var obj = document.getElementById("structure_name");
-    var sname =  obj.options[obj.selectedIndex].value;
-    queryString += '&StructureName='+sname;
-  }
+  queryString = 'RequestID=PlotAsModule';
+  // Get Module Number
+  var obj = document.getElementById("module_numbers");
+  var value =  obj.options[obj.selectedIndex].value;
+  queryString += '&ModId='+value;
   var hist_opt = SetHistosAndPlotOption();
   if (hist_opt == " ") return;
   queryString += hist_opt;	
@@ -27,7 +18,6 @@ function DrawSelectedHistos() {
   }
   url += queryString;
   makeRequest(url, dummy);
-   
   setTimeout('UpdatePlot()', 2000);   
 }
 //
@@ -101,4 +91,14 @@ function UpdatePlot() {
   url = url + queryString;
   url = url + '&t=' + Math.random();
   canvas.src = url; 
+}
+function DrawSingleHisto(path){
+  var url = getApplicationURL2();
+  url += "/Request?";
+  queryString = 'RequestID=PlotSingleHistogram';
+  queryString += '&Path='+path;
+  url += queryString;
+  makeRequest(url, dummy);
+   
+  setTimeout('UpdatePlot()', 2000);     
 }

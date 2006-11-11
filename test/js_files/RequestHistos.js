@@ -1,19 +1,21 @@
-function RequestHistoList() {
+function RequestModuleHistoList() {
   var queryString;
   var url = getApplicationURL2();
   url += "/Request?";
-  if (document.getElementById("SingleModuleHisto").checked) {
-    queryString = "RequestID=SingleModuleHistoList";
-    url += queryString; 
-    makeRequest(url, FillModuleHistoList);     
-  } else if (document.getElementById("SummaryHisto").checked) {
-     queryString= "RequestID=SummaryHistoList";
-     var obj = document.getElementById("structure_name");
-     var sname =  obj.options[obj.selectedIndex].value;
-      queryString += '&StructureName='+sname;
-      url += queryString; 
-      makeRequest(url, FillSummaryHistoList);     
-  }
+  queryString = "RequestID=SingleModuleHistoList";
+  url += queryString; 
+  makeRequest(url, FillModuleHistoList);     
+}
+function RequestSummaryHistoList() {
+  var queryString;
+  var url = getApplicationURL2();
+  url += "/Request?";
+  queryString = "RequestID=SummaryHistoList";
+  var obj = document.getElementById("structure_name");
+  var sname =  obj.options[obj.selectedIndex].value;
+  queryString += '&StructureName='+sname;
+  url += queryString; 
+  makeRequest(url, FillSummaryHistoList);     
 }
 function FillModuleHistoList() {
   if (http_request.readyState == 4) {
@@ -64,7 +66,7 @@ function FillModuleHistoList() {
     }
   }
 }
-function FillSummaryHistoList() {
+/*function FillSummaryHistoList() {
   if (http_request.readyState == 4) {
     if (http_request.status == 200) {
       try {
@@ -90,6 +92,23 @@ function FillSummaryHistoList() {
       }
       catch (err) {
         alert ("Error detail: " + err.message); 
+      }
+    }
+  }
+}*/
+function FillSummaryHistoList() {
+  if (http_request.readyState == 4) {
+    if (http_request.status == 200) {
+      try {
+        var text = http_request.responseText;
+        var obj = document.getElementById("tree_list");
+        if (obj != null) {
+          obj.innerHTML = text;
+          initTree();
+        }       
+      }
+      catch (err) {
+//        alert ("Error detail: " + err.message); 
       }
     }
   }
