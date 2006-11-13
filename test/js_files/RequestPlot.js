@@ -102,3 +102,27 @@ function DrawSingleHisto(path){
    
   setTimeout('UpdatePlot()', 2000);     
 }
+function ReadStatus(path) {
+  var url = getApplicationURL2();
+  url += "/Request?";
+  queryString = 'RequestID=ReadQTestStatus';
+  queryString += '&Path='+path;
+  url += queryString;
+  makeRequest(url, FillStatus);
+}
+function FillStatus() {
+  if (http_request.readyState == 4) {
+    if (http_request.status == 200) {
+      try {
+        var text = http_request.responseText;
+        var obj = document.getElementById("status_area");
+        if (obj != null) {
+          obj.innerHTML = text;
+        }       
+      }
+      catch (err) {
+//        alert ("Error detail: " + err.message); 
+      }
+    }
+  }
+}
