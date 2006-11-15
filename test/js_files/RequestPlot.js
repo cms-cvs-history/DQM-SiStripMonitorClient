@@ -16,6 +16,7 @@ function DrawSelectedHistos() {
     alert("Canvas is not defined!");
     return;
   }
+  queryString += '&width='+canvas.width+'&height='+canvas.height;
   url += queryString;
   makeRequest(url, dummy);
   setTimeout('UpdatePlot()', 2000);   
@@ -97,6 +98,12 @@ function DrawSingleHisto(path){
   url += "/Request?";
   queryString = 'RequestID=PlotSingleHistogram';
   queryString += '&Path='+path;
+  var canvas = document.getElementById("drawingcanvas");
+  if (canvas == null) {
+    alert("Canvas is not defined!");
+    return;
+  }
+  queryString += '&width='+canvas.width+'&height='+canvas.height
   url += queryString;
   makeRequest(url, dummy);
    
