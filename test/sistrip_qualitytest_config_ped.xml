@@ -1,0 +1,12 @@
+<TESTSCONFIGURATION> 
+<QTEST name="XrangeWithin:-0.5-0.5" activate="true"> 
+     <TYPE>ContentsXRangeROOT</TYPE> 
+     <PARAM name="error">0.98</PARAM> 
+     <PARAM name="warning">0.99</PARAM> 
+     <PARAM name="xmin">-0.5</PARAM> 
+     <PARAM name="xmax">0.5</PARAM> 
+</QTEST>
+<LINK name="NoisyStripDistribution"> 
+  <TestName activate="true">XrangeWithin:-0.5-0.5</TestName> 
+</LINK>
+</TESTCONFIGURATION>

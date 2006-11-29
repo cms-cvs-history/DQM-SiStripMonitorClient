@@ -43,10 +43,8 @@ function SaveToFile() {
 // Create Tracker Map
 //
 function CreateTrackerMap() {
-  var queryString = "RequestID=SelectTkMap";
+  var queryString = "RequestID=CreateTkMap";
   var obj = document.getElementById("create_tkmap");
-  var sname =  obj.options[obj.selectedIndex].value;
-  queryString += '&Argument='+sname;
 
   var url = getApplicationURL2();
   url = url + "/Request?";
