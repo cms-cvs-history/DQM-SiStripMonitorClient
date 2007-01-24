@@ -1,5 +1,5 @@
 # SiStripOfflineDQM
-module SiStripOfflineDQM = SiStripOfflineDQM {
+module modSiStripOfflineDQM = SiStripOfflineDQM {
   untracked bool   bVerbose	        = false
   untracked bool   bOutputMEsInRootFile = false
   untracked string oOutputFile	        = "offlineDQM_out.root"
