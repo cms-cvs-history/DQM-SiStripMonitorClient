@@ -1,20 +1,20 @@
 <TESTSCONFIGURATION> 
 <QTEST name="XrangeWithin:0-2.0" activate="true"> 
-     <TYPE>ContentsXRangeROOT</TYPE> 
+     <TYPE>ContentsXRange</TYPE> 
      <PARAM name="error">0.4</PARAM> 
      <PARAM name="warning">0.6</PARAM> 
      <PARAM name="xmin">0</PARAM> 
      <PARAM name="xmax">2.0</PARAM> 
 </QTEST>
 <QTEST name="XrangeWithin:0-2.5" activate="true"> 
-     <TYPE>ContentsXRangeROOT</TYPE> 
+     <TYPE>ContentsXRange</TYPE> 
      <PARAM name="error">0.4</PARAM> 
      <PARAM name="warning">0.6</PARAM> 
      <PARAM name="xmin">0</PARAM> 
      <PARAM name="xmax">2.5</PARAM> 
 </QTEST>
 <QTEST name="MeanWithinExpected:RMS" activate="true"> 
-     <TYPE>MeanWithinExpectedROOT</TYPE> 
+     <TYPE>MeanWithinExpected</TYPE> 
      <PARAM name="error">0.05</PARAM> 
      <PARAM name="warning">0.5</PARAM> 
      <PARAM name="mean">1.0</PARAM> 
@@ -24,13 +24,14 @@
      <PARAM name="xmin">0</PARAM> 
      <PARAM name="xmax">0</PARAM> 
 </QTEST>
-<LINK name="NumberOfDigis"> 
+
+<LINK name="*NumberOfDigis__det__*"> 
   <TestName activate="true">MeanWithinExpected:RMS</TestName> 
 </LINK>
-<LINK name="NumberOfClusters"> 
+<LINK name="*NumberOfClusters__det__*"> 
   <TestName activate="true">XrangeWithin:0-2.0</TestName> 
 </LINK>
-<LINK name="NrOfClusterizedStrips"> 
+<LINK name="*ClusterWidth__det__*"> 
   <TestName activate="true">XrangeWithin:0-2.5</TestName> 
 </LINK>
 </TESTCONFIGURATION>

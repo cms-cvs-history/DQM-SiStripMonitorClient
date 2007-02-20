@@ -1,0 +1,18 @@
+<MonElementConfiguration> 
+<TkMap name="Summary Map" update_frequency="800">
+     <MonElement name="NumberOfDigis"></MonElement> 
+     <MonElement name="NumberOfClusters"></MonElement> 
+     <MonElement name="ClusterWidth"></MonElement> 
+     <MonElement name="CMSubNoiseProfile"></MonElement> 
+     <MonElement name="NoisyStripDistribution"></MonElement> 
+     <MonElement name="NoisyStrips"></MonElement> 
+</TkMap>
+<SummaryPlot>
+<SubStructureLevel name="string_" update_frequency="300"> 
+    <MonElement name="NumberOfDigis"></MonElement> 
+    <MonElement name="NumberOfClusters"></MonElement> 
+    <MonElement name="CMSubNoiseProfile"></MonElement> 
+    <MonElement name="NoisyStrips"></MonElement> 
+</SubStructureLevel> 
+</SummaryPlot>
+</MonElementConfiguration> 
