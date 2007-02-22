@@ -81,6 +81,10 @@ function SetHistosAndPlotOption() {
     }
     qstring += '&cols=' + nc + '&rows=' + nr;       
   }
+  // Drawing option
+  var obj1 = document.getElementById("drawing_options");
+  var value1 =  obj1.options[obj1.selectedIndex].value;
+  qstring += '&drawopt='+value1;
   return qstring;
 }  
 function UpdatePlot() {
