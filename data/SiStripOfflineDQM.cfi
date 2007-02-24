@@ -1,6 +1,7 @@
 # SiStripOfflineDQM
 module modSiStripOfflineDQM = SiStripOfflineDQM {
-  untracked bool   bVerbose	        = false
+  untracked bool   bVerbose	            = false
   untracked bool   bOutputMEsInRootFile = false
   untracked string oOutputFile	        = "offlineDQM_out.root"
+  untracked int32  nQTestEventsDelay    = 10
 }
