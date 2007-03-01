@@ -2,11 +2,15 @@ function DrawSelectedHistos() {
   var queryString;
   var url = getApplicationURL2();
   url += "/Request?";
-  queryString = 'RequestID=PlotAsModule';
-  // Get Module Number
-  var obj = document.getElementById("module_numbers");
-  var value =  obj.options[obj.selectedIndex].value;
-  queryString += '&ModId='+value;
+  if (document.getElementById("module_histos").checked) {
+    queryString = "RequestID=PlotAsModule";
+    // Get Module Number
+    var obj = document.getElementById("module_numbers");
+    var value =  obj.options[obj.selectedIndex].value;
+    queryString += '&ModId='+value;
+  } else if (document.getElementById("track_histos").checked) {
+    queryString = "RequestID=PlotTrackHisto";    
+  }
   var hist_opt = SetHistosAndPlotOption();
   if (hist_opt == " ") return;
   queryString += hist_opt;	
