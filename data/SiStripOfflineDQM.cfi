@@ -4,4 +4,8 @@ module modSiStripOfflineDQM = SiStripOfflineDQM {
   untracked bool   bOutputMEsInRootFile = false
   untracked string oOutputFile	        = "offlineDQM_out.root"
   untracked int32  nQTestEventsDelay    = 10
+
+  # ActionExecutor setup
+  untracked string oQTestsXMLConfig     = 
+    "DQM/SiStripMonitorClient/test/sistrip_qualitytest_config_cluster_digi.xml"
 }
