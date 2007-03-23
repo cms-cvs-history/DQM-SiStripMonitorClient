@@ -12,6 +12,7 @@
     <MonElement name="NumberOfDigis"></MonElement> 
     <MonElement name="NumberOfClusters"></MonElement> 
     <MonElement name="CMSubNoiseProfile"></MonElement> 
+    <MonElement name="ClusterWidth"></MonElement> 
     <MonElement name="NoisyStrips"></MonElement> 
 </SubStructureLevel> 
 </SummaryPlot>

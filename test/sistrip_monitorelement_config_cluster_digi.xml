@@ -7,6 +7,7 @@
 <SummaryPlot>
 <SubStructureLevel name="string_" update_frequency="300"> 
     <MonElement name="NumberOfDigis"></MonElement> 
+    <MonElement name="ClusterWidth"></MonElement> 
     <MonElement name="NumberOfClusters"></MonElement> 
 </SubStructureLevel> 
 </SummaryPlot>

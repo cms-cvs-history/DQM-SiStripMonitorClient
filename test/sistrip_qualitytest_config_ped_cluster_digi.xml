@@ -1,17 +1,17 @@
 <TESTSCONFIGURATION> 
-<QTEST name="XrangeWithin:0-2.0" activate="true"> 
+<QTEST name="XrangeWithin:0-3.0" activate="true"> 
      <TYPE>ContentsXRange</TYPE> 
      <PARAM name="error">0.4</PARAM> 
      <PARAM name="warning">0.6</PARAM> 
      <PARAM name="xmin">0</PARAM> 
-     <PARAM name="xmax">2.0</PARAM> 
+     <PARAM name="xmax">3.0</PARAM> 
 </QTEST>
-<QTEST name="XrangeWithin:0-2.5" activate="true"> 
+<QTEST name="XrangeWithin:0-5.0" activate="true"> 
      <TYPE>ContentsXRange</TYPE> 
      <PARAM name="error">0.4</PARAM> 
      <PARAM name="warning">0.6</PARAM> 
      <PARAM name="xmin">0</PARAM> 
-     <PARAM name="xmax">2.5</PARAM> 
+     <PARAM name="xmax">5.0</PARAM> 
 </QTEST>
 <QTEST name="MeanWithinExpected:RMS" activate="true"> 
      <TYPE>MeanWithinExpected</TYPE> 
@@ -36,10 +36,10 @@
   <TestName activate="true">MeanWithinExpected:RMS</TestName> 
 </LINK>
 <LINK name="*NumberOfClusters__det__*"> 
-  <TestName activate="true">XrangeWithin:0-2.0</TestName> 
+  <TestName activate="true">XrangeWithin:0-3.0</TestName> 
 </LINK>
 <LINK name="*ClusterWidth__det__*"> 
-  <TestName activate="true">XrangeWithin:0-2.5</TestName> 
+  <TestName activate="true">XrangeWithin:0-5.0</TestName> 
 </LINK>
 <LINK name="*NoisyStripDistribution__det__*">
   <TestName activate="true">XrangeWithin:-0.5-0.5</TestName>
