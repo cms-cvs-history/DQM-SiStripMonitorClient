@@ -104,7 +104,7 @@ function UpdatePlot() {
 function DrawSingleHisto(path){
   var url = getApplicationURL2();
   url += "/Request?";
-  queryString = 'RequestID=PlotSingleHistogram';
+  queryString = 'RequestID=PlotHistogramFromPath';
   queryString += '&Path='+path;
   var canvas = document.getElementById("drawingcanvas");
   if (canvas == null) {
@@ -156,7 +156,7 @@ function FillStatus() {
 function DrawQTestHisto(path){
   var url = getApplicationURL2();
   url += "/Request?";
-  queryString = 'RequestID=PlotSingleHistogram';
+  queryString = 'RequestID=PlotHistogramFromPath';
   queryString += '&Path='+path;
   var canvas = document.getElementById("drawingcanvas");
   if (canvas == null) {
@@ -166,8 +166,66 @@ function DrawQTestHisto(path){
   queryString += '&width='+canvas.width+'&height='+canvas.height;
   queryString += '&histotype=qtest';
 
+  alert(queryString);
   url += queryString;
   makeRequest(url, dummy);
    
   setTimeout('UpdatePlot()', 2000);     
 }
+function DrawSelectedSummary() {
+  var queryString;
+  var url = getApplicationURL2();
+  url += "/Request?";
+  var tobj = document.getElementById("summary_plot_type");
+  var tval =  tobj.options[tobj.selectedIndex].value;
+
+  if (tval=="Track_Summary_1") {
+    queryString = 'RequestID=PlotGlobalHisto';    
+    queryString += '&histo=NumberOfTracks_ctf';
+    queryString += '&histo=NumberOfTracks_cosmicTF';
+    queryString += '&histo=NumberOfRecHitsPerTrack_ctf';
+    queryString += '&histo=NumberOfRecHitsPerTrack_cosmicTF';
+  } else if (tval=="Track_Summary_2") {
+    queryString = 'RequestID=PlotGlobalHisto';    
+    queryString += '&histo=All_TIB_cStoN';
+    queryString += '&histo=OffTrack_TIB_cStoN';
+    queryString += '&histo=All_TOB_cStoN';
+    queryString += '&histo=OffTrack_TOB_cStoN';
+    queryString += '&histo=All_TID_cStoN';
+    queryString += '&histo=OffTrack_TID_cStoN';
+  } else if (tval=="TOB_Summary") {
+    queryString = 'RequestID=PlotHistogramFormPath';    
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TOB/Summary_CMSubNoiseProfile_in_TOB';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TOB/Summary_NoisyStrips_in_TOB';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TOB/Summary_NumberOfDigis_in_TOB';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TOB/Summary_NumberOfClusters_in_TOB';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TOB/Summary_ClusterWidth_in_TOB';
+    queryString += '&cols=1&rows=5'; 
+    queryString += '&histotype=qtest';
+  } else if (tval=="TIB_Summary") {
+    queryString = 'RequestID=PlotHistogramFormPath';    
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TIB/Summary_CMSubNoiseProfile_in_TIB';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TIB/Summary_NoisyStrips_in_TIB';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TIB/Summary_NumberOfDigis_in_TIB';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TIB/Summary_NumberOfClusters_in_TIB';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TIB/Summary_ClusterWidth_in_TIB';
+    queryString += '&histotype=qtest';
+  } else if (tval=="TIDF_Summary") {
+    queryString = 'RequestID=PlotHistogramFormPath';    
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_CMSubNoiseProfile_in_side_2';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_NoisyStrips_in_side_2';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_NumberOfDigis_in_side_2';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_NumberOfClusters_in_side_2';
+    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_ClusterWidth_in_side_2';
+    queryString += '&histotype=qtest';
+  }
+  var canvas = document.getElementById("drawingcanvas");
+  if (canvas == null) {
+    alert("Canvas is not defined!");
+    return;
+  }
+  queryString += '&width=800&height=800';
+  url += queryString;
+  makeRequest(url, dummy);
+  setTimeout('UpdatePlot()', 2000);   
+} 
