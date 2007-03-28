@@ -60,7 +60,7 @@ function FillReadyState() {
             callAgain = true; 
           }
         }
-        if (callAgain) RequestReadyState();
+        if (callAgain) setTimeout('RequestReadyState()',20000);
       }
       catch (err) {
         alert ("Error detail: " + err.message); 
