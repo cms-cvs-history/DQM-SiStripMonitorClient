@@ -172,58 +172,27 @@ function DrawQTestHisto(path){
 }
 function DrawSelectedSummary() {
   var queryString;
-  var url = getApplicationURL2();
-  url += "/Request?";
+  var image_src = getApplicationURL();
   var tobj = document.getElementById("summary_plot_type");
   var tval =  tobj.options[tobj.selectedIndex].value;
 
-  if (tval=="Track_Summary_1") {
-    queryString = 'RequestID=PlotGlobalHisto';    
-    queryString += '&histo=NumberOfTracks_ctf';
-    queryString += '&histo=NumberOfTracks_cosmicTF';
-    queryString += '&histo=NumberOfRecHitsPerTrack_ctf';
-    queryString += '&histo=NumberOfRecHitsPerTrack_cosmicTF';
-  } else if (tval=="Track_Summary_2") {
-    queryString = 'RequestID=PlotGlobalHisto';    
-    queryString += '&histo=OnTrack_TIB_cStoN';
-    queryString += '&histo=OffTrack_TIB_cStoN';
-    queryString += '&histo=OnTrack_TOB_cStoN';
-    queryString += '&histo=OffTrack_TOB_cStoN';
-    queryString += '&histo=OnTrack_TID_cStoN';
-    queryString += '&histo=OffTrack_TID_cStoN';
-  } else if (tval=="TOB_Summary") {
-    queryString = 'RequestID=PlotHistogramFromPath';    
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TOB/Summary_CMSubNoiseProfile_in_TOB';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TOB/Summary_NoisyStrips_in_TOB';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TOB/Summary_NumberOfDigis_in_TOB';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TOB/Summary_NumberOfClusters_in_TOB';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TOB/Summary_ClusterWidth_in_TOB';
-    queryString += '&cols=1&rows=5'; 
-    queryString += '&histotype=qtest';
-  } else if (tval=="TIB_Summary") {
-    queryString = 'RequestID=PlotHistogramFromPath';    
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TIB/Summary_CMSubNoiseProfile_in_TIB';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TIB/Summary_NoisyStrips_in_TIB';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TIB/Summary_NumberOfDigis_in_TIB';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TIB/Summary_NumberOfClusters_in_TIB';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TIB/Summary_ClusterWidth_in_TIB';
-    queryString += '&histotype=qtest';
-  } else if (tval=="TIDF_Summary") {
-    queryString = 'RequestID=PlotHistogramFromPath';    
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_CMSubNoiseProfile_in_side_2';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_NoisyStrips_in_side_2';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_NumberOfDigis_in_side_2';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_NumberOfClusters_in_side_2';
-    queryString += '&Path=Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_ClusterWidth_in_side_2';
-    queryString += '&histotype=qtest';
-  }
   var canvas = document.getElementById("drawingcanvas");
   if (canvas == null) {
     alert("Canvas is not defined!");
     return;
+  } 
+
+  if (tval=="Global_Tracks") {
+     image_src += "/temporary/GlobalTracks.png";
+  } else if (tval=="Local_Tracks") {
+     image_src += "/temporary/LocalTracks.png";
+  } else if (tval=="TOB_Summary") {
+     image_src += "/temporary/TIBSummary.png";
+  } else if (tval=="TIB_Summary") {
+     image_src += "/temporary/TOBSummary.png";
+  } else if (tval=="TIDF_Summary") {
+     image_src += "/temporary/TIDFSummary.png";
   }
-  queryString += '&width=900&height=900';
-  url += queryString;
-  makeRequest(url, dummy);
-  setTimeout('UpdatePlot()', 2000);   
+  canvas.src = image_src;   
+
 } 

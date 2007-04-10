@@ -1,8 +1,9 @@
 window.onload=function(){
-  initTabs('dhtmlgoodies_tabView1', Array('Single Module View','Summary View','Alarm View'), 0, '99.5%','100%');
+  initTabs('dhtmlgoodies_tabView1', Array('Non-Expert View', 'Single Module View','Summary View','Alarm View'), 0, '99.5%','100%');
   ShowProgress('visible');
   ShowButtons(true);
   ShowTabs('hidden');  
+  FillSlides();
 
   RequestReadyState();
 }
