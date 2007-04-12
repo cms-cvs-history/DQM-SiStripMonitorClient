@@ -171,28 +171,40 @@ function DrawQTestHisto(path){
   setTimeout('UpdatePlot()', 2000);     
 }
 function DrawSelectedSummary() {
-  var queryString;
-  var image_src = getApplicationURL();
-  var tobj = document.getElementById("summary_plot_type");
-  var tval =  tobj.options[tobj.selectedIndex].value;
-
   var canvas = document.getElementById("drawingcanvas");
   if (canvas == null) {
     alert("Canvas is not defined!");
     return;
   } 
-
-  if (tval=="Global_Tracks") {
-     image_src += "/temporary/GlobalTracks.png";
-  } else if (tval=="Local_Tracks") {
-     image_src += "/temporary/LocalTracks.png";
-  } else if (tval=="TOB_Summary") {
-     image_src += "/temporary/TIBSummary.png";
-  } else if (tval=="TIB_Summary") {
-     image_src += "/temporary/TOBSummary.png";
-  } else if (tval=="TIDF_Summary") {
-     image_src += "/temporary/TIDFSummary.png";
-  }
+  var tobj = document.getElementById("summary_plot_type");
+  image_src = slideList[tobj.selectedIndex];
   canvas.src = image_src;   
-
 } 
+//
+// Check Quality Test Results
+//
+function CheckQualityTestResultsLite() {
+  var queryString = "RequestID=CheckQTResults";
+  queryString +=  '&InfoType=Lite';
+  var url = getApplicationURL2();
+  url = url + "/Request?";
+  url = url + queryString; 
+  
+  makeRequest(url, FillTextStatus); 
+}
+function FillTextStatus() {
+  if (http_request.readyState == 4) {
+    if (http_request.status == 200) {
+      try {
+        var text = http_request.responseText;
+        var obj = document.getElementById("summary_status_area");
+        if (obj != null) {
+          obj.innerHTML = text;
+        }       
+      }
+      catch (err) {
+//        alert ("Error detail: " + err.message); 
+      }
+    }
+  }
+}

@@ -7,20 +7,20 @@ var MAX_SLIDES = 20;
 var timerID;
 
 
-function FillSlides() {
-  var image_src;
-  image_src = getApplicationURL() + "/temporary/GlobalTracks.png";
-  slideList[0] = image_src;
-  image_src = getApplicationURL() + "/temporary/LocalTracks.png";
-  slideList[1] = image_src;
-  image_src = getApplicationURL() + "/temporary/TIBSummary.png";
-  slideList[2] = image_src;
-  image_src = getApplicationURL() + "/temporary/TOBSummary.png";
-  slideList[3] = image_src;
-  image_src = getApplicationURL() + "/temporary/TIDFSummary.png";
-  slideList[4] = image_src;
-  nSlides = slideList.length;
-}
+//function FillSlides() {
+//  var image_src;
+//  image_src = getApplicationURL() + "/temporary/GlobalTracks.png";
+//  slideList[0] = image_src;
+//  image_src = getApplicationURL() + "/temporary/LocalTracks.png";
+//  slideList[1] = image_src;
+//  image_src = getApplicationURL() + "/temporary/TIBSummary.png";
+//  slideList[2] = image_src;
+//  image_src = getApplicationURL() + "/temporary/TOBSummary.png";
+//  slideList[3] = image_src;
+//  image_src = getApplicationURL() + "/temporary/TIDFSummary.png";
+//  slideList[4] = image_src;
+//  nSlides = slideList.length;
+//}
 function StartSlideShow() {
  setSlide(index);
  index = (index+1) % nSlides;

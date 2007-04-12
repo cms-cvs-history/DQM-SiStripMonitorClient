@@ -3,7 +3,7 @@ window.onload=function(){
   ShowProgress('visible');
   ShowButtons(true);
   ShowTabs('hidden');  
-  FillSlides();
+//  FillSlides();
 
   RequestReadyState();
 }
@@ -44,22 +44,31 @@ function FillReadyState() {
         var callAgain = false;
         var doc = http_request.responseXML;
         var root = doc.documentElement;
+
+        var aobj = document.getElementById("summary_plot_type");
+        aobj.options.length = 0;
       
-        var hrows = root.getElementsByTagName('Response');
+        var hrows = root.getElementsByTagName('LName');
 //        alert(" rows = " + hrows.length);
-        if (hrows.length != 1) {
+        if (hrows.length < 1) {
           callAgain = true; 
-        }
-        else {
-          var name = hrows[0].childNodes[0].nodeValue;
-          if (name == "ready") {
-            ShowButtons(false);
-            ShowTabs('visible');
-            ShowProgress('hidden');
-          } 
-          else {
-            callAgain = true; 
+        }  else {
+          for (var i = 0; i < hrows.length; i++) {
+            var l_name  = hrows[i].childNodes[0].nodeValue;
+            var aoption = new Option(l_name, l_name);
+            try {
+              aobj.add(aoption, null);
+              var image_src = getApplicationURL() + "/temporary/" + l_name + ".png";
+              slideList[i] = image_src; 
+            }
+            catch (e) {
+              aobj.add(aoption, -1);
+            }
           }
+          nSlides = slideList.length;
+	  ShowButtons(false);
+          ShowTabs('visible');
+          ShowProgress('hidden');
         }
         if (callAgain) setTimeout('RequestReadyState()',20000);
       }

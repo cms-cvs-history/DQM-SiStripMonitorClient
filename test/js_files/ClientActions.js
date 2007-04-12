@@ -8,17 +8,6 @@ function SubscribeAll() {
   makeRequest(url, dummy);     
 }
 //
-// Check Quality Test Results
-//
-function CheckQualityTestResults() {
-  var queryString = "RequestID=CheckQTResults";
-  var url = getApplicationURL2();
-  url = url + "/Request?";
-  url = url + queryString; 
-  
-  makeRequest(url, dummy);     
-}
-//
 // Create Summary
 //
 function CreateSummary() {
