@@ -16,7 +16,7 @@
 <QTEST name="MeanWithinExpected:RMS" activate="true"> 
      <TYPE>MeanWithinExpected</TYPE> 
      <PARAM name="error">0.05</PARAM> 
-     <PARAM name="warning">0.5</PARAM> 
+     <PARAM name="warning">0.3</PARAM> 
      <PARAM name="mean">1.0</PARAM> 
      <PARAM name="useRMS">1</PARAM> 
      <PARAM name="useSigma">0</PARAM>

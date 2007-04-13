@@ -41,3 +41,10 @@ function GetPlotOptions() {
   }
   return hlist;
 }
+function FillText(id, text)
+{
+ var obj = document.getElementById(id);
+ if (obj != null) {
+   obj.innerHTML = '<PRE>'+text+'</PRE>';
+ }
+}

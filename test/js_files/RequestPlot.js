@@ -181,11 +181,23 @@ function DrawSelectedSummary() {
   canvas.src = image_src;   
 } 
 //
-// Check Quality Test Results
+// Check Quality Test Results (Lite)
 //
 function CheckQualityTestResultsLite() {
   var queryString = "RequestID=CheckQTResults";
   queryString +=  '&InfoType=Lite';
+  var url = getApplicationURL2();
+  url = url + "/Request?";
+  url = url + queryString; 
+  
+  makeRequest(url, FillTextStatus); 
+}
+//
+// Check Quality Test Results (Expert)
+//
+function CheckQualityTestResultsDetail() {
+  var queryString = "RequestID=CheckQTResults";
+  queryString +=  '&InfoType=Detail';
   var url = getApplicationURL2();
   url = url + "/Request?";
   url = url + queryString; 
@@ -197,10 +209,7 @@ function FillTextStatus() {
     if (http_request.status == 200) {
       try {
         var text = http_request.responseText;
-        var obj = document.getElementById("summary_status_area");
-        if (obj != null) {
-          obj.innerHTML = text;
-        }       
+	FillText("summary_status_area", text);
       }
       catch (err) {
 //        alert ("Error detail: " + err.message); 

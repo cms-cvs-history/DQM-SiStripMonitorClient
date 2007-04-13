@@ -15,21 +15,24 @@
 </layout>
 <layout name="TOBSummary">
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TOB/Summary_CMSubNoiseProfile_in_TOB"></monitorable>
-  <monitorable name="Collector/FU0/SiStrip/MechanicalView/TOB/Summary_NoisyStrips_in_TOB"></monitorable>
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TOB/Summary_NumberOfDigis_in_TOB"></monitorable>
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TOB/Summary_NumberOfClusters_in_TOB"></monitorable>
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TOB/Summary_ClusterWidth_in_TOB"></monitorable>
 </layout>
 <layout name="TIBSummary">
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TIB/Summary_CMSubNoiseProfile_in_TIB"></monitorable>
-  <monitorable name="Collector/FU0/SiStrip/MechanicalView/TIB/Summary_NoisyStrips_in_TIB"></monitorable>
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TIB/Summary_NumberOfDigis_in_TIB"></monitorable>
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TIB/Summary_NumberOfClusters_in_TIB"></monitorable>
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TIB/Summary_ClusterWidth_in_TIB"></monitorable>
 </layout>
+<layout name="TECFSummary">
+  <monitorable name="Collector/FU0/SiStrip/MechanicalView/TEC/side_2/Summary_CMSubNoiseProfile_in_side_2"></monitorable>
+  <monitorable name="Collector/FU0/SiStrip/MechanicalView/TEC/side_2/Summary_NumberOfDigis_in_side_2"></monitorable>
+  <monitorable name="Collector/FU0/SiStrip/MechanicalView/TEC/side_2/Summary_NumberOfClusters_in_side_2"></monitorable>
+  <monitorable name="Collector/FU0/SiStrip/MechanicalView/TEC/side_2/Summary_ClusterWidth_in_side_2"></monitorable>
+</layout>
 <layout name="TIDFSummary">
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_CMSubNoiseProfile_in_side_2"></monitorable>
-  <monitorable name="Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_NoisyStrips_in_side_2"></monitorable>
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_NumberOfDigis_in_side_2"></monitorable>
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_NumberOfClusters_in_side_2"></monitorable>
   <monitorable name="Collector/FU0/SiStrip/MechanicalView/TID/side_2/Summary_ClusterWidth_in_side_2"></monitorable>
