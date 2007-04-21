@@ -5,12 +5,16 @@
   <monitorable name="Collector/FU0/Track/GlobalParameters/NumberOfRecHitsPerTrack_ctf"></monitorable>
   <monitorable name="Collector/FU0/Track/GlobalParameters/NumberOfRecHitsPerTrack_cosmicTF"></monitorable>
 </layout>
-<layout name="LocalTracks">
+<layout name="OnTrackCluster">
   <monitorable name="Collector/FU0/Track/GlobalParameters/OnTrack_TOB_cStoN"></monitorable>
-  <monitorable name="Collector/FU0/Track/GlobalParameters/OffTrack_TOB_cStoN"></monitorable>
   <monitorable name="Collector/FU0/Track/GlobalParameters/OnTrack_TIB_cStoN"></monitorable>
-  <monitorable name="Collector/FU0/Track/GlobalParameters/OffTrack_TIB_cStoN"></monitorable>
+  <monitorable name="Collector/FU0/Track/GlobalParameters/OnTrack_TEC_cStoN"></monitorable>
   <monitorable name="Collector/FU0/Track/GlobalParameters/OnTrack_TID_cStoN"></monitorable>
+</layout>
+<layout name="OffTrackCluster">
+  <monitorable name="Collector/FU0/Track/GlobalParameters/OffTrack_TOB_cStoN"></monitorable>
+  <monitorable name="Collector/FU0/Track/GlobalParameters/OffTrack_TIB_cStoN"></monitorable>
+  <monitorable name="Collector/FU0/Track/GlobalParameters/OffTrack_TEC_cStoN"></monitorable>
   <monitorable name="Collector/FU0/Track/GlobalParameters/OffTrack_TID_cStoN"></monitorable>
 </layout>
 <layout name="TOBSummary">
