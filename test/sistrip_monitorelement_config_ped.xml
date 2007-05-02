@@ -4,10 +4,8 @@
      <MonElement name="NoisyStripDistribution"></MonElement> 
      <MonElement name="NoisyStrips"></MonElement> 
 </TkMap>
-<SummaryPlot>
-<SubStructureLevel name="string_" update_frequency="25"> 
-    <MonElement name="CMSubNoiseProfile"></MonElement> 
-    <MonElement name="NoisyStrips"></MonElement> 
-</SubStructureLevel> 
+<SummaryPlot name="Summary Plots" update_frequency="25"> 
+    <MonElement name="CMSubNoiseProfile" type="bin-by-bin"></MonElement> 
+    <MonElement name="NoisyStrips" type="bin-by-bin"></MonElement> 
 </SummaryPlot>
 </MonElementConfiguration> 
