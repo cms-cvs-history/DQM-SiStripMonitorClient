@@ -8,10 +8,10 @@
      <MonElement name="NoisyStrips"></MonElement> 
 </TkMap>
 <SummaryPlot name="Summary Plots" update_frequency="25"> 
-    <MonElement name="NumberOfDigis" type="mean"></MonElement> 5D
+    <MonElement name="NumberOfDigis" type="mean"></MonElement> 
     <MonElement name="NumberOfClusters" type="mean"></MonElement> 
     <MonElement name="CMSubNoiseProfile" type="bin-by-bin"></MonElement> 
-    <MonElement name="ClusterWidth" ype="mean"></MonElement> 
+    <MonElement name="ClusterWidth" type="mean"></MonElement> 
     <MonElement name="NoisyStrips" type="bin-by-bin"></MonElement> 
 </SummaryPlot>
 </MonElementConfiguration> 
