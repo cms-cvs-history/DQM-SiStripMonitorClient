@@ -177,8 +177,8 @@ function DrawSelectedSummary() {
     return;
   } 
   var tobj = document.getElementById("summary_plot_type");
-  image_src = slideList[tobj.selectedIndex];
-  canvas.src = image_src;   
+  var image_src = slideList[tobj.selectedIndex];
+  canvas.src = image_src + '?t=' + Math.random();   
 } 
 //
 // Check Quality Test Results (Lite)
