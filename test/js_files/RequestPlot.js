@@ -178,7 +178,8 @@ function DrawSelectedSummary() {
   } 
   var tobj = document.getElementById("summary_plot_type");
   var image_src = slideList[tobj.selectedIndex];
-  canvas.src = image_src + '?t=' + Math.random();   
+  image_src += '?t=' + Math.random();
+  canvas.src = image_src;   
 } 
 //
 // Check Quality Test Results (Lite)
