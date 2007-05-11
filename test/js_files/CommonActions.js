@@ -48,3 +48,13 @@ function FillText(id, text)
    obj.innerHTML = '<PRE>'+text+'</PRE>';
  }
 }
+function SetSelectedValue() {
+  var aobj = document.getElementById("module_numbers");
+  if (aobj != null) {
+    var value =  aobj.options[aobj.selectedIndex].value;
+    var bobj = document.getElementById("module_number_edit");
+    if (bobj != null) {
+      bobj.value = value;
+    }   
+  }
+}

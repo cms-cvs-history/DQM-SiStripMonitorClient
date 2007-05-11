@@ -5,8 +5,8 @@ function DrawSelectedHistos() {
   if (document.getElementById("module_histos").checked) {
     queryString = "RequestID=PlotAsModule";
     // Get Module Number
-    var obj = document.getElementById("module_numbers");
-    var value =  obj.options[obj.selectedIndex].value;
+    var obj = document.getElementById("module_number_edit");
+    var value =  obj.value;
     queryString += '&ModId='+value;
   } else if (document.getElementById("global_histos").checked) {
     queryString = "RequestID=PlotGlobalHisto";    
