@@ -1,5 +1,7 @@
 window.onload=function(){
   initTabs('dhtmlgoodies_tabView1', Array('Non-Expert View', 'Summary View','Alarm View', 'Expert View'), 0, '99.5%','100%');
+
+  document.onkeypress = stopRKey;
   ShowProgress('visible');
   ShowButtons(true);
   ShowTabs('hidden');  
