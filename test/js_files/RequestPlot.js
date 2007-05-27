@@ -178,7 +178,7 @@ function DrawSelectedSummary() {
   } 
   var tobj = document.getElementById("summary_plot_type");
   var image_src = slideList[tobj.selectedIndex];
-  image_src += '&t=' + Math.random();
+  image_src += '?t=' + Math.random();  //Should start with "?"
   canvas.src = image_src;   
 } 
 //

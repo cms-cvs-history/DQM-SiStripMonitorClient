@@ -38,6 +38,6 @@ function setSlide(index) {
  var canvas = document.getElementById("drawingcanvas");
  if (canvas == null) return;
  var url = slideList[index];
- url = url + '&t=' + Math.random();
+ image_src += '?t=' + Math.random();  //Should start with "?"
  canvas.src = url;
 }
