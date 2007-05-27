@@ -96,7 +96,7 @@ function UpdatePlot() {
 
   var queryString = "RequestID=UpdatePlot";
   var url = getApplicationURL2();
-  url = url + "/Request?";
+  url = url + "/RequestW?";
   url = url + queryString;
   url = url + '&t=' + Math.random();
   canvas.src = url; 
@@ -178,7 +178,7 @@ function DrawSelectedSummary() {
   } 
   var tobj = document.getElementById("summary_plot_type");
   var image_src = slideList[tobj.selectedIndex];
-  image_src += '?t=' + Math.random();
+  image_src += '&t=' + Math.random();
   canvas.src = image_src;   
 } 
 //
