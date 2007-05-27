@@ -96,7 +96,7 @@ function UpdatePlot() {
 
   var queryString = "RequestID=UpdatePlot";
   var url = getApplicationURL2();
-  url = url + "/RequestW?";
+  url = url + "/Request?";
   url = url + queryString;
   url = url + '&t=' + Math.random();
   canvas.src = url; 
