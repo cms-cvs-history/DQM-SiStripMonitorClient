@@ -1,9 +1,15 @@
 <Layouts>
-<layout name="GlobalTracks">
+<layout name="GlobalTracks_1">
   <monitorable name="Collector/FU0/Track/GlobalParameters/NumberOfTracks_ctf"></monitorable>
   <monitorable name="Collector/FU0/Track/GlobalParameters/NumberOfTracks_cosmicTF"></monitorable>
   <monitorable name="Collector/FU0/Track/GlobalParameters/NumberOfRecHitsPerTrack_ctf"></monitorable>
   <monitorable name="Collector/FU0/Track/GlobalParameters/NumberOfRecHitsPerTrack_cosmicTF"></monitorable>
+</layout>
+<layout name="GlobalTracks_2">
+  <monitorable name="Collector/FU0/Track/GlobalParameters/TrackPhi_ctf"></monitorable>
+  <monitorable name="Collector/FU0/Track/GlobalParameters/TrackPhi_cosmicTF"></monitorable>
+  <monitorable name="Collector/FU0/Track/GlobalParameters/TrackEta_ctf"></monitorable>
+  <monitorable name="Collector/FU0/Track/GlobalParameters/TrackEta_cosmicTF"></monitorable>
 </layout>
 <layout name="OnTrackCluster">
   <monitorable name="Collector/FU0/Track/GlobalParameters/OnTrack_TOB_cStoN"></monitorable>
