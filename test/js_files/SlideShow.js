@@ -37,7 +37,8 @@ function setSlide(index) {
  }
  var canvas = document.getElementById("drawingcanvas");
  if (canvas == null) return;
- var url = slideList[index];
+ var image_src = slideList[index];
  image_src += '?t=' + Math.random();  //Should start with "?"
- canvas.src = url;
+ canvas.src = image_src;
 }
+

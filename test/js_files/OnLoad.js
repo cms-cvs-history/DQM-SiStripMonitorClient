@@ -2,7 +2,7 @@ window.onload=function(){
   initTabs('dhtmlgoodies_tabView1', Array('Shifter View', 'Summary View','Alarm View', 'Expert View'), 0, '99.5%','100%');
 
   document.onkeypress = stopRKey;
-  ShowProgress('visible');
+  ShowProgress('visible', 'Histograms from Collector');
   ShowButtons(true);
   ShowTabs('hidden');  
 //  FillSlides();
@@ -27,10 +27,18 @@ function ShowButtons(option) {
   obj = document.getElementById("draw_summary");
   if (obj != null ) obj.disabled=option;
 }
-function ShowProgress(option) {
-  var obj = document.getElementById("progress_icon");
-  if (obj == null) return;
-  obj.style.visibility = option; // "visible" or "hidden"
+function ShowProgress (option) {
+  var progress = document.getElementById('progressbar');
+  if (progress == null) return;
+
+  var label = document.getElementById('progress_message');
+  if (label == null) return;
+
+  var args = arguments[1];
+  if (args != null && args.length > 0) {
+    label.innerHTML = '<B>Please wait, loading '+args +'</B>';
+  }
+  progress.style.visibility = option; // "visible" or "hidden"
 }
 function RequestReadyState() {
   var url = getApplicationURL2();

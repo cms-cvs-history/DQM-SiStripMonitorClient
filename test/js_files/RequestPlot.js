@@ -23,6 +23,7 @@ function DrawSelectedHistos() {
   queryString += '&width='+canvas.width+'&height='+canvas.height;
   url += queryString;
   makeRequest(url, dummy);
+  ShowProgress('visible', 'Selected Plot');
   setTimeout('UpdatePlot()', 2000);   
 }
 //
@@ -100,6 +101,7 @@ function UpdatePlot() {
   url = url + queryString;
   url = url + '&t=' + Math.random();
   canvas.src = url; 
+  ShowProgress('hidden');
 }
 function DrawSingleHisto(path){
   var url = getApplicationURL2();
@@ -115,7 +117,7 @@ function DrawSingleHisto(path){
   queryString += '&histotype=summary';
   url += queryString;
   makeRequest(url, dummy);
-   
+  ShowProgress('visible', 'Selected Plot');   
   setTimeout('UpdatePlot()', 2000);     
 }
 function ReadStatus(path) {
@@ -124,11 +126,13 @@ function ReadStatus(path) {
   queryString = 'RequestID=ReadQTestStatus';
   queryString += '&Path='+path;
   url += queryString;
+  ShowProgress('visible', 'Status Message');
   makeRequest(url, FillStatus);
 }
 function FillStatus() {
   if (http_request.readyState == 4) {
     if (http_request.status == 200) {
+      ShowProgress('hidden');
       try {
         var doc = http_request.responseXML;
         var root = doc.documentElement;
@@ -167,6 +171,7 @@ function DrawQTestHisto(path){
 
   url += queryString;
   makeRequest(url, dummy);
+  ShowProgress('visible', 'Selected Plot');
    
   setTimeout('UpdatePlot()', 2000);     
 }
