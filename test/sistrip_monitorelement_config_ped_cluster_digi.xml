@@ -12,6 +12,6 @@
     <MonElement name="NumberOfClusters" type="mean"></MonElement> 
     <MonElement name="CMSubNoiseProfile" type="bin-by-bin"></MonElement> 
     <MonElement name="ClusterWidth" type="mean"></MonElement> 
-    <MonElement name="NoisyStrips" type="bin-by-bin"></MonElement> 
+    <MonElement name="NoisyStrips" type="mean"></MonElement> 
 </SummaryPlot>
 </MonElementConfiguration> 
