@@ -17,6 +17,9 @@
 //
 // -- Constructor
 // 
+
+using namespace std;
+
 SiStripWebInterface::SiStripWebInterface(std::string theContextURL, std::string theApplicationURL, MonitorUserInterface ** _mui_p) 
   : WebInterface(theContextURL, theApplicationURL, _mui_p) {
   
