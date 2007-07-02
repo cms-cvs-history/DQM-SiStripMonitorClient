@@ -6,6 +6,6 @@
 </TkMap>
 <SummaryPlot name="Summary Plots" update_frequency="25"> 
     <MonElement name="CMSubNoiseProfile" type="bin-by-bin"></MonElement> 
-    <MonElement name="NoisyStrips" type="bin-by-bin"></MonElement> 
+    <MonElement name="NoisyStrips" type="mean"></MonElement> 
 </SummaryPlot>
 </MonElementConfiguration> 
