@@ -1,7 +1,6 @@
 function DrawSelectedHistos() {
   var queryString;
   var url = getApplicationURL2();
-  url += "/Request?";
   if (document.getElementById("module_histos").checked) {
     queryString = "RequestID=PlotAsModule";
     // Get Module Number
@@ -97,7 +96,6 @@ function UpdatePlot() {
 
   var queryString = "RequestID=UpdatePlot";
   var url = getApplicationURL2();
-  url = url + "/Request?";
   url = url + queryString;
   url = url + '&t=' + Math.random();
   canvas.src = url; 
@@ -105,7 +103,6 @@ function UpdatePlot() {
 }
 function DrawSingleHisto(path){
   var url = getApplicationURL2();
-  url += "/Request?";
   queryString = 'RequestID=PlotHistogramFromPath';
   queryString += '&Path='+path;
   var canvas = document.getElementById("drawingcanvas");
@@ -122,7 +119,6 @@ function DrawSingleHisto(path){
 }
 function ReadStatus(path) {
   var url = getApplicationURL2();
-  url += "/Request?";
   queryString = 'RequestID=ReadQTestStatus';
   queryString += '&Path='+path;
   url += queryString;
@@ -158,7 +154,6 @@ function FillStatus() {
 }
 function DrawQTestHisto(path){
   var url = getApplicationURL2();
-  url += "/Request?";
   queryString = 'RequestID=PlotHistogramFromPath';
   queryString += '&Path='+path;
   var canvas = document.getElementById("drawingcanvas");
@@ -193,7 +188,6 @@ function CheckQualityTestResultsLite() {
   var queryString = "RequestID=CheckQTResults";
   queryString +=  '&InfoType=Lite';
   var url = getApplicationURL2();
-  url = url + "/Request?";
   url = url + queryString; 
   
   makeRequest(url, FillTextStatus); 
@@ -205,7 +199,6 @@ function CheckQualityTestResultsDetail() {
   var queryString = "RequestID=CheckQTResults";
   queryString +=  '&InfoType=Detail';
   var url = getApplicationURL2();
-  url = url + "/Request?";
   url = url + queryString; 
   
   makeRequest(url, FillTextStatus); 

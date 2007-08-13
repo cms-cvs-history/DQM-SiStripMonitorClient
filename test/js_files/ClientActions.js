@@ -2,7 +2,6 @@
 function SubscribeAll() {
   var queryString = "RequestID=SubscribeAll";
   var url = getApplicationURL2();
-  url = url + "/Request?";
   url = url + queryString; 
   
   makeRequest(url, dummy);     
@@ -13,7 +12,6 @@ function SubscribeAll() {
 function CreateSummary() {
   var queryString = "RequestID=CreateSummary";
   var url = getApplicationURL2();
-  url = url + "/Request?";
   url = url + queryString; 
   
   makeRequest(url, dummy);     
@@ -24,7 +22,6 @@ function CreateSummary() {
 function SaveToFile() {
   var queryString = "RequestID=SaveToFile";
   var url = getApplicationURL2();
-  url = url + "/Request?";
   url = url + queryString;   
   makeRequest(url, dummy);     
 }
@@ -36,7 +33,6 @@ function CreateTrackerMap() {
   var obj = document.getElementById("create_tkmap");
 
   var url = getApplicationURL2();
-  url = url + "/Request?";
   url = url + queryString;
    
   makeRequest(url, dummy);
@@ -50,7 +46,6 @@ function OpenTrackerMap() {
   var queryString = "RequestID=OpenTkMap";
 
   var url = getApplicationURL2();
-  url = url + "/Request?";
   url = url + queryString;
    
   makeRequest(url, ReadResponseAndOpenTkMap); 
@@ -90,7 +85,6 @@ function ReadResponseAndOpenTkMap() {
 function CollateME() {
   var queryString = "RequestID=CollateME";
   var url = getApplicationURL2();
-  url = url + "/Request?";
   url = url + queryString; 
   
   makeRequest(url, dummy);     

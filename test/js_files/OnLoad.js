@@ -42,7 +42,6 @@ function ShowProgress (option) {
 }
 function RequestReadyState() {
   var url = getApplicationURL2();
-  url += "/Request?";
   var queryString = "RequestID=IsReady";
   url += queryString;
   makeRequest(url, FillReadyState);
