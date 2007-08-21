@@ -63,7 +63,7 @@ function ReadResponseAndOpenTkMap() {
         if ( rows.length == 1) { 
           var name  = rows[0].childNodes[0].nodeValue;
           if (name == "Successful" ) {            
-             var win = window.open('embedded_svg.html');
+             var win = window.open('svgmap.xml');
              win.focus();            
           } else {
             alert(" Creation of Tracker Map Failed !! ");	
