@@ -1,36 +1,64 @@
-var DEBUG = true;
-var slideList = new Array();
-var slideShowSpeed = 10000;  // miliseconds
-var index = 0;
-var nSlides = 0;
-var MAX_SLIDES = 20;
-var timerID;
+var SlideShow = {};
 
-
-function StartSlideShow() {
+SlideShow.DEBUG = true;
+SlideShow.slideList = new Array();
+SlideShow.slideShowSpeed = 10000;  // miliseconds
+SlideShow.index = 0;
+SlideShow.nSlides = 0;
+SlideShow.MAX_SLIDES = 20;
+SlideShow.timerID = null;
+//
+// -- Start slide show
+//
+SlideShow.StartSlideShow = function()
+{
  setSlide(index);
  index = (index+1) % nSlides;
  timerID = setTimeout('StartSlideShow()', slideShowSpeed);
 }
-function StopSlideShow() {
+//
+// -- Stop slide show
+//
+SlideShow.StopSlideShow = function()
+{
  if (timerID != null) clearTimeout(timerID);
 }
-function ShowFirst() {
+//
+// -- Show first slide
+//
+SlideShow.ShowFirst  = function()
+{
  setSlide(0);
 }
-function ShowLast() {
+//
+// -- Show last slide
+//
+SlideShow.ShowLast = function()
+{
  setSlide(nSlides-1);
 }
-function ShowPrev() {
+//
+// -- Show previous slide
+//
+SlideShow.ShowPrev = function()
+{
  index = (index-1) % nSlides;
  if (index<0) index = nSlides-1;
  setSlide(index);
 }
-function ShowNext() {
+//
+// -- Show next slide
+//
+SlideShow.ShowNext = function()
+{
  index = (index+1) % nSlides;
  setSlide(index);
 }
-function setSlide(index) {
+//
+// -- Set a specific slide
+//
+SlideShow.setSlide = function(index) 
+{
  if (nSlides == 0) {
    if (DEBUG) alert("No canvas name selected!");
    return false;

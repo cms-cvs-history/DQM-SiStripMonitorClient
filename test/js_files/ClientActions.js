@@ -1,63 +1,70 @@
-// Subscribe All MEs 
-function SubscribeAll() {
+var ClientActions = {};
+//
+// -- Subscribe All MEs 
+//
+ClientActions.SubscribeAll = function()
+{
   var queryString = "RequestID=SubscribeAll";
-  var url = getApplicationURL2();
-  url = url + queryString; 
-  
-  makeRequest(url, dummy);     
+  var url         = WebLib.getApplicationURL2();
+  url             = url + queryString;   
+  WebLib.makeRequest(url, null);     
 }
 //
 // Create Summary
 //
-function CreateSummary() {
+ClientActions.CreateSummary = function() 
+{
   var queryString = "RequestID=CreateSummary";
-  var url = getApplicationURL2();
-  url = url + queryString; 
+  var url         = WebLib.getApplicationURL2();
+  url             = url + queryString; 
   
-  makeRequest(url, dummy);     
+  WebLib.makeRequest(url, null);     
 }
 //
-// Same MEs in a file
+// -- Save MEs in a file
 //
-function SaveToFile() {
+ClientActions.SaveToFile = function() 
+{
   var queryString = "RequestID=SaveToFile";
-  var url = getApplicationURL2();
-  url = url + queryString;   
-  makeRequest(url, dummy);     
+  var url         = WebLib.getApplicationURL2();
+  url             = url + queryString;   
+  WebLib.makeRequest(url, null);     
 }
 //
-// Create Tracker Map
+// -- Create Tracker Map
 //
-function CreateTrackerMap() {
+ClientActions.CreateTrackerMap = function()
+{
   var queryString = "RequestID=CreateTkMap";
-  var obj = document.getElementById("create_tkmap");
-
-  var url = getApplicationURL2();
-  url = url + queryString;
+  var obj         = document.getElementById("create_tkmap");
+  var url         = WebLib.getApplicationURL2();
+  url             = url + queryString;
    
-  makeRequest(url, dummy);
+  WebLib.makeRequest(url, null);
  
-  setTimeout('OpenTrackerMap()', 5000);   
+  setTimeout('ClientActions.OpenTrackerMap()', 5000);   
 }
 //
-// Create Tracker Map
+// -- Create Tracker Map
 //
-function OpenTrackerMap() {
+ClientActions.OpenTrackerMap = function()
+{
   var queryString = "RequestID=OpenTkMap";
 
-  var url = getApplicationURL2();
-  url = url + queryString;
+  var url   = WebLib.getApplicationURL2();
+  url       = url + queryString;
    
-  makeRequest(url, ReadResponseAndOpenTkMap); 
+  WebLib.makeRequest(url, ClientActions.ReadResponseAndOpenTkMap); 
 }
-
-// check the response and open tracker map
-function ReadResponseAndOpenTkMap() {
-
-  if (http_request.readyState == 4) {
-    if (http_request.status == 200) {
+//
+// -- check the response and open tracker map
+//
+ClientActions.ReadResponseAndOpenTkMap = function() 
+{
+  if (WebLib.http_request.readyState == 4) {
+    if (WebLib.http_request.status == 200) {
       try {
-        var doc = http_request.responseXML;
+        var doc  = WebLib.http_request.responseXML;
         var root = doc.documentElement;
         var rows = root.getElementsByTagName('Response');
         if ( rows.length == 1) { 
@@ -75,17 +82,17 @@ function ReadResponseAndOpenTkMap() {
       }
     }
     else {
-      alert("FillFileList:  ERROR:"+http_request.readyState+", "+http_request.status);
+      alert("FillFileList:  ERROR:"+WebLib.http_request.readyState+", "+WebLib.http_request.status);
     }
   }
 }
 //
-// Check Quality Test Results
+// Collate MEs
 //
-function CollateME() {
+ClientActions.CollateME = function() {
   var queryString = "RequestID=CollateME";
-  var url = getApplicationURL2();
-  url = url + queryString; 
+  var url         = WebLib.getApplicationURL2();
+  url             = url + queryString; 
   
-  makeRequest(url, dummy);     
+  WebLib.makeRequest(url, null);     
 }
