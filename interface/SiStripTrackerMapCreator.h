@@ -1,5 +1,5 @@
-#ifndef _TrackerMapCreator_h_
-#define _TrackerMapCreator_h_
+#ifndef _SiStripTrackerMapCreator_h_
+#define _SiStripTrackerMapCreator_h_
 
 #include "DQMServices/UI/interface/MonitorUIRoot.h"
 #include "DQMServices/Core/interface/MonitorElement.h"
@@ -13,12 +13,12 @@ class DaqMonitorBEInterface;
 class SiStripDetCabling;
 class SiStripFedCabling;
 
-class TrackerMapCreator {
+class SiStripTrackerMapCreator {
 
  public:
 
-  TrackerMapCreator();
- ~TrackerMapCreator();
+  SiStripTrackerMapCreator();
+ ~SiStripTrackerMapCreator();
   bool readConfiguration();
 
   void create(DaqMonitorBEInterface* bei);

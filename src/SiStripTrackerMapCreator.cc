@@ -1,4 +1,4 @@
-#include "DQM/SiStripMonitorClient/interface/TrackerMapCreator.h"
+#include "DQM/SiStripMonitorClient/interface/SiStripTrackerMapCreator.h"
 #include "CondFormats/SiStripObjects/interface/SiStripFedCabling.h"
 #include "DQM/SiStripMonitorClient/interface/SiStripUtility.h"
 #include "DQM/SiStripMonitorClient/interface/SiStripConfigParser.h"
@@ -10,7 +10,7 @@ using namespace std;
 //
 // -- Constructor
 // 
-TrackerMapCreator::TrackerMapCreator() {
+SiStripTrackerMapCreator::SiStripTrackerMapCreator() {
   tkMapFrequency_ = -1;
   trackerMap_ = 0;
   fedTrackerMap_ = 0;
@@ -18,14 +18,14 @@ TrackerMapCreator::TrackerMapCreator() {
 //
 // -- Destructor
 //
-TrackerMapCreator::~TrackerMapCreator() {
+SiStripTrackerMapCreator::~SiStripTrackerMapCreator() {
   if (trackerMap_) delete trackerMap_;
   if (fedTrackerMap_) delete fedTrackerMap_;
 }
 //
 // -- Read ME list
 //
-bool TrackerMapCreator::readConfiguration() {
+bool SiStripTrackerMapCreator::readConfiguration() {
   SiStripConfigParser config_parser;
   string localPath = string("DQM/SiStripMonitorClient/test/sistrip_monitorelement_config.xml");
   config_parser.getDocument(edm::FileInPath(localPath).fullPath());
@@ -36,7 +36,7 @@ bool TrackerMapCreator::readConfiguration() {
   }
 
   if (!config_parser.getMENamesForTrackerMap(tkMapName_, meNames_)){  
-    cout << "TrackerMapCreator::readConfiguration: Failed to read TrackerMap configuration parameters!! ";
+    cout << "SiStripTrackerMapCreator::readConfiguration: Failed to read TrackerMap configuration parameters!! ";
     return false;
   }
   cout << " # of MEs in Tk Map " << meNames_.size() << endl;
@@ -45,7 +45,7 @@ bool TrackerMapCreator::readConfiguration() {
 //
 // -- Browse through monitorable and get values need for TrackerMap
 //
-void TrackerMapCreator::create(DaqMonitorBEInterface* bei) {
+void SiStripTrackerMapCreator::create(DaqMonitorBEInterface* bei) {
   if (meNames_.size() == 0) return;
   if (!trackerMap_) trackerMap_ = new TrackerMap(tkMapName_);
 
@@ -105,7 +105,7 @@ void TrackerMapCreator::create(DaqMonitorBEInterface* bei) {
 //
 // -- Create Fed Tracker Map
 //
-void TrackerMapCreator::createFedTkMap(const edm::ESHandle<SiStripFedCabling> fedcabling, DaqMonitorBEInterface* bei) {
+void SiStripTrackerMapCreator::createFedTkMap(const edm::ESHandle<SiStripFedCabling> fedcabling, DaqMonitorBEInterface* bei) {
 
   if (meNames_.size() == 0) return;
   if (! fedTrackerMap_ )   fedTrackerMap_ = new FedTrackerMap(fedcabling);
@@ -140,7 +140,7 @@ void TrackerMapCreator::createFedTkMap(const edm::ESHandle<SiStripFedCabling> fe
 //
 // -- Paint FED Tracker Map
 //
-void TrackerMapCreator::paintFedTkMap(int fed_id, int fed_ch, std::map<MonitorElement*, int>& me_map) {
+void SiStripTrackerMapCreator::paintFedTkMap(int fed_id, int fed_ch, std::map<MonitorElement*, int>& me_map) {
   int icol;
   string tag;
 
@@ -171,7 +171,7 @@ void TrackerMapCreator::paintFedTkMap(int fed_id, int fed_ch, std::map<MonitorEl
 //
 // -- Get Tracker Map ME names
 //
-int TrackerMapCreator::getMENames(vector<string>& me_names) {
+int SiStripTrackerMapCreator::getMENames(vector<string>& me_names) {
   if (meNames_.size() == 0) return 0;
   for (vector<string>::const_iterator im = meNames_.begin();
        im != meNames_.end(); im++) {
@@ -182,7 +182,7 @@ int TrackerMapCreator::getMENames(vector<string>& me_names) {
 //
 // -- Create Geometric and Fed Tracker Map
 //
-void TrackerMapCreator::create(const edm::ESHandle<SiStripFedCabling> fedcabling, DaqMonitorBEInterface* bei) {
+void SiStripTrackerMapCreator::create(const edm::ESHandle<SiStripFedCabling> fedcabling, DaqMonitorBEInterface* bei) {
 
   if (meNames_.size() == 0) return;
   if (!trackerMap_)     trackerMap_    = new TrackerMap(tkMapName_);
@@ -225,7 +225,7 @@ void TrackerMapCreator::create(const edm::ESHandle<SiStripFedCabling> fedcabling
 //
 // -- Draw Monitor Elements
 //
-void TrackerMapCreator::paintTkMap(int det_id, map<MonitorElement*, int>& me_map) {
+void SiStripTrackerMapCreator::paintTkMap(int det_id, map<MonitorElement*, int>& me_map) {
   int icol;
   string tag;
 
@@ -256,7 +256,7 @@ void TrackerMapCreator::paintTkMap(int det_id, map<MonitorElement*, int>& me_map
 //
 // -- get Tracker Map ME 
 //
-MonitorElement* TrackerMapCreator::getTkMapMe(DaqMonitorBEInterface* bei, 
+MonitorElement* SiStripTrackerMapCreator::getTkMapMe(DaqMonitorBEInterface* bei,
                     string& me_name, int ndet) {
   string new_name = "TrackerMap_for_" + me_name;
   string path = "Collector/" + new_name;

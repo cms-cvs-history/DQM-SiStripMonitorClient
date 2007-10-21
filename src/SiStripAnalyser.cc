@@ -1,8 +1,8 @@
 /*
  * \file SiStripAnalyser.cc
  * 
- * $Date: 2007/09/03 20:51:11 $
- * $Revision: 1.9 $
+ * $Date: 2007/09/19 14:25:54 $
+ * $Revision: 1.10 $
  * \author  S. Dutta INFN-Pisa
  *
  */
@@ -30,7 +30,7 @@
 #include "CondFormats/SiStripObjects/interface/SiStripFedCabling.h"
 
 #include "DQM/SiStripMonitorClient/interface/SiStripWebInterface.h"
-#include "DQM/SiStripMonitorClient/interface/TrackerMapCreator.h"
+#include "DQM/SiStripMonitorClient/interface/SiStripTrackerMapCreator.h"
 #include "DQM/SiStripMonitorClient/interface/SiStripUtility.h"
 
 #include <SealBase/Callback.h>
@@ -113,7 +113,7 @@ void SiStripAnalyser::beginJob(const edm::EventSetup& eSetup){
   staticUpdateFrequency_ = parameters.getUntrackedParameter<int>("StaticUpdateFrequency",10);
   // Get Fed cabling
   eSetup.get<SiStripFedCablingRcd>().get(fedCabling_);
-  trackerMapCreator_ = new TrackerMapCreator();
+  trackerMapCreator_ = new SiStripTrackerMapCreator();
   if (trackerMapCreator_->readConfiguration()) {
     tkMapFrequency_ = trackerMapCreator_->getFrequency();
   }
@@ -225,3 +225,5 @@ void SiStripAnalyser::defaultWebPage(xgi::Input *in, xgi::Output *out)
   sistripWebInterface_->handleAnalyserRequest(in, out,nLumiBlock);
 
 }
+#include "FWCore/Framework/interface/MakerMacros.h"
+DEFINE_FWK_MODULE(SiStripAnalyser);
