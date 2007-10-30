@@ -1,0 +1,4 @@
+</svg:svg>
+ <svg:text id="Title" class="normalText"  x="100" y="0">GeomDetUnitId : move the mouse on the module and look at the second text line below</svg:text>
+</svg:svg>
+</body></html>
