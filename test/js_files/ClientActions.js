@@ -7,7 +7,11 @@ ClientActions.SubscribeAll = function()
   var queryString = "RequestID=SubscribeAll";
   var url         = WebLib.getApplicationURL2();
   url             = url + queryString;   
-  WebLib.makeRequest(url, null);     
+  var retVal = new Ajax.Request(url,                    
+                   	       {			  
+ 	 		         method: 'get',	  
+ 			         parameters: ''
+ 			        });
 }
 //
 // Create Summary
@@ -17,8 +21,11 @@ ClientActions.CreateSummary = function()
   var queryString = "RequestID=CreateSummary";
   var url         = WebLib.getApplicationURL2();
   url             = url + queryString; 
-  
-  WebLib.makeRequest(url, null);     
+  var retVal = new Ajax.Request(url,                    
+                   	       {			  
+ 	 		         method: 'get',	  
+ 			         parameters: ''  
+ 			        });
 }
 //
 // -- Save MEs in a file
@@ -28,7 +35,11 @@ ClientActions.SaveToFile = function()
   var queryString = "RequestID=SaveToFile";
   var url         = WebLib.getApplicationURL2();
   url             = url + queryString;   
-  WebLib.makeRequest(url, null);     
+  var retVal = new Ajax.Request(url,                    
+                   	       {			  
+ 	 		         method: 'get',	  
+ 			         parameters: '' 
+ 			        });
 }
 //
 // -- Create Tracker Map
@@ -40,8 +51,11 @@ ClientActions.CreateTrackerMap = function()
   var url         = WebLib.getApplicationURL2();
   url             = url + queryString;
    
-  WebLib.makeRequest(url, null);
- 
+  var retVal = new Ajax.Request(url,                    
+                   	       {			  
+ 	 		         method: 'get',	  
+ 			         parameters: '' 
+ 			        });
   setTimeout('ClientActions.OpenTrackerMap()', 5000);   
 }
 //
@@ -53,8 +67,13 @@ ClientActions.OpenTrackerMap = function()
 
   var url   = WebLib.getApplicationURL2();
   url       = url + queryString;
-   
-  WebLib.makeRequest(url, ClientActions.ReadResponseAndOpenTkMap); 
+  var retVal = new Ajax.Request(url,                    
+                   	       {			  
+ 	 		         method: 'get',	  
+ 			         parameters: '', 
+ 			         onSuccess: ClientActions.ReadResponseAndOpenTkMap
+ 			        });
+// WebLib.makeRequest(url, ClientActions.ReadResponseAndOpenTkMap); 
 }
 //
 // -- check the response and open tracker map
@@ -85,14 +104,4 @@ ClientActions.ReadResponseAndOpenTkMap = function()
       alert("FillFileList:  ERROR:"+WebLib.http_request.readyState+", "+WebLib.http_request.status);
     }
   }
-}
-//
-// Collate MEs
-//
-ClientActions.CollateME = function() {
-  var queryString = "RequestID=CollateME";
-  var url         = WebLib.getApplicationURL2();
-  url             = url + queryString; 
-  
-  WebLib.makeRequest(url, null);     
 }
