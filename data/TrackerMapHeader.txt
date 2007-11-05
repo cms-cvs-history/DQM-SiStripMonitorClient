@@ -51,63 +51,87 @@ xmlns:xlink="http://www.w3.org/1999/xlink"
        <button class = "controlButton" onclick = "SiStripSvgMap.updateTrackerMap();" >Refresh  </button>
       </td>
      </tr>
+   <tr>
+    <td>
+<form name="layerselect" id="layerselect" action="javascript:void(0)" >
+<input type="RADIO" name="what" value="TIB" />TIB
+<select id="menuTIB"  onFocus="document.layerselect.what[0].checked=1">
+<option value="TIB1" selected="selected">1</option>
+<option value="TIB2">2</option>
+<option value="TIB3">3</option>
+<option value="TIB4">4</option>
+</select>
+<input type="RADIO" name="what" value="TOB" />TOB
+<select id="menuTOB" onFocus="document.layerselect.what[1].checked=1">
+<option value="TOB1" selected="selected">1</option>
+<option value="TOB2">2</option>
+<option value="TOB3">3</option>
+<option value="TOB4">4</option>
+<option value="TOB5">5</option>
+<option value="TOB6">6</option>
+</select>
+<input type="RADIO" name="what"  value="TID-z" />TID-z
+<select id="menuTID-z" onFocus="document.layerselect.what[2].checked=1">
+<option value="TID-z1" selected="selected">1</option>
+<option value="TID-z2">2</option>
+<option value="TID-z3">3</option>
+</select>
+<input type="RADIO" name="what"  value="TID+z" />TID+z
+<select id="menuTID+z"  onFocus="document.layerselect.what[3].checked=1">
+<option value="TID+z1" selected="selected">1</option>
+<option value="TID+z2">2</option>
+<option value="TID+z3">3</option>
+</select>
+<input type="RADIO" name="what"  value="TEC-z" />TEC-z
+<select id="menuTEC-z"  onFocus="document.layerselect.what[4].checked=1">
+<option value="TEC-z1" selected="selected">1</option>
+<option value="TEC-z2">2</option>
+<option value="TEC-z3">3</option>
+<option value="TEC-z4">4</option>
+<option value="TEC-z5">5</option>
+<option value="TEC-z6">6</option>
+<option value="TEC-z7">7</option>
+<option value="TEC-z8">8</option>
+<option value="TEC-z9">9</option>
+</select>
+<input type="RADIO" name="what"  value="TEC+z" />TEC+z
+<select id="menuTEC+z"  onFocus="document.layerselect.what[5].checked=1">
+<option value="TEC+z1" selected="selected">1</option>
+<option value="TEC+z2">2</option>
+<option value="TEC+z3">3</option>
+<option value="TEC+z4">4</option>
+<option value="TEC+z5">5</option>
+<option value="TEC+z6">6</option>
+<option value="TEC+z7">7</option>
+<option value="TEC+z8">8</option>
+<option value="TEC+z9">9</option>
+</select>
+<button onclick="SiStripSvgMap.getLayer('All');">Select layer</button>
+</form>
+    </td>
+   </tr> 
     </table>
    </center> 
   </fieldset>
 <table border="1" cellpadding="0" cellspacing="0">
    <tr>
     <td>
-     <form action = "javascript:void(0)"
-           style  = "color: #ffb400; font-family: Verdana; Arial">
-      <h3>
-       Color criteria: 
-       <input id    = "currentColorCodeME"
-     	      class = "inputBox"
-              type  = "text" 
-              value = "" 
-              name  = "currentColorCodeME"
-              size  = "40">
-       </input>
-       View: 
-       <input id    = "currentViewText"
-     	      class = "inputBox"
-              type  = "text" 
-              value = "Home" 
-              name  = "currentViewText"
-              size  = "8">
-       </input>
-       <br/>
-       Det: 
-       <input id    = "currentElementText"
- 	      class = "inputBox"
- 	      type  = "text" 
- 	      value = ""
- 	      name  = "currentElementText" 
- 	      size  = "67">
-       </input>
-      </h3> 
-     </form>
-    </td>
-   </tr> 
-   <tr>
-    <td>
-<svg:svg  width="100%" height="100%" viewBox="0 0 900 700"  >
+<svg:svg  width="100%" height="100%" viewBox="0 0 900 500"  >
 <svg:rect x      = "-500"
          y        = "-500"
          width    = "6000"
         overflow = "hidden"
          height   = "8000"
         style    = "fill:#d5e6fc;stroke:red;stroke-width:1px;" />
-<svg:svg id="referenceMap" x="0" y="510" viewBox="0 0 3000 1600" width="180"
+<!--<svg:svg id="referenceMap" x="0" y="510" viewBox="0 0 3000 1600" width="180"
 height="100" >
         <svg:use xlink:href="#tracker" />
 </svg:svg>
 <svg:rect id="dragRectForRefMap" class="dragRect" x="0" y="510" width="180"
-height="100" />
+height="100" />-->
 <svg:svg id="clipArea" x="0" y="0" viewBox="0 0 3000 1600" width="900" height="500"  onclick="SiStripSvgMap.showData(evt);"  >
 <svg:g id="tracker"  style="fill:none;stroke:black;stroke-width:0;"> 
-<svg:image id="bgimage" xlink:href="svgmap.png" x="10" y="-100" width="3000" height="1600" /> 
+<svg:image id="bgimage" xlink:href="svgmap.png" x="11" y="-98" width="3000" height="1600" /> 
 <svg:g  id="trackerin" transform="translate(10,1500) rotate(270)" > 
 </svg:g>
 </svg:g>
-

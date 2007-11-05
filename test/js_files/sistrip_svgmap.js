@@ -58,34 +58,6 @@ if (evt.type == "mouseover") //   <---------------------------------------------
   {
    SiStripSvgMap.theElementText.setAttribute("value","-") ;
   }
-  if (evt.type == "click")  //   <-----------------------------------------------
-  {
-
-    var canvas = parent.parent.plot_area.IMGC
-    alert(canvas.GLOBAL_RATIO);
-    var moduleId =  evt.currentTarget.getAttribute("detid");
-    alert(moduleId);
-    var queryString = "RequestID=PlotTkMapHistogram";
-    queryString+= "&ModId=" + moduleId;
-    canvas.computeCanvasSize();
-    queryString += '&width='+canvas.BASE_IMAGE_WIDTH+
-                   '&height='+canvas.BASE_IMAGE_HEIGHT;
-    canvas.IMAGES_PER_ROW      = 2;
-    canvas.IMAGES_PER_COL      = 2; 
-    canvas.IMAGES_PER_PAGE     = canvas.IMAGES_PER_ROW * canvas.IMAGES_PER_COL;
-
-    var url_serv = "http://lxplus232.cern.ch:40000/urn:xdaq-application:lid=27/moduleWeb?module=SiStripAnalyser&";
-              
-    var url1 = url_serv  + queryString;
-                             
-    var getMEURLS = new parent.parent.plot_area.Ajax.Request(url1,                    
-		         {			  
-		          method: 'get',	  
-	                  parameters: '', 
-		          onComplete: canvas.processIMGCPlots // <-- call-back function
-		         });
-  }
-
  }
 SiStripSvgMap.updateTrackerMap = function()
  {
@@ -95,7 +67,7 @@ var url = 'svgmap.png';
 myTrackerPlot.setAttributeNS( xlinkns, "xlink:href", url);  
 if(SiStripSvgMap.layerselected!=0){
 url = 'Layer'+SiStripSvgMap.layerselected+'.xml';
-var getxml = new parent.parent.plot_area.Ajax.Request(url, {
+var getxml = new parent.Ajax.Request(url, {
  method:  'get',
  onSuccess: function(transport) {
     var modTags = transport.responseXML.getElementsByTagName('mod');
@@ -113,12 +85,29 @@ var getxml = new parent.parent.plot_area.Ajax.Request(url, {
  //____________________________________________________________________________
 SiStripSvgMap.getLayer =function(what)
 {
+  if(what=="All") 
+{
+  for(var i=0;i<6;i++)
+{
+  var formname=document.getElementById('layerselect');
+  if(formname.what[i].checked)
+{
+  var namedet=formname.what[i].getAttribute("value");
+  var menuname="menu"+namedet;
+  var DropDown = document.getElementById(menuname);
+   var namelayer=DropDown.options[DropDown.selectedIndex].value;
+   SiStripSvgMap.theSelectedText.setAttribute("value",namelayer); 
+   SiStripSvgMap.zoomIt(namelayer);
+}else{ }
+}
+  
+} else {
   var menuname="menu"+what;
   var DropDown = document.getElementById(menuname);
    var namelayer=DropDown.options[DropDown.selectedIndex].value;
    SiStripSvgMap.theSelectedText.setAttribute("value",namelayer); 
    SiStripSvgMap.zoomIt(namelayer);
-
+}
 }
 
  //____________________________________________________________________________
@@ -255,233 +244,233 @@ switch (what)
        break;
    case "TIB2":
        geo[0]=    750 ;
-       geo[1]=    550 ;
-       geo[2]= 1120 ;
-       geo[3]= 593 ;
+       geo[1]=    525 ;
+       geo[2]= 561 ;
+       geo[3]= 295 ;
        SiStripSvgMap.updatetree(35,1);
        break;
    case "TIB3":
-       geo[0]=    750 ;
-       geo[1]=    550 ;
-       geo[2]= 1120 ;
-       geo[3]= 593 ;
+       geo[0]=    1175 ;
+       geo[1]=    825 ;
+       geo[2]= 561 ;
+       geo[3]= 295 ;
        SiStripSvgMap.updatetree(36,1);
        break;
    case "TIB4":
-       geo[0]=    750 ;
-       geo[1]=    550 ;
-       geo[2]= 1120 ;
-       geo[3]= 593 ;
+       geo[0]=    1150 ;
+       geo[1]=    500 ;
+       geo[2]= 561 ;
+       geo[3]= 295 ;
        SiStripSvgMap.updatetree(37,1);
        break;
    case "TOB1":
-       geo[0]=    1650 ;
-       geo[1]=    525 ;
-       geo[2]= 1176 ;
-       geo[3]= 622 ;
+       geo[0]=    1525 ;
+       geo[1]=    825 ;
+       geo[2]= 590 ;
+       geo[3]= 309 ;
        SiStripSvgMap.updatetree(38,1);
        break;
    case "TOB2":
-       geo[0]=    1650 ;
-       geo[1]=    525 ;
-       geo[2]= 1176 ;
-       geo[3]= 622 ;
+       geo[0]=    1600 ;
+       geo[1]=    500 ;
+       geo[2]= 590 ;
+       geo[3]= 309 ;
        SiStripSvgMap.updatetree(39,1);
        break;
    case "TOB3":
-       geo[0]=    1650 ;
-       geo[1]=    525 ;
-       geo[2]= 1176 ;
-       geo[3]= 622 ;
+       geo[0]=    1975 ;
+       geo[1]=    825 ;
+       geo[2]= 590 ;
+       geo[3]= 309 ;
        SiStripSvgMap.updatetree(40,1);
        break;
    case "TOB4":
-       geo[0]=    1650 ;
-       geo[1]=    525 ;
-       geo[2]= 1176 ;
-       geo[3]= 622 ;
+       geo[0]=    2000 ;
+       geo[1]=    500 ;
+       geo[2]= 590 ;
+       geo[3]= 309 ;
        SiStripSvgMap.updatetree(41,1);
        break;
    case "TOB5":
-       geo[0]=    1650 ;
-       geo[1]=    525 ;
-       geo[2]= 1176 ;
-       geo[3]= 622 ;
+       geo[0]=    2325 ;
+       geo[1]=    825 ;
+       geo[2]= 590 ;
+       geo[3]= 309 ;
        SiStripSvgMap.updatetree(42,1);
        break;
    case "TOB6":
-       geo[0]=    1650 ;
-       geo[1]=    525 ;
-       geo[2]= 1176 ;
-       geo[3]= 622 ;
+       geo[0]=    2375 ;
+       geo[1]=    500 ;
+       geo[2]= 619 ;
+       geo[3]= 324 ;
        SiStripSvgMap.updatetree(43,1);
        break;
    case "TID-z1":
-       geo[0]=    650 ;
-       geo[1]=    1175 ;
-       geo[2]= 507 ;
-       geo[3]= 265 ;
-       SiStripSvgMap.updatetree(10,1);
+       geo[0]=    575 ;
+       geo[1]=    1250 ;
+       geo[2]= 279 ;
+       geo[3]= 144 ;
+       SiStripSvgMap.updatetree(12,1);
        break;
    case "TID-z2":
-       geo[0]=    650 ;
-       geo[1]=    1175 ;
-       geo[2]= 507 ;
-       geo[3]= 265 ;
+       geo[0]=    800 ;
+       geo[1]=    1250 ;
+       geo[2]= 279 ;
+       geo[3]= 144 ;
        SiStripSvgMap.updatetree(11,1);
        break;
    case "TID-z3":
-       geo[0]=    650 ;
-       geo[1]=    1175 ;
-       geo[2]= 507 ;
-       geo[3]= 265 ;
-       SiStripSvgMap.updatetree(12,1);
+       geo[0]=    950 ;
+       geo[1]=    1250 ;
+       geo[2]= 279 ;
+       geo[3]= 144 ;
+       SiStripSvgMap.updatetree(10,1);
        break;
    case "TID+z1":
-       geo[0]=    675 ;
-       geo[1]=    175 ;
-       geo[2]= 507 ;
-       geo[3]= 265 ;
+       geo[0]=    550 ;
+       geo[1]=    250 ;
+       geo[2]= 293 ;
+       geo[3]= 152 ;
        SiStripSvgMap.updatetree(19,1);
        break;
    case "TID+z2":
-       geo[0]=    675 ;
-       geo[1]=    175 ;
-       geo[2]= 507 ;
-       geo[3]= 265 ;
+       geo[0]=    750 ;
+       geo[1]=    250 ;
+       geo[2]= 293 ;
+       geo[3]= 152 ;
        SiStripSvgMap.updatetree(20,1);
        break;
    case "TID+z3":
-       geo[0]=    675 ;
-       geo[1]=    175 ;
-       geo[2]= 507 ;
-       geo[3]= 265 ;
+       geo[0]=    950 ;
+       geo[1]=    250 ;
+       geo[2]= 293 ;
+       geo[3]= 152 ;
        SiStripSvgMap.updatetree(21,1);
        break;
    case "TEC-z1":
-       geo[0]=    1200 ;
-       geo[1]=    950 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
-       SiStripSvgMap.updatetree(1,1);
+       geo[0]=    1100 ;
+       geo[1]=    1200 ;
+       geo[2]= 469 ;
+       geo[3]= 240 ;
+       SiStripSvgMap.updatetree(9,1);
        break;
    case "TEC-z2":
-       geo[0]=    1200 ;
-       geo[1]=    950 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
-       SiStripSvgMap.updatetree(2,1);
+       geo[0]=    1300 ;
+       geo[1]=    1200 ;
+       geo[2]= 469 ;
+       geo[3]= 240 ;
+       SiStripSvgMap.updatetree(8,1);
        break;
    case "TEC-z3":
-       geo[0]=    1200 ;
-       geo[1]=    950 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
-       SiStripSvgMap.updatetree(3,1);
+       geo[0]=    1450 ;
+       geo[1]=    1200 ;
+       geo[2]= 469 ;
+       geo[3]= 240 ;
+       SiStripSvgMap.updatetree(7,1);
        break;
    case "TEC-z4":
-       geo[0]=    1200 ;
-       geo[1]=    950 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
-       SiStripSvgMap.updatetree(4,1);
+       geo[0]=    1650 ;
+       geo[1]=    1200 ;
+       geo[2]= 469 ;
+       geo[3]= 240 ;
+       SiStripSvgMap.updatetree(6,1);
        break;
    case "TEC-z5":
-       geo[0]=    1200 ;
-       geo[1]=    950 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
+       geo[0]=    1850 ;
+       geo[1]=    1200 ;
+       geo[2]= 469 ;
+       geo[3]= 240 ;
        SiStripSvgMap.updatetree(5,1);
        break;
    case "TEC-z6":
-       geo[0]=    1200 ;
-       geo[1]=    950 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
-       SiStripSvgMap.updatetree(6,1);
+       geo[0]=    2050 ;
+       geo[1]=    1200 ;
+       geo[2]= 469 ;
+       geo[3]= 240 ;
+       SiStripSvgMap.updatetree(4,1);
        break;
    case "TEC-z7":
-       geo[0]=    1200 ;
-       geo[1]=    950 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
-       SiStripSvgMap.updatetree(7,1);
+       geo[0]=    2250 ;
+       geo[1]=    1200 ;
+       geo[2]= 469 ;
+       geo[3]= 240 ;
+       SiStripSvgMap.updatetree(3,1);
        break;
    case "TEC-z8":
-       geo[0]=    1200 ;
-       geo[1]=    950 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
-       SiStripSvgMap.updatetree(8,1);
+       geo[0]=    2450 ;
+       geo[1]=    1200 ;
+       geo[2]= 469 ;
+       geo[3]= 240 ;
+       SiStripSvgMap.updatetree(2,1);
        break;
    case "TEC-z9":
-       geo[0]=    1200 ;
-       geo[1]=    950 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
-       SiStripSvgMap.updatetree(9,1);
+       geo[0]=    2650 ;
+       geo[1]=    1200 ;
+       geo[2]= 469 ;
+       geo[3]= 240 ;
+       SiStripSvgMap.updatetree(1,1);
        break;
    case "TEC+z1":
-       geo[0]=   1200 ;
-       geo[1]=    -150 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
+       geo[0]=   1075 ;
+       geo[1]=    175 ;
+       geo[2]= 517 ;
+       geo[3]= 264 ;
        SiStripSvgMap.updatetree(22,1);
        break;
    case "TEC+z2":
-       geo[0]=   1200 ;
-       geo[1]=    -150 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
+       geo[0]=   1225 ;
+       geo[1]=    175 ;
+       geo[2]= 517 ;
+       geo[3]= 264 ;
        SiStripSvgMap.updatetree(23,1);
        break;
    case "TEC+z3":
-       geo[0]=   1200 ;
-       geo[1]=    -150 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
+       geo[0]=   1425 ;
+       geo[1]=    175 ;
+       geo[2]= 517 ;
+       geo[3]= 264 ;
        SiStripSvgMap.updatetree(24,1);
        break;
    case "TEC+z4":
-       geo[0]=   1200 ;
-       geo[1]=    -150 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
+       geo[0]=   1625 ;
+       geo[1]=    175 ;
+       geo[2]= 517 ;
+       geo[3]= 264 ;
        SiStripSvgMap.updatetree(25,1);
        break;
    case "TEC+z5":
-       geo[0]=   1200 ;
-       geo[1]=    -150 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
+       geo[0]=   1825 ;
+       geo[1]=    175 ;
+       geo[2]= 517 ;
+       geo[3]= 264 ;
        SiStripSvgMap.updatetree(26,1);
        break;
    case "TEC+z6":
-       geo[0]=   1200 ;
-       geo[1]=    -150 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
+       geo[0]=   2025 ;
+       geo[1]=    175 ;
+       geo[2]= 517 ;
+       geo[3]= 264 ;
        SiStripSvgMap.updatetree(27,1);
        break;
    case "TEC+z7":
-       geo[0]=   1200 ;
-       geo[1]=    -150 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
+       geo[0]=   2225 ;
+       geo[1]=    175 ;
+       geo[2]= 517 ;
+       geo[3]= 264 ;
        SiStripSvgMap.updatetree(28,1);
        break;
    case "TEC+z8":
-       geo[0]=   1200 ;
-       geo[1]=    -150 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
+       geo[0]=   2425 ;
+       geo[1]=    175 ;
+       geo[2]= 517 ;
+       geo[3]= 264 ;
        SiStripSvgMap.updatetree(29,1);
        break;
    case "TEC+z9":
-       geo[0]=   1200 ;
-       geo[1]=    -150 ;
-       geo[2]= 1779 ;
-       geo[3]= 918 ;
+       geo[0]=   2625 ;
+       geo[1]=    175 ;
+       geo[2]= 517 ;
+       geo[3]= 264 ;
        SiStripSvgMap.updatetree(30,1);
        break;
   }
