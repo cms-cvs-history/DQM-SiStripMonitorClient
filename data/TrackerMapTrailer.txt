@@ -1,4 +1,83 @@
 </svg:svg>
  <svg:text id="Title" class="normalText"  x="100" y="0">GeomDetUnitId : move the mouse on the module and look at the second text line below</svg:text>
 </svg:svg>
+   </td>
+   </tr>
+   <tr>
+    <td>
+     <form action  = "javascript:void(0)"
+ 	   class   = "inputBox">
+      <h3>
+       Selected layer: 
+       <input id    = "selectedElementText"
+ 	      class = "inputBox"
+ 	      type  = "text" 
+ 	      value = ""
+ 	      style = "font-weight:bold;"
+ 	      name  = "currentElementText" 
+ 	      size  = "50">
+       </input>
+      </h3>
+     </form>
+    </td>
+   </tr> 
+   <tr>
+    <td>
+     <fieldset style = "background:#414141;">
+<select id="menuTIB" >
+<option value="TIB1" selected="selected">TIB layer 1</option>
+<option value="TIB2">TIB layer2</option>
+<option value="TIB3">TIB layer3</option>
+<option value="TIB4">TIB layer4</option>
+</select>
+<button onclick="SiStripSvgMap.getLayer('TIB');">TIB</button>
+<select id="menuTOB" >
+<option value="TOB1" selected="selected">TOB layer 1</option>
+<option value="TOB2">TOB layer2</option>
+<option value="TOB3">TOB layer3</option>
+<option value="TOB4">TOB layer4</option>
+<option value="TOB5">TOB layer5</option>
+<option value="TOB6">TOB layer6</option>
+</select>
+<button onclick="SiStripSvgMap.getLayer('TOB');">TOB</button>
+<select id="menuTID-z" >
+<option value="TID-z1" selected="selected">TID-z layer 1</option>
+<option value="TID-z2">TID-z layer2</option>
+<option value="TID-z3">TID-z layer3</option>
+</select>
+<button onclick="SiStripSvgMap.getLayer('TID-z');">TID-z</button>
+<select id="menuTID+z" >
+<option value="TID+z1" selected="selected">TID+z layer 1</option>
+<option value="TID+z2">TID+z layer2</option>
+<option value="TID+z3">TID+z layer3</option>
+</select>
+<button onclick="SiStripSvgMap.getLayer('TID+z');">TID+z</button>
+<select id="menuTEC-z" >
+<option value="TEC-z1" selected="selected">TEC-z layer 1</option>
+<option value="TEC-z2">TEC-z layer2</option>
+<option value="TEC-z3">TEC-z layer3</option>
+<option value="TEC-z4">TEC-z layer4</option>
+<option value="TEC-z5">TEC-z layer5</option>
+<option value="TEC-z6">TEC-z layer6</option>
+<option value="TEC-z7">TEC-z layer7</option>
+<option value="TEC-z8">TEC-z layer8</option>
+<option value="TEC-z9">TEC-z layer9</option>
+</select>
+<button onclick="SiStripSvgMap.getLayer('TEC-z');">TEC-z</button>
+<select id="menuTEC+z" >
+<option value="TEC+z1" selected="selected">TEC+z layer 1</option>
+<option value="TEC+z2">TEC+z layer2</option>
+<option value="TEC+z3">TEC+z layer3</option>
+<option value="TEC+z4">TEC+z layer4</option>
+<option value="TEC+z5">TEC+z layer5</option>
+<option value="TEC+z6">TEC+z layer6</option>
+<option value="TEC+z7">TEC+z layer7</option>
+<option value="TEC+z8">TEC+z layer8</option>
+<option value="TEC+z9">TEC+z layer9</option>
+</select>
+<button onclick="SiStripSvgMap.getLayer('TEC+z');">TEC+z</button>
+     </fieldset>
+    </td>
+   </tr> 
+  </table>
 </body></html>

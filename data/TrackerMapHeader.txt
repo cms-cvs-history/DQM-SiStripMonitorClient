@@ -5,6 +5,9 @@ xmlns:xlink="http://www.w3.org/1999/xlink"
 >
 <head>
 <script type="text/javascript"
+         src="js_files/scriptaculous/lib/prototype.js">
+ </script>
+<script type="text/javascript"
          src="js_files/sistrip_svgmap.js">
  </script>
 <!-- section for CSS stylesheet definitions -->
@@ -13,77 +16,97 @@ xmlns:xlink="http://www.w3.org/1999/xlink"
       .dragRect {fill:darkcyan;stroke:none;opacity:0.4;}
   ]]></style>
 </head>
-<body onload="init()" onresize="myMapApp.resetFactors();" style=" background-color:lightyellow; ">
-<button onclick="zoomIt('in');">Zoom in</button>
-<button onclick="zoomIt('out');">Zoom out</button>
-<button onclick="zoomIt('full');">Home</button>
-<button onclick="zoomIt('up');">Up</button>
-<button onclick="zoomIt('down');">Down</button>
-<button onclick="zoomIt('left');">Left</button>
-<button onclick="zoomIt('right');">Right</button>
-<button onclick="zoomIt('TIB');">TIB</button>
-<button onclick="zoomIt('TOB');">TOB</button>
-<button onclick="zoomIt('TID+z');">TID+z</button>
-<button onclick="zoomIt('TID-z');">TID-z</button>
-<button onclick="zoomIt('TEC+z');">TEC+z</button>
-<button onclick="zoomIt('TEC-z');">TEC-z</button>
-<button onclick="zoomIt('PIXB');">PIXB</button>
-<button onclick="zoomIt('FPIX+z');">FPIX+z</button>
-<button onclick="zoomIt('FPIX-z');">FPIX-z</button>
-<br />
-<select id="menus" >
-<option value="TIB layer1" selected="selected">TIB layer 1</option>
-<option value="TIB layer2">TIB layer2</option>
-<option value="TIB layer3">TIB layer3</option>
-<option value="TIB layer4">TIB layer4</option>
-</select>
-<button onclick="getLayer();">GO</button>
-<input type="text" id="output" value="none" />
-<br />
-<svg:svg width="100%" height="100%" viewBox="0 0 1400 700"  >
+<body  style=" background-color:lightyellow; "
+            onload	= "SiStripSvgMap.init();" >
+<fieldset style = "margin-top:    0px;
+                     margin-bottom: 0px;
+                     padding-top:   0px;
+		     padding-bottom:0px;
+		     border-style:  groove;">
+   <legend class = "legend" 
+           align = "center">
+    Detector elements and controls
+   </legend>
+<center> 
+    <table border = "0">
+     <tr>
+      <td align = "center">
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('TIB');"  >TIB</button> 
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('TOB');"  >TOB</button> 
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('TID-z');"    >TID-z  </button>  
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('TID+z');"  >TID+z</button>  
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('TEC-z');"  >TEC-z</button> 
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('TEC+z');"  >TEC+z</button> 
+      </td>
+     </tr>
+     <tr>
+      <td align = "center">
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('Home');"     >Home	</button> 
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('In');"       >Zoom in  </button>
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('Out');"      >Zoom out </button>
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('Up');"       >Up	</button> 
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('Down');"     >Down	</button> 
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('Left');"     >Left	</button>
+       <button class = "controlButton" onclick = "SiStripSvgMap.zoomIt('Right');"    >Right	</button>
+       <button class = "controlButton" onclick = "SiStripSvgMap.updateTrackerMap();" >Refresh  </button>
+      </td>
+     </tr>
+    </table>
+   </center> 
+  </fieldset>
+<table border="1" cellpadding="0" cellspacing="0">
+   <tr>
+    <td>
+     <form action = "javascript:void(0)"
+           style  = "color: #ffb400; font-family: Verdana; Arial">
+      <h3>
+       Color criteria: 
+       <input id    = "currentColorCodeME"
+     	      class = "inputBox"
+              type  = "text" 
+              value = "" 
+              name  = "currentColorCodeME"
+              size  = "40">
+       </input>
+       View: 
+       <input id    = "currentViewText"
+     	      class = "inputBox"
+              type  = "text" 
+              value = "Home" 
+              name  = "currentViewText"
+              size  = "8">
+       </input>
+       <br/>
+       Det: 
+       <input id    = "currentElementText"
+ 	      class = "inputBox"
+ 	      type  = "text" 
+ 	      value = ""
+ 	      name  = "currentElementText" 
+ 	      size  = "67">
+       </input>
+      </h3> 
+     </form>
+    </td>
+   </tr> 
+   <tr>
+    <td>
+<svg:svg  width="100%" height="100%" viewBox="0 0 900 700"  >
 <svg:rect x      = "-500"
          y        = "-500"
          width    = "6000"
         overflow = "hidden"
          height   = "8000"
         style    = "fill:#d5e6fc;stroke:red;stroke-width:1px;" />
-<svg:defs>
-   <svg:symbol id="magnifyer" overflow="visible" style="fill:white;stroke:darkcyan;stroke-width:2;" >
-    <svg:circle r="12" />
-  </svg:symbol>
-  <svg:symbol id="magnifyerZoomOut" overflow="visible" style="fill:white;stroke:darkcyan;stroke-width:2;" >
-    <svg:use xlink:href="#magnifyer"/>
-    <svg:line x1="-6" y1="0" x2="6" y2="0" style="stroke:darkcyan;stroke-width:2;"/>
-  </svg:symbol>
-  <svg:symbol id="magnifyerZoomIn" overflow="visible">
-    <svg:use xlink:href="#magnifyer"/>
-    <svg:line x1="-6" y1="0" x2="6" y2="0" style="stroke:darkcyan;stroke-width:2;"/>
-    <svg:line x1="0" y1="-6" x2="0" y2="6" style="stroke:darkcyan;stroke-width:2;"/>
-  </svg:symbol>
-  <svg:symbol id="magnifyerFull" overflow="visible">
-    <svg:use xlink:href="#magnifyer"/>
-    <svg:line x1="-2" y1="0" x2="4" y2="0" style="stroke:darkcyan;stroke-width:2;"/>
-    <svg:line x1="-2" y1="-6" x2="-4" y2="6" style="stroke:darkcyan;stroke-width:2;"/>
-    <svg:line x1="-2" y1="-6" x2="5" y2="-6" style="stroke:darkcyan;stroke-width:2;"/>
-  </svg:symbol>
-</svg:defs>
-<svg:rect fill="white" stroke="none" x="0" y="0" width="100%" height="100%" onclick="showData1(evt);"/>
 <svg:svg id="referenceMap" x="0" y="510" viewBox="0 0 3000 1600" width="180"
 height="100" >
         <svg:use xlink:href="#tracker" />
 </svg:svg>
 <svg:rect id="dragRectForRefMap" class="dragRect" x="0" y="510" width="180"
 height="100" />
-  <svg:g id="navigatorElements" class="normalText">       	  
-        <svg:text id="TrackerText" x="350" y="530"> - </svg:text>
-        <svg:text id="TrackerText1" x="350" y="565"> - </svg:text>
-        <svg:text id="TrackerMessage" x="350" y="600"> - </svg:text>
-  </svg:g>
-<svg:image id="plot" xlink:href="plot.jpg" x="900" y="10" width="420" height="400" /> 
-<svg:svg id="mainMap" x="0" y="0" viewBox="0 0 3000 1600" width="900" height="500">
-<svg:rect fill="lightblue" stroke="none" x="0" y="0" width="3000" height="1600" /> 
+<svg:svg id="clipArea" x="0" y="0" viewBox="0 0 3000 1600" width="900" height="500"  onclick="SiStripSvgMap.showData(evt);"  >
 <svg:g id="tracker"  style="fill:none;stroke:black;stroke-width:0;"> 
-<svg:image id="bgimage" xlink:href="svgmap.png" x="0" y="0" width="3000" height="1600" /> 
+<svg:image id="bgimage" xlink:href="svgmap.png" x="10" y="-100" width="3000" height="1600" /> 
 <svg:g  id="trackerin" transform="translate(10,1500) rotate(270)" > 
 </svg:g>
 </svg:g>

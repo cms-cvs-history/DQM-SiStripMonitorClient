@@ -1,495 +1,523 @@
-  var myMapApp = new mapApp();
-  var myMainMap;
-  var myRefMapDragger;
-  var svgNS="http://www.w3.org/2000/svg";
-  var layeradd = new Array();
-  function init() {
-     myMapApp.resetFactors();
-     myMainMap = new map("mainMap",3000,100,1000,0.6);
-     //set constraints to draggable rect in reference map
-     myRefMapDragger = new dragObj("dragRectForRefMap",0,200,510,610,"ul");
-     for (var i = 1; i < 44;i++) {
+var SiStripSvgMap = {} ;
+
+ SiStripSvgMap.thisFile	= "sistrip_svgmap.js" ;
+ SiStripSvgMap.theZoomAmount   = 1.05 ;
+ SiStripSvgMap.theStepAmount   = 25 ;
+ SiStripSvgMap.zoomAmount	= SiStripSvgMap.theZoomAmount ;
+ SiStripSvgMap.stepAmount	= SiStripSvgMap.theStepAmount ;
+ SiStripSvgMap.theViewText	= null ;
+ SiStripSvgMap.theElementText  = null ;
+ SiStripSvgMap.theSelectedText = null ;
+ SiStripSvgMap.theClipArea     = null ;
+ SiStripSvgMap.where  	 	= null ;
+ SiStripSvgMap.oldPosX	 	= 0 ;
+ SiStripSvgMap.oldPosY	 	= 0 ;
+ SiStripSvgMap.panning	 	= 0 ;
+ SiStripSvgMap.gotResponse	= 0 ;
+ SiStripSvgMap.timeOutHandle ;
+ SiStripSvgMap.layeradd = new Array();
+ SiStripSvgMap.layerselected = 0;
+
+ SiStripSvgMap.init = function()
+ {
+  SiStripSvgMap.theClipArea         = document.getElementById("clipArea") ;
+  SiStripSvgMap.theViewText         = document.getElementById("currentViewText") ;
+  SiStripSvgMap.theElementText      = document.getElementById("currentElementText") ;
+  SiStripSvgMap.theSelectedText     = document.getElementById("selectedElementText") ;
+  //var theRefresh             = top.opener.document.getElementById("refreshInterval") ;
+  //var refreshInterval        = theRefresh.options[theRefresh.selectedIndex].value;
+  //SiStripSvgMap.theClipArea.addEventListener('DOMMouseScroll',  SiStripSvgMap.mouseScrollListener, false);
+  SiStripSvgMap.theClipArea.addEventListener("mousedown",       SiStripSvgMap.mouseDownListener,   false);
+  //setTimeout( "SvgMap.updateTrackerMap()",1000) ; // Capture first data snapshot as soon as possibile
+  //setInterval("SvgMap.updateTrackerMap()",refreshInterval) ;
+   for (var i = 1; i < 44;i++) {
                 var layername="layer"+i;
-                layeradd[i]=document.getElementById(layername);
-                                       }
-
-//    zoomIt('TIB'); 
-     //colorRegion();
+                SiStripSvgMap.layeradd[i]=document.getElementById(layername);
+               // alert(layername+SiStripSvgMap.layeradd[i]);
+                }
+ }
+function showData(evt) {
+SiStripSvgMap.where  = evt.currentTarget;
+if (evt.type == "mouseover") //   <----------------------------------------------- 
+  {
+     var theStyle = SiStripSvgMap.where.getAttribute("style") ;
+    try
+    {
+     var opacity  = theStyle.match(/fill-opacity:\\s+(\\d+)/) ;
+     theStyle     = "cursor:crosshair; fill-opacity: " + opacity ;
+    } catch(error) {
+     theStyle     = "cursor:crosshair; fill-opacity: 1" ;
+    } 
+    SiStripSvgMap.where.setAttribute("style",theStyle) ;
+    SiStripSvgMap.theElementText.setAttribute("value",SiStripSvgMap.where.getAttribute("POS")+
+                                               " -- Entries:" + 
+					       SiStripSvgMap.where.getAttribute("entries")) ;
   }
-  function showData1(evt) {}
-  function showData(evt) {
-        var xlinkns = "http://www.w3.org/1999/xlink"; 
-	var myPoly = evt.currentTarget;
-	var myDynamicTrackerText = document.getElementById("TrackerText");
-        var myDynamicTrackerText1 = document.getElementById("TrackerText1");
-        var myDynamicTrackerMessage = document.getElementById("TrackerMessage");
-        var myTrackerPlot = document.getElementById("plot");
-        if (evt.type == "mouseover") {
-                var myTracker = myPoly.getAttribute("POS");
-                var myTracker1 = "  value="+myPoly.getAttribute("value");
-                var myMessage = myPoly.getAttribute("MESSAGE");
-                myTracker1 = myTracker1+" count="+myPoly.getAttribute("count");
-//		alert (myTracker+" "+myTracker1);
-                myDynamicTrackerText.firstChild.nodeValue=myTracker;
-                myDynamicTrackerText1.firstChild.nodeValue=myTracker1;
-                myDynamicTrackerMessage.firstChild.nodeValue=myMessage;
-        }
 
-	if (evt.type == "mouseout") {
-		myDynamicTrackerText.firstChild.nodeValue="-";				
-	}
+  if (evt.type == "mouseout")  //   <-----------------------------------------------
+  {
+   SiStripSvgMap.theElementText.setAttribute("value","-") ;
+  }
+  if (evt.type == "click")  //   <-----------------------------------------------
+  {
 
-	if (evt.type == "click") {
-		myDynamicTrackerText.firstChild.nodeValue="-";	
-		var moduleId = myPoly.getAttribute("detid");
-                var url_serv = "http://cmstkmon.cern.ch:1972/urn:xdaq-application:lid=15/Request?";
-                var queryString = "RequestID=PlotTkMapHistogram";
-		queryString+= "&ModId=" + moduleId;
-                var url1 = url_serv  + queryString;
-//                var filename=moduleId+".jpg";
-//                myTrackerPlot.setAttributeNS( xlinkns, "xlink:href", filename ) 
-                myTrackerPlot.setAttributeNS( xlinkns, "xlink:href", url1);
-                
-                pausecomp(5000);
-                queryString = "RequestID=UpdatePlot&t="+moduleId;
-                var url2 = url_serv  + queryString;
+    var canvas = parent.parent.plot_area.IMGC
+    alert(canvas.GLOBAL_RATIO);
+    var moduleId =  evt.currentTarget.getAttribute("detid");
+    alert(moduleId);
+    var queryString = "RequestID=PlotTkMapHistogram";
+    queryString+= "&ModId=" + moduleId;
+    canvas.computeCanvasSize();
+    queryString += '&width='+canvas.BASE_IMAGE_WIDTH+
+                   '&height='+canvas.BASE_IMAGE_HEIGHT;
+    canvas.IMAGES_PER_ROW      = 2;
+    canvas.IMAGES_PER_COL      = 2; 
+    canvas.IMAGES_PER_PAGE     = canvas.IMAGES_PER_ROW * canvas.IMAGES_PER_COL;
 
-                myTrackerPlot.setAttributeNS( xlinkns, "xlink:href", url2);  
+    var url_serv = "http://lxplus232.cern.ch:40000/urn:xdaq-application:lid=27/moduleWeb?module=SiStripAnalyser&";
               
-		var myTracker = myPoly.getAttribute("POS");
-                myTracker = myTracker+"  value="+myPoly.getAttribute("value");
-	        myTracker = myTracker+"  count="+myPoly.getAttribute("count");
-		myDynamicTrackerText.firstChild.nodeValue=myTracker;
-	}
+    var url1 = url_serv  + queryString;
+                             
+    var getMEURLS = new parent.parent.plot_area.Ajax.Request(url1,                    
+		         {			  
+		          method: 'get',	  
+	                  parameters: '', 
+		          onComplete: canvas.processIMGCPlots // <-- call-back function
+		         });
+  }
 
+ }
+SiStripSvgMap.updateTrackerMap = function()
+ {
+var xlinkns = "http://www.w3.org/1999/xlink"; 
+var myTrackerPlot = document.getElementById("bgimage");
+var url = 'svgmap.png';
+myTrackerPlot.setAttributeNS( xlinkns, "xlink:href", url);  
+if(SiStripSvgMap.layerselected!=0){
+url = 'Layer'+SiStripSvgMap.layerselected+'.xml';
+var getxml = new parent.parent.plot_area.Ajax.Request(url, {
+ method:  'get',
+ onSuccess: function(transport) {
+    var modTags = transport.responseXML.getElementsByTagName('mod');
+    for (var b = 0; b < modTags.length; b++) {
+      var id = modTags[b].getAttribute('id');
+      var color = modTags[b].getAttribute('color');
+      var polyline=document.getElementById(id);
+      var theColor = 'rgb'+color ;
+      polyline.setAttribute("fill",theColor);
+     }
+     }
+     });
   }
-  function colorRegion() {
-	var myGroup = document.getElementById("tracker");
-	var children = myGroup.childNodes;
-	var myModule;					
-	//loop over all children
-	//for (var i = 0; i < children.length;i++) {
-	for (var i = 0; i < 10000;i++) {
-	//check if it is a path-element
-	 if (children.item(i).nodeName == "polygon") {
-	   myModule = children.item(i).getAttribute("MODULE");
-		switch (myModule) {
-		   case "stereo":
-			myColor = "blue";
-			break;
-		   case "nostereo":
-			myColor = "rgb(255,255,0)";
-			break;
-		   default:
-			myColor = "red";
-		}
-	   children.item(i).setAttribute("fill",myColor);
-	 }
-        }			
-  }
-  //holds data on map
-  function map(mapName,origWidth,minZoom,maxZoom,zoomFact) {
-	var mapSVG = document.getElementById(mapName);
-	this.mapName = mapName;
-	this.origWidth = origWidth;
-	this.minZoom = minZoom;
-	this.maxZoom = maxZoom;
-	this.zoomFact = zoomFact;
-	this.pixXOffset = parseFloat(mapSVG.getAttributeNS(null,"x"));
-	this.pixYOffset = parseFloat(mapSVG.getAttributeNS(null,"y"));
-	viewBoxArray = mapSVG.getAttributeNS(null,"viewBox").split(" ");
-	this.curxOrig = parseFloat(viewBoxArray[0]);
-	this.curyOrig = parseFloat(viewBoxArray[1]);
-	this.curWidth = parseFloat(viewBoxArray[2]);
-	this.curHeight = parseFloat(viewBoxArray[3]);
-	this.pixWidth = parseFloat(mapSVG.getAttributeNS(null,"width"));
-	this.pixHeight = parseFloat(mapSVG.getAttributeNS(null,"height"));
-	this.pixXOrig = parseFloat(mapSVG.getAttributeNS(null,"x"));
-	this.pixYOrig = parseFloat(mapSVG.getAttributeNS(null,"y"));
-	this.pixSize = this.curWidth / this.pixWidth;
-	this.zoomVal = this.origWidth / this.curWidth * 100;
-  }
-  map.prototype.newViewBox = function(refRectId,refMapId) {
-	var myRefRect = document.getElementById(refRectId);
-	var myRefMapSVG = document.getElementById(refMapId);
-	var viewBoxArray = myRefMapSVG.getAttributeNS(null,"viewBox").split(" ");
-	var refPixSize = viewBoxArray[2] / myRefMapSVG.getAttributeNS(null,"width");
-	this.curxOrig = parseFloat(viewBoxArray[0]) + (myRefRect.getAttributeNS(null,"x") - myRefMapSVG.getAttributeNS(null,"x")) * refPixSize;
-	this.curyOrig = parseFloat(viewBoxArray[1]) + (myRefRect.getAttributeNS(null,"y") - myRefMapSVG.getAttributeNS(null,"y")) * refPixSize;
-	this.curWidth = myRefRect.getAttributeNS(null,"width") * refPixSize;
-	this.curHeight = myRefRect.getAttributeNS(null,"height") * refPixSize;
-	var myViewBoxString = this.curxOrig + " " + this.curyOrig + " " + this.curWidth + " " + this.curHeight;
-	this.pixSize = this.curWidth / this.pixWidth;
-	this.zoomVal = this.origWidth / this.curWidth * 100;
-	document.getElementById(this.mapName).setAttributeNS(null,"viewBox",myViewBoxString);
-  }
-  //holds data on window size
-  function mapApp() {
-  }		
-  //calculate ratio and offset values of app window
-  mapApp.prototype.resetFactors = function() {
-	var svgroot = document.documentElement;
-	if (!svgroot.getScreenCTM) {
-		//case for ASV3 and Corel
-		var viewBoxArray = svgroot.getAttributeNS(null,"viewBox").split(" ");
-		var myRatio = viewBoxArray[2]/viewBoxArray[3];
-		if ((window.innerWidth/window.innerHeight) > myRatio) { //case window is more wide than myRatio
-			this.scaleFactor = viewBoxArray[3] / window.innerHeight;
-		}
-		else { //case window is more tall than myRatio
-			this.scaleFactor = viewBoxArray[2] / window.innerWidth;		
-		}
-		this.offsetX = (window.innerWidth - viewBoxArray[2] * 1 / this.scaleFactor) / 2;
-		this.offsetY = (window.innerHeight - viewBoxArray[3] * 1 / this.scaleFactor) / 2;
-		}
-  }
-   mapApp.prototype.calcCoord = function(coordx,coordy) {
-	var svgroot = document.documentElement;
-	var coords = new Array();
-	if (!svgroot.getScreenCTM) {
-	  //case ASV3 a. Corel
-	  coords["x"] = (coordx  - this.offsetX) * this.scaleFactor;
-	  coords["y"] = (coordy - this.offsetY) * this.scaleFactor;
-	}
-	else {
-	  matrix=svgroot.getScreenCTM();
-	  coords["x"]= matrix.inverse().a*coordx+matrix.inverse().c*coordy+matrix.inverse().e;
-	  coords["y"]= matrix.inverse().b*coordx+matrix.inverse().d*coordy+matrix.inverse().f;
-	 }
-	return coords;
-  }		
-  
-  //make an element draggable with constraints
-  function dragObj(dragId,constrXmin,constrXmax,constrYmin,constrYmax,refPoint) {
-	this.dragId = dragId;
-	this.constrXmin = constrXmin;
-	this.constrXmax = constrXmax;
-	this.constrYmin = constrYmin;
-	this.constrYmax = constrYmax;
-	this.refPoint = refPoint;
-	this.status = "false";
-  }
-  dragObj.prototype.drag = function(evt) {
-        //works only for rect and use-elements
-        var myDragElement = evt.target;
-	if (evt.type == "mousedown") {
-		var coords = myMapApp.calcCoord(evt.clientX,evt.clientY);
-		this.curX = coords["x"];
-		this.curY = coords["y"];
-		this.status = "true";
-	}
-	if (evt.type == "mousemove" && this.status == "true") {
-		var coords = myMapApp.calcCoord(evt.clientX,evt.clientY);
-		var newEvtX = coords["x"];
-		var newEvtY = coords["y"];
-		var bBox = myDragElement.getBBox();
-		if (this.refPoint == "ul") {
-		  var toMoveX = bBox.x + newEvtX - this.curX;
-		  var toMoveY = bBox.y + newEvtY - this.curY;
-		}
-		else {
-		  //refPoint = center
-		  var toMoveX = bBox.x + bBox.width / 2 + newEvtX - this.curX;
-		  var toMoveY = bBox.y + bBox.height / 2 + newEvtY - this.curY;
-		}
-		if ((bBox.x + newEvtX - this.curX) < this.constrXmin) {
-		  if(this.refPoint == "ul") {
-		     toMoveX = this.constrXmin;
-		  }
-		  else {
-		   toMoveX = this.constrXmin + bBox.width / 2;
-		  }
-	        }
-		if ((bBox.x + newEvtX - this.curX + bBox.width) > this.constrXmax) {
-			if(this.refPoint == "ul") {
-		  	  toMoveX = this.constrXmax - bBox.width;
-			}
-			else {
-		  	  toMoveX = this.constrXmax - bBox.width / 2;
-			}					
-		}
-		if ((bBox.y + newEvtY - this.curY) < this.constrYmin) {
-	 		if(this.refPoint == "ul") {
-		  	 toMoveY = this.constrYmin;
-			}
-			else {
-		  	 toMoveY = this.constrYmin + bBox.height / 2;
-			}
-		}
-		if ((bBox.y + bBox.height + newEvtY - this.curY) > this.constrYmax) {
-			if(this.refPoint == "ul") {
-		  	 toMoveY = this.constrYmax - bBox.height;
-			}
-			else {
-		 	 toMoveY = this.constrYmax - bBox.height / 2;
-			}					
-		}
-		myDragElement.setAttributeNS(null,"x",toMoveX);
-		myDragElement.setAttributeNS(null,"y",toMoveY);
-		this.curX = newEvtX;
-		this.curY = newEvtY;
-	}
-	if (evt.type == "mouseup" || evt.type == "mouseout") {
-		this.status = "false";
-	}			
-  }
-  dragObj.prototype.zoom = function(inOrOut) {
-	var myDragElement = document.getElementById(this.dragId);
-	var myOldX = myDragElement.getAttributeNS(null,"x");
-	var myOldY = myDragElement.getAttributeNS(null,"y");
-	var myOldWidth = myDragElement.getAttributeNS(null,"width");
-	var myOldHeight = myDragElement.getAttributeNS(null,"height");
-	switch (inOrOut) {
-	   case "in":
-		var myNewX = parseFloat(myOldX) + myOldWidth / 2 - (myOldWidth * myMainMap.zoomFact * 0.5);
-		var myNewY = parseFloat(myOldY) + myOldHeight / 2 - (myOldHeight * myMainMap.zoomFact * 0.5);
-		var myNewWidth = myOldWidth * myMainMap.zoomFact;
-		var myNewHeight = myOldHeight * myMainMap.zoomFact;
-		break;
-	   case "out":
-		var myNewX = parseFloat(myOldX) + myOldWidth / 2 - (myOldWidth * (1 + myMainMap.zoomFact) * 0.5);
-		var myNewY = parseFloat(myOldY) + myOldHeight / 2 - (myOldHeight * (1 + myMainMap.zoomFact) * 0.5);
-		var myNewWidth = myOldWidth * (1 + myMainMap.zoomFact);
-		var myNewHeight = myOldHeight * (1 + myMainMap.zoomFact);
-		break;
-           case "down":
-                var myNewX = parseFloat(myOldX);
-                var myNewY = parseFloat(myOldY) +1.3* 6.*myMainMap.zoomFact;
-                var myNewWidth = myOldWidth ;
-                var myNewHeight = myOldHeight ;
-                break;
-           case "up":
-                var myNewX = parseFloat(myOldX);
-                var myNewY = parseFloat(myOldY) -1.3*6.* myMainMap.zoomFact;
-                var myNewWidth = myOldWidth ;
-                var myNewHeight = myOldHeight ;
-                break;
-           case "left":
-                var myNewX = parseFloat(myOldX) - 3.*6.* myMainMap.zoomFact;
-                var myNewY = parseFloat(myOldY);
-                var myNewWidth = myOldWidth ;
-                var myNewHeight = myOldHeight ;
-                break;
-           case "right":
-                var myNewX = parseFloat(myOldX)+3.*6.* myMainMap.zoomFact;
-                var myNewY = parseFloat(myOldY);
-                var myNewWidth = myOldWidth ;
-                var myNewHeight = myOldHeight ;
-                break;
-           case "PIXB":
-                var myNewX = 0.;
-                var myNewY = 540.;
-                var myNewWidth = 62. ;
-                var myNewHeight = 36. ;
-                updatetree(31,3);
-                break;
-           case "FPIX-z":
-                var myNewX = 0.;
-                var myNewY = 581.;
-                var myNewWidth = 35.83 ;
-                var myNewHeight = 21.01 ;
-                updatetree(14,2);
-                break;
-           case "FPIX+z":
-                var myNewX = 0.;
-                var myNewY = 516.;
-                var myNewWidth = 35.83 ;
-                var myNewHeight = 21.01 ;
-                updatetree(16,2);
-                break;
-           case "TID-z":
-                var myNewX = 40.0;
-                var myNewY = 585.;
-                var myNewWidth = 34. ;
-                var myNewHeight = 15. ;
-                updatetree(10,3);
-                break;
-           case "TID+z":
-                var myNewX = 40.0;
-                var myNewY = 520.;
-                var myNewWidth = 34. ;
-                var myNewHeight = 15. ;
-                updatetree(19,3);
-                break;
-           case "TOB":
-                var myNewX = 97.;
-                var myNewY = 542.;
-                var myNewWidth = 72. ;
-                var myNewHeight = 36. ;
-                updatetree(38,6);
-                break;
-           case "TIB":
-                var myNewX = 46.8;
-                var myNewY = 540.;
-                var myNewWidth = 64.8 ;
-                var myNewHeight = 38. ;
-                updatetree(34,4);
-                break;
-           case "TIB layer1":
-                var myNewX = 46.8;
-                var myNewY = 560.;
-                var myNewWidth = 32.0 ;
-                var myNewHeight = 19. ;
-                updatetree(34,1);
-                break;
-           case "TIB layer2":
-                var myNewX = 46.8;
-                var myNewY = 540.;
-                var myNewWidth = 32.0 ;
-                var myNewHeight = 19. ;
-                updatetree(35,1);
-                break;
-           case "TIB layer3":
-                var myNewX = 72.;
-                var myNewY = 560.;
-                var myNewWidth = 32.0 ;
-                var myNewHeight = 19. ;
-                updatetree(36,1);
-                break;
-           case "TIB layer4":
-                var myNewX = 72.;
-                var myNewY = 540.;
-                var myNewWidth = 32.0 ;
-                var myNewHeight = 19. ;
-                updatetree(37,1);
-                break;
-           case "TEC-z":
-                var myNewX = 73.8;
-                var myNewY = 568.;
-                var myNewWidth = 115.2 ;
-                var myNewHeight = 57.6 ;
-                updatetree(1,9);
-                break;
-           case "TEC+z":
-                var myNewX = 73.8;
-                var myNewY = 500.;
-                var myNewWidth = 115.2 ;
-                var myNewHeight = 57.6 ;
-                updatetree(22,9);
-                break;
+}
+ //____________________________________________________________________________
+SiStripSvgMap.getLayer =function(what)
+{
+  var menuname="menu"+what;
+  var DropDown = document.getElementById(menuname);
+   var namelayer=DropDown.options[DropDown.selectedIndex].value;
+   SiStripSvgMap.theSelectedText.setAttribute("value",namelayer); 
+   SiStripSvgMap.zoomIt(namelayer);
 
-	   default:
-		var myNewX = this.constrXmin;
-		var myNewY = this.constrYmin;
-		var myNewWidth = this.constrXmax - this.constrXmin;
-		var myNewHeight = this.constrYmax - this.constrYmin;
-		break;
-	}
-if(inOrOut=="in" || inOrOut=="out" || inOrOut=="full"){
-	if (myNewWidth > (this.constrXmax - this.constrXmin)) {
-		myNewWidth = this.constrXmax - this.constrXmin;
-	}
-	if (myNewHeight > (this.constrYmax - this.constrYmin)) {
-		myNewHeight = this.constrYmax - this.constrYmin;
-	}
-	if (myNewX < this.constrXmin) {
-		myNewX = this.constrXmin;
-	}
-	if (myNewY < this.constrYmin) {
-		myNewY = this.constrYmin;
-	}
-	if ((myNewX + myNewWidth) > this.constrXmax) {
-		myNewX = this.constrXmax - myNewWidth;
-	}
-	if ((myNewY + myNewHeight) > this.constrYmax) {
-		myNewY = this.constrYmax - myNewHeight;
-	}
-	}
-	myDragElement.setAttributeNS(null,"x",myNewX);
-	myDragElement.setAttributeNS(null,"y",myNewY);
-	myDragElement.setAttributeNS(null,"width",myNewWidth);
-	myDragElement.setAttributeNS(null,"height",myNewHeight);
-	myMainMap.newViewBox(this.dragId,"referenceMap");
+}
+
+ //____________________________________________________________________________
+ SiStripSvgMap.showData = function (evt)
+ {
+//alert(evt.type);
+  if(evt.type=="click")
+  SiStripSvgMap.theClipArea.addEventListener("mousedown",       SiStripSvgMap.mouseDownListener,   true);
+}
+ //____________________________________________________________________________
+ SiStripSvgMap.mouseDownListener = function(evt)
+ {
+  SiStripSvgMap.panning = 1 ;
+  SiStripSvgMap.oldPosX = evt.clientX ;
+  SiStripSvgMap.oldPosY = evt.clientY ;
+  SiStripSvgMap.theClipArea.setAttribute("style","cursor: move;");
+  document.addEventListener("mousemove", SiStripSvgMap.mouseMoveListener, true);
+  document.addEventListener("mouseup",   SiStripSvgMap.mouseUpListener,   true);
+ }
+ //____________________________________________________________________________
+ SiStripSvgMap.mouseUpListener = function(evt)
+ {
+  SiStripSvgMap.panning = 0;
+  SiStripSvgMap.theClipArea.setAttribute("style","cursor: default;");
+ }
+//____________________________________________________________________________
+ SiStripSvgMap.mouseMoveListener = function(evt)
+ {
+  var stepTolerance = 1 ;
+  if( SiStripSvgMap.panning == 1 )
+  {
+   var deltaX = evt.clientX - SiStripSvgMap.oldPosX ;
+   var deltaY = evt.clientY - SiStripSvgMap.oldPosY ;
+   SiStripSvgMap.oldPosX    = evt.clientX ;
+   SiStripSvgMap.oldPosY    = evt.clientY ;
+   if( deltaX > stepTolerance && Math.abs(deltaY) < stepTolerance)
+   {
+     SiStripSvgMap.zoomIt("Right") ;
+     return ;
+   } else if ( deltaX < -stepTolerance && Math.abs(deltaY) < stepTolerance){
+     SiStripSvgMap.zoomIt("Left") ;
+     return ;
+   } 
+   if( deltaY > stepTolerance && Math.abs(deltaX) < stepTolerance )
+   {
+     SiStripSvgMap.zoomIt("Down") ;
+     return ;
+   } else if( deltaY < -stepTolerance && Math.abs(deltaX) < stepTolerance ){
+     SiStripSvgMap.zoomIt("Up") ;
+     return ;
+   } 
+  } else {
   }
- function updatetree(from,nlayer){
-                var trackerin=document.getElementById("trackerin"); 
+ }
+ 
+//____________________________________________________________________________
+ SiStripSvgMap.zoomIt = function(what)
+ {
+var vBAtt = SiStripSvgMap.theClipArea.getAttribute("viewBox") ;
+  var geo   = vBAtt.split(/\s+/) ;
+
+  SiStripSvgMap.theViewText.setAttribute("value",what) ;
+  SiStripSvgMap.theElementText.setAttribute("value",geo[0]+" "+geo[1]+" "+geo[2]+" "+geo[3]);
+switch (what) 
+  {
+   case "TIB":
+       geo[0]=    750 ;
+       geo[1]=    550 ;
+       geo[2]= 1120 ;
+       geo[3]= 593 ;
+       break;
+   case "TOB":
+       geo[0]=    1650 ;
+       geo[1]=    525 ;
+       geo[2]= 1176 ;
+       geo[3]= 622 ;
+       break;
+   case "TID-z":
+       geo[0]=    650 ;
+       geo[1]=    1175 ;
+       geo[2]= 507 ;
+       geo[3]= 265 ;
+       break;
+   case "TID+z":
+       geo[0]=    675 ;
+       geo[1]=    175 ;
+       geo[2]= 507 ;
+       geo[3]= 265 ;
+       break;
+   case "TEC-z":
+       geo[0]=    1200 ;
+       geo[1]=    950 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       break;
+   case "TEC+z":
+       geo[0]=   1200 ;
+       geo[1]=    -150 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       break;
+   case "Home":
+       geo[0]=    0 ;
+       geo[1]=    0 ;
+       geo[2]= 3000 ;
+       geo[3]= 1600 ;
+       break;
+   case "In":
+       geo[2]= parseFloat(geo[2]) / SiStripSvgMap.zoomAmount ;
+       geo[3]= parseFloat(geo[3]) / SiStripSvgMap.zoomAmount ;
+       break;
+   case "Out":
+       geo[2]= parseFloat(geo[2]) * SiStripSvgMap.zoomAmount ;
+       geo[3]= parseFloat(geo[3]) * SiStripSvgMap.zoomAmount ;
+       break;
+   case "Up":
+       geo[1]= parseInt(geo[1])   + SiStripSvgMap.stepAmount ;
+       break;
+   case "Down":
+       geo[1]= parseInt(geo[1])   - SiStripSvgMap.stepAmount ;
+       break;
+   case "Left":
+       geo[0]= parseInt(geo[0])   + SiStripSvgMap.stepAmount ;
+       break;
+   case "Right":
+       geo[0]= parseInt(geo[0])   - SiStripSvgMap.stepAmount ;
+       break;
+   case "TIB1":
+       geo[0]=    750 ;
+       geo[1]=    850 ;
+       geo[2]= 561 ;
+       geo[3]= 295 ;
+       SiStripSvgMap.updatetree(34,1);
+       break;
+   case "TIB2":
+       geo[0]=    750 ;
+       geo[1]=    550 ;
+       geo[2]= 1120 ;
+       geo[3]= 593 ;
+       SiStripSvgMap.updatetree(35,1);
+       break;
+   case "TIB3":
+       geo[0]=    750 ;
+       geo[1]=    550 ;
+       geo[2]= 1120 ;
+       geo[3]= 593 ;
+       SiStripSvgMap.updatetree(36,1);
+       break;
+   case "TIB4":
+       geo[0]=    750 ;
+       geo[1]=    550 ;
+       geo[2]= 1120 ;
+       geo[3]= 593 ;
+       SiStripSvgMap.updatetree(37,1);
+       break;
+   case "TOB1":
+       geo[0]=    1650 ;
+       geo[1]=    525 ;
+       geo[2]= 1176 ;
+       geo[3]= 622 ;
+       SiStripSvgMap.updatetree(38,1);
+       break;
+   case "TOB2":
+       geo[0]=    1650 ;
+       geo[1]=    525 ;
+       geo[2]= 1176 ;
+       geo[3]= 622 ;
+       SiStripSvgMap.updatetree(39,1);
+       break;
+   case "TOB3":
+       geo[0]=    1650 ;
+       geo[1]=    525 ;
+       geo[2]= 1176 ;
+       geo[3]= 622 ;
+       SiStripSvgMap.updatetree(40,1);
+       break;
+   case "TOB4":
+       geo[0]=    1650 ;
+       geo[1]=    525 ;
+       geo[2]= 1176 ;
+       geo[3]= 622 ;
+       SiStripSvgMap.updatetree(41,1);
+       break;
+   case "TOB5":
+       geo[0]=    1650 ;
+       geo[1]=    525 ;
+       geo[2]= 1176 ;
+       geo[3]= 622 ;
+       SiStripSvgMap.updatetree(42,1);
+       break;
+   case "TOB6":
+       geo[0]=    1650 ;
+       geo[1]=    525 ;
+       geo[2]= 1176 ;
+       geo[3]= 622 ;
+       SiStripSvgMap.updatetree(43,1);
+       break;
+   case "TID-z1":
+       geo[0]=    650 ;
+       geo[1]=    1175 ;
+       geo[2]= 507 ;
+       geo[3]= 265 ;
+       SiStripSvgMap.updatetree(10,1);
+       break;
+   case "TID-z2":
+       geo[0]=    650 ;
+       geo[1]=    1175 ;
+       geo[2]= 507 ;
+       geo[3]= 265 ;
+       SiStripSvgMap.updatetree(11,1);
+       break;
+   case "TID-z3":
+       geo[0]=    650 ;
+       geo[1]=    1175 ;
+       geo[2]= 507 ;
+       geo[3]= 265 ;
+       SiStripSvgMap.updatetree(12,1);
+       break;
+   case "TID+z1":
+       geo[0]=    675 ;
+       geo[1]=    175 ;
+       geo[2]= 507 ;
+       geo[3]= 265 ;
+       SiStripSvgMap.updatetree(19,1);
+       break;
+   case "TID+z2":
+       geo[0]=    675 ;
+       geo[1]=    175 ;
+       geo[2]= 507 ;
+       geo[3]= 265 ;
+       SiStripSvgMap.updatetree(20,1);
+       break;
+   case "TID+z3":
+       geo[0]=    675 ;
+       geo[1]=    175 ;
+       geo[2]= 507 ;
+       geo[3]= 265 ;
+       SiStripSvgMap.updatetree(21,1);
+       break;
+   case "TEC-z1":
+       geo[0]=    1200 ;
+       geo[1]=    950 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(1,1);
+       break;
+   case "TEC-z2":
+       geo[0]=    1200 ;
+       geo[1]=    950 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(2,1);
+       break;
+   case "TEC-z3":
+       geo[0]=    1200 ;
+       geo[1]=    950 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(3,1);
+       break;
+   case "TEC-z4":
+       geo[0]=    1200 ;
+       geo[1]=    950 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(4,1);
+       break;
+   case "TEC-z5":
+       geo[0]=    1200 ;
+       geo[1]=    950 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(5,1);
+       break;
+   case "TEC-z6":
+       geo[0]=    1200 ;
+       geo[1]=    950 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(6,1);
+       break;
+   case "TEC-z7":
+       geo[0]=    1200 ;
+       geo[1]=    950 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(7,1);
+       break;
+   case "TEC-z8":
+       geo[0]=    1200 ;
+       geo[1]=    950 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(8,1);
+       break;
+   case "TEC-z9":
+       geo[0]=    1200 ;
+       geo[1]=    950 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(9,1);
+       break;
+   case "TEC+z1":
+       geo[0]=   1200 ;
+       geo[1]=    -150 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(22,1);
+       break;
+   case "TEC+z2":
+       geo[0]=   1200 ;
+       geo[1]=    -150 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(23,1);
+       break;
+   case "TEC+z3":
+       geo[0]=   1200 ;
+       geo[1]=    -150 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(24,1);
+       break;
+   case "TEC+z4":
+       geo[0]=   1200 ;
+       geo[1]=    -150 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(25,1);
+       break;
+   case "TEC+z5":
+       geo[0]=   1200 ;
+       geo[1]=    -150 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(26,1);
+       break;
+   case "TEC+z6":
+       geo[0]=   1200 ;
+       geo[1]=    -150 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(27,1);
+       break;
+   case "TEC+z7":
+       geo[0]=   1200 ;
+       geo[1]=    -150 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(28,1);
+       break;
+   case "TEC+z8":
+       geo[0]=   1200 ;
+       geo[1]=    -150 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(29,1);
+       break;
+   case "TEC+z9":
+       geo[0]=   1200 ;
+       geo[1]=    -150 ;
+       geo[2]= 1779 ;
+       geo[3]= 918 ;
+       SiStripSvgMap.updatetree(30,1);
+       break;
+  }
+  var newGeo = geo[0]+" "+geo[1]+" "+parseInt(geo[2])+" "+parseInt(geo[3]);
+  SiStripSvgMap.theClipArea.setAttribute("viewBox",newGeo) ;
+  //SiStripSvgMap.showIt() ;  
+}
+ //____________________________________________________________________________
+  SiStripSvgMap.updatetree=function(from,nlayer){
+                SiStripSvgMap.layerselected=from;
+                var trackerin=document.getElementById("trackerin");
               var  trackerin1=trackerin.cloneNode(false);
-	for (var i = from; i < from+nlayer;i++) {
-                //var layername="layer"+i; 
+        for (var i = from; i < from+nlayer;i++) {
+                //var layername="layer"+i;
                 //trackerin1.appendChild(document.getElementById(layername));
-                trackerin1.appendChild(layeradd[i]);
+                trackerin1.appendChild(SiStripSvgMap.layeradd[i]);
                                        }
                 trackerin.parentNode.replaceChild(trackerin1,trackerin);
   }
-  //magnifier glass mouse-over effects
-  function magnify(evt,scaleFact,inOrOut) {
-	if (inOrOut == "in") {
-	   if (myMainMap.zoomVal < myMainMap.maxZoom) {
-	      scaleObject(evt,scaleFact);
-	   }
-	   else {
-	   }
-	}
-	if (inOrOut == "out") {
-           if (myMainMap.zoomVal > myMainMap.minZoom) {
-	       scaleObject(evt,scaleFact);
-	   }
-	   else {
-	   }		
-	}
-	if (inOrOut == "full") {
-	   if (myMainMap.zoomVal > myMainMap.minZoom) {
-	      scaleObject(evt,scaleFact);
-	   }
-	   else {			
-	   }		
-	}
-	if (scaleFact == 1) {	
-	   scaleObject(evt,scaleFact);
-        }
-  }
-  //scale an object
-  function scaleObject(evt,factor) {
-  //reference to the currently selected object
-        var element = evt.currentTarget;
-	var myX = element.getAttributeNS(null,"x");
-	var myY = element.getAttributeNS(null,"y");
-        var newtransform = "scale(" + factor + ") translate(" + (myX * 1 / factor - myX) + " " + (myY * 1 / factor - myY) +")";
-        element.setAttributeNS(null,'transform', newtransform);
-  }
-  function zoomIt(inOrOut) {
-	if (inOrOut == "in") {
-	   if (myMainMap.zoomVal < myMainMap.maxZoom) {
-              myRefMapDragger.zoom("in");
-	   }
-	   else {
-	   }
-	}
-	if (inOrOut == "out") {
-	   if (myMainMap.zoomVal > myMainMap.minZoom) {
-	       myRefMapDragger.zoom("out");
-	   }
-	   else {			
-	   }		
-	}
-	if (inOrOut == "full") {
-	     if (myMainMap.zoomVal > myMainMap.minZoom) {
-	        myRefMapDragger.zoom("full");				
-	     }
-	     else {	
-	     }		
-	}
-if(inOrOut!="in" && inOrOut!="out" && inOrOut!="full") myRefMapDragger.zoom(inOrOut);
-  }
 
-function pausecomp(millis)
-{
-  var inizio = new Date();
-  var inizioint=inizio.getTime();
-  var intervallo = 0;
-  while(intervallo<millis){
-    var fine = new Date();
-    var fineint=fine.getTime();
-     intervallo = fineint-inizioint;
+ //____________________________________________________________________________
+ SiStripSvgMap.showIt = function()
+ {
+  var where = document.getElementsByTagName("text");
+  for( var i=0; i<where.length; i++)
+  {
+   if( where[i].getAttribute("name") == "overlappingDetectorLabel" )
+   {
+    var theStyle = where[i].getAttribute("style") ;
+    if( theStyle.match(/visible/)) 
+    {
+     return ;
+    }
+    theStyle    += " visibility: visible;" ;
+    where[i].setAttribute("style", theStyle) ;
    }
-  return;
-}
-function getLayer()
-{
-  var DropDown = document.getElementById("menus");
-   var namelayer=DropDown.options[DropDown.selectedIndex].value;
-   var Output = document.getElementById("output");
-   Output.setAttributeNS(null,"value",namelayer);
-   zoomIt(namelayer);
-   
-}
+  }
+ }
+
