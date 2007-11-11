@@ -61,6 +61,14 @@ ClientActions.CreateTrackerMap = function()
 //
 // -- Create Tracker Map
 //
+ClientActions.OpenTrackerMapFrame = function()
+{
+  var win = window.open('TrackerMapFrame.html');
+  win.focus();            
+}
+//
+// -- Create Tracker Map
+//
 ClientActions.OpenTrackerMap = function()
 {
   var queryString = "RequestID=OpenTkMap";

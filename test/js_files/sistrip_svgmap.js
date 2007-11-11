@@ -58,6 +58,32 @@ if (evt.type == "mouseover") //   <---------------------------------------------
   {
    SiStripSvgMap.theElementText.setAttribute("value","-") ;
   }
+  if (evt.type == "click")  //   <-----------------------------------------------
+  {
+
+    var canvas = parent.parent.plot_area.IMGC
+    var moduleId =  evt.currentTarget.getAttribute("detid");
+    var queryString = "RequestID=PlotTkMapHistogram";
+    queryString+= "&ModId=" + moduleId;
+    canvas.computeCanvasSize();
+    queryString += '&width='+canvas.BASE_IMAGE_WIDTH+
+                   '&height='+canvas.BASE_IMAGE_HEIGHT;
+    canvas.IMAGES_PER_ROW      = 2;
+    canvas.IMAGES_PER_COL      = 2; 
+    canvas.IMAGES_PER_PAGE     = canvas.IMAGES_PER_ROW * canvas.IMAGES_PER_COL;
+
+    var url_serv = parent.WebLib.getApplicationURL2();
+              
+    var url1 = url_serv  + queryString;
+                             
+    var getMEURLS = new parent.parent.plot_area.Ajax.Request(url1,                    
+		         {			  
+		          method: 'get',	  
+	                  parameters: '', 
+		          onComplete: canvas.processIMGCPlots // <-- call-back function
+		         });
+  }
+
  }
 SiStripSvgMap.updateTrackerMap = function()
  {

@@ -153,6 +153,8 @@ CommonActions.RequestReadyState = function()
 {
   var url         = WebLib.getApplicationURL2();
   var queryString = "RequestID=IsReady";
+  queryString += '&width='+IMGC.BASE_IMAGE_WIDTH+
+                 '&height='+IMGC.BASE_IMAGE_HEIGHT;
   url             += queryString;
   var getMEURLS = new Ajax.Request(url,                    
  	 		         {			  

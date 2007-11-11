@@ -60,13 +60,13 @@ SlideShow.ShowNext = function()
 SlideShow.setSlide = function(index) 
 {
  if (nSlides == 0) {
-   if (DEBUG) alert("No canvas name selected!");
+   if (DEBUG) alert("Empty Image List!");
    return false;
  }
- var canvas = document.getElementById("drawingcanvas");
- if (canvas == null) return;
+// var canvas = document.getElementById("drawingcanvas");
+// if (canvas == null) return;
  var image_src = slideList[index];
  image_src += '?t=' + Math.random();  //Should start with "?"
- canvas.src = image_src;
+// canvas.src = image_src;
 }
 
