@@ -72,7 +72,7 @@ if (evt.type == "mouseover") //   <---------------------------------------------
     canvas.IMAGES_PER_COL      = 2; 
     canvas.IMAGES_PER_PAGE     = canvas.IMAGES_PER_ROW * canvas.IMAGES_PER_COL;
 
-    var url_serv = parent.WebLib.getApplicationURL2();
+    var url_serv = parent.WebLib.getApplicationURLWithLID();
               
     var url1 = url_serv  + queryString;
                              
