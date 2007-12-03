@@ -33,15 +33,6 @@
  	      name  = "currentElementText" 
  	      size  = "50">
        </input>
-       <br/>
-       Det: 
-       <input id    = "currentElementText"
- 	      class = "inputBox"
- 	      type  = "text" 
- 	      value = ""
- 	      name  = "currentElementText" 
- 	      size  = "67">
-       </input>
       </h3>
      </form>
     </td>

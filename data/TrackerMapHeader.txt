@@ -110,6 +110,18 @@ xmlns:xlink="http://www.w3.org/1999/xlink"
 </form>
     </td>
    </tr> 
+   <tr> 
+     <td> 
+       Det: 
+       <input id    = "currentElementText"
+ 	      class = "inputBox"
+ 	      type  = "text" 
+ 	      value = ""
+ 	      name  = "currentElementText" 
+ 	      size  = "80">
+       </input>
+     </td> 
+    </tr> 
     </table>
    </center> 
   </fieldset>

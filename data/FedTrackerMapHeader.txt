@@ -1,0 +1,81 @@
+<html>
+<head>
+<script type="text/javascript"
+         src="js_files/scriptaculous/lib/prototype.js">
+ </script>
+<script type="text/javascript"
+         src="js_files/sistrip_fedtrackermap.js">
+ </script>
+<!-- section for CSS stylesheet definitions -->
+<style type="text/css"><![CDATA[  
+      .normalText {font-size:20;fill:black;font-weight:bold;}
+      .dragRect {fill:darkcyan;stroke:none;opacity:0.4;}
+  ]]></style>
+SiStripFedTrackerMap.init();" >
+<fieldset style = "margin-top:    0px;
+                     margin-bottom: 0px;
+                     padding-top:   0px;
+		     padding-bottom:0px;
+		     border-style:  groove;">
+   <legend class = "legend" 
+           align = "center">
+    Detector elements and controls
+   </legend>
+<center> 
+    <table border = "0">
+     <tr>
+      <td align = "center">
+       <button class = "controlButton" onclick = "SiStripFedTrackerMap.zoomIt('Home');"     >Home	</button> 
+       <button class = "controlButton" onclick = "SiStripFedTrackerMap.zoomIt('In');"       >Zoom in  </button>
+       <button class = "controlButton" onclick = "SiStripFedTrackerMap.zoomIt('Out');"      >Zoom out </button>
+       <button class = "controlButton" onclick = "SiStripFedTrackerMap.zoomIt('Up');"       >Up	</button> 
+       <button class = "controlButton" onclick = "SiStripFedTrackerMap.zoomIt('Down');"     >Down	</button> 
+       <button class = "controlButton" onclick = "SiStripFedTrackerMap.zoomIt('Left');"     >Left	</button>
+       <button class = "controlButton" onclick = "SiStripFedTrackerMap.zoomIt('Right');"    >Right	</button>
+       <button class = "controlButton" onclick = "SiStripFedTrackerMap.updateTrackerMap();" >Refresh  </button>
+      </td>
+     </tr>
+   <tr>
+    <td>
+<form name="layerselect" id="layerselect" action="javascript:void(0)" >
+<input type="RADIO" name="what" value="CRATE" />CRATE
+<select id="menuCRATE"  onFocus="document.layerselect.what[0].checked=1">
+<option value="CRATE1" selected="selected">1</option>
+<option value="CRATE2">2</option>
+<option value="CRATE3">3</option>
+<option value="CRATE4">4</option>
+<option value="CRATE5">5</option>
+<option value="CRATE6">6</option>
+<option value="CRATE7">7</option>
+<option value="CRATE8">8</option>
+<option value="CRATE9">9</option>
+<option value="CRATE10">10</option>
+<option value="CRATE11">11</option>
+<option value="CRATE12">12</option>
+<option value="CRATE13">13</option>
+<option value="CRATE14">14</option>
+<option value="CRATE15">15</option>
+<option value="CRATE16">16</option>
+<option value="CRATE17">17</option>
+<option value="CRATE18">18</option>
+<option value="CRATE19">19</option>
+<option value="CRATE20">20</option>
+<option value="CRATE21">21</option>
+<option value="CRATE22">22</option>
+<option value="CRATE23">23</option>
+<option value="CRATE24">24</option>
+<option value="CRATE25">25</option>
+<option value="CRATE26">26</option>
+<option value="CRATE27">27</option>
+</select>
+<button onclick="SiStripFedTrackerMap.getLayer('All');">Select crate</button>
+</form>
+    </td>
+   </tr> 
+    </table>
+   </center> 
+  </fieldset>
+<table border="1" cellpadding="0" cellspacing="0">
+   <tr>
+    <td>
+

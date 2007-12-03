@@ -16,7 +16,7 @@
     </input>   
  </div>
  <iframe  style="height:100%;width:100%" id="geomtkmap" STYLE="display:''" src="svgmap.xml"></iframe>
- <iframe  style="height:100%;width:100%" id="fedtkmap"  STYLE="display:none" src="svgmap_fed.xml"></iframe>
+ <iframe  style="height:100%;width:100%" id="fedtkmap"  STYLE="display:none" src="fedtrackermap.html"></iframe>
  <script type="text/javascript">
   function SelectGeomTkMap() {
       document.getElementById("fedtkmap").style.display='none';
@@ -26,7 +26,7 @@
   function SelectFedTkMap() {  
       document.getElementById("geomtkmap").style.display='none';
       document.getElementById("fedtkmap").style.display='';
-      document.getElementById("fedtkmap").src="svgmap_fed.xml";
+      document.getElementById("fedtkmap").src="fedtrackermap.html";
   }
  </script>
 </body>
