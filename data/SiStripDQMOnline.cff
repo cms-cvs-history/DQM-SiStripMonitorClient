@@ -1,0 +1,59 @@
+#--------------------------
+#### DQM services
+#--------------------------
+
+include "DQMServices/Core/data/DQM.cfg"
+
+####  DQM Online Environment #####
+# use include file for dqmEnv dqmSaver
+include "DQMServices/Components/test/dqm_onlineEnv.cfi"
+# put your subsystem name here: 
+# DT, Ecal, Hcal, SiStrip, Pixel, RPC, CSC, L1T 
+# (this goes into the filename)
+ replace dqmSaver.fileName = "SiStrip"
+ replace dqmSaver.dirName       = "."
+# # (this goes into the foldername)
+ replace dqmEnv.subSystemFolder = "SiStrip"
+
+####  DQM File Saving (optionally change fileSaving condition) #####
+ replace dqmSaver.prescaleLS =   -1
+ replace dqmSaver.prescaleTime = -1 # in minutes
+ replace dqmSaver.prescaleEvt =  -1
+ replace dqmSaver.saveAtRunEnd = true
+ replace dqmSaver.saveAtJobEnd = false
+
+#### Quality Tester ####
+module qTester = QualityTester {
+    untracked string qtList = "sistrip_qualitytest_config.xml"
+    untracked bool getQualityTestsFromFile = true	        
+    untracked int32 QualityTestPrescaler = 200
+}
+
+#--------------------------
+#### STRIP DQM Source and Client
+#--------------------------
+include "DQM/SiStripMonitorClient/data/SiStripSourceConfig.cff"
+
+include "DQM/SiStripMonitorClient/data/SiStripClientConfig.cff"
+
+
+#--------------------------
+#### Web Service
+#--------------------------
+service = ModuleWebRegistry { }
+
+
+sequence SiStripDQMOnSimData = {
+    SiStripSourcesSimData ,
+    qTester,
+    SiStripOnlineDQMClient ,
+    dqmEnv , 
+    dqmSaver 
+}
+sequence SiStripDQMOnRealData = {
+    SiStripSourcesRealData ,
+    qTester,
+    SiStripOnlineDQMClient ,
+    dqmEnv , 
+    dqmSaver 
+}

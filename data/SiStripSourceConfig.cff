@@ -1,0 +1,34 @@
+#### SiStripMonitorPedestal ###
+include "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
+replace PedsMon.OutputMEsInRootFile = false
+
+#### SiStripMonitorDigi ####
+module SiStripMonitorDigiReal = SiStripMonitorDigi from "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi_RealData.cfi"
+# use the following flag to select all detectors (e.g. for mtcc data). by default is false
+replace SiStripMonitorDigiReal.SelectAllDetectors = true
+
+module SiStripMonitorDigiSim = SiStripMonitorDigi from "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi_SimData.cfi"
+# use the following flag to select all detectors (e.g. for mtcc data). by default is false
+replace SiStripMonitorDigiSim.SelectAllDetectors = true
+
+#### SiStripMonitorCluster ####
+include "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
+replace SiStripMonitorCluster.FillSignalNoiseHistos = false
+replace SiStripMonitorCluster.OutputMEsInRootFile = false
+replace SiStripMonitorCluster.SelectAllDetectors = true
+
+#### SiStripMonitorQuality
+include "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
+replace QualityMon.dataLabel = ""
+
+sequence SiStripSourcesRealData = {
+    PedsMon, 	
+    SiStripMonitorDigiReal, 
+    SiStripMonitorCluster, 
+    QualityMon
+}
+sequence SiStripSourcesSimData = { 	
+    SiStripMonitorDigiSim, 
+    SiStripMonitorCluster, 
+    QualityMon
+}
