@@ -19,7 +19,7 @@ replace SiStripMonitorCluster.SelectAllDetectors = true
 
 #### SiStripMonitorQuality
 include "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
-replace QualityMon.dataLabel = ""
+replace QualityMon.dataLabel = "test1"
 
 sequence SiStripSourcesRealData = {
     PedsMon, 	
