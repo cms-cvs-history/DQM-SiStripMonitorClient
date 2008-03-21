@@ -17,18 +17,23 @@ replace SiStripMonitorCluster.FillSignalNoiseHistos = false
 replace SiStripMonitorCluster.OutputMEsInRootFile = false
 replace SiStripMonitorCluster.SelectAllDetectors = true
 
-#### SiStripMonitorQuality
+#### SiStripMonitorQuality ####
 include "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
-replace QualityMon.dataLabel = "test1"
+replace QualityMon.dataLabel = ""
+
+#### TrackingMonitor ####
+include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
 
 sequence SiStripSourcesRealData = {
     PedsMon, 	
     SiStripMonitorDigiReal, 
     SiStripMonitorCluster, 
-    QualityMon
+    QualityMon,
+    TrackMon
 }
 sequence SiStripSourcesSimData = { 	
     SiStripMonitorDigiSim, 
     SiStripMonitorCluster, 
-    QualityMon
+    QualityMon,
+    TrackMon
 }

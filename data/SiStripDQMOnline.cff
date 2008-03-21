@@ -3,6 +3,8 @@
 #--------------------------
 
 include "DQMServices/Core/data/DQM.cfg"
+replace DQMStore.referenceFileName = "Reference.root"
+
 
 ####  DQM Online Environment #####
 # use include file for dqmEnv dqmSaver
