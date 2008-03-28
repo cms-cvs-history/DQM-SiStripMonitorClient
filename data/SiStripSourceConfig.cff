@@ -24,16 +24,22 @@ replace QualityMon.dataLabel = ""
 #### TrackingMonitor ####
 include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
 
+#### TrackerMonitorTrack ####
+
+include "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cff"
+
 sequence SiStripSourcesRealData = {
     PedsMon, 	
     SiStripMonitorDigiReal, 
     SiStripMonitorCluster, 
     QualityMon,
-    TrackMon
+    TrackMon,
+    DQMMonitorTrackResiduals
 }
 sequence SiStripSourcesSimData = { 	
     SiStripMonitorDigiSim, 
     SiStripMonitorCluster, 
     QualityMon,
-    TrackMon
+    TrackMon,
+    DQMMonitorTrackResiduals
 }
