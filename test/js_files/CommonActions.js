@@ -2,7 +2,7 @@ window.onload=function(){
   initTabs('dhtmlgoodies_tabView1', Array('Shifter View', 'Summary View','Alarm View', 'Expert View'), 0, '99.5%','100%');
 
   document.onkeypress = CommonActions.stopRKey;
-  CommonActions.ShowProgress('visible', 'Histograms from Collector');
+  CommonActions.ShowProgress('visible', 'Histograms ');
   CommonActions.ShowButtons(true);
   CommonActions.ShowTabs('hidden');  
   CommonActions.RequestReadyState();
@@ -67,7 +67,7 @@ CommonActions.ShowProgress = function(option)
 
   var args = arguments[1];
   if (args != null && args.length > 0) {
-    label.innerHTML = '<B>Please wait, loading '+args +'</B>';
+    label.innerHTML = '<B><Font size="+2" color="#961414">Please wait, loading '+args +'</Font></B>';
   }
   progress.style.visibility = option; // "visible" or "hidden"
 }
