@@ -1,0 +1,20 @@
+##### Zero Suppression  ####
+
+include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression_SimData.cfi"
+
+#### TrackRefitter ####
+
+include "RecoTracker/TrackProducer/data/RefitterWithMaterial.cff"
+replace TrackRefitter.TrajectoryInEvent = true
+
+#### TrackInfo ####
+
+include "AnalysisAlgos/TrackInfoProducer/data/TrackInfoProducer.cfi"
+replace trackinfo.cosmicTracks=TrackRefitter
+replace trackinfo.rechits=TrackRefitter
+
+sequence RecoMdulesForSimData = {
+    siStripZeroSuppression,
+    TrackRefitter,
+    trackinfo
+}

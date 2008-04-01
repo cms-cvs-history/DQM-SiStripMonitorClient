@@ -21,12 +21,21 @@ replace SiStripMonitorCluster.SelectAllDetectors = true
 include "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
 replace QualityMon.dataLabel = ""
 
+#### SiStripMonitorTrack ####
+include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+replace SiStripMonitorTrack.TrackProducer= "TrackRefitter"
+replace SiStripMonitorTrack.TrackLabel= ""
+replace SiStripMonitorTrack.TrackInfo = "trackinfo"
+replace SiStripMonitorTrack.Cluster_src = siStripClusters
+
+#### TrackerMonitorTrack ####
+include "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
+
 #### TrackingMonitor ####
 include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
 
-#### TrackerMonitorTrack ####
 
-include "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cff"
+
 
 sequence SiStripSourcesRealData = {
     PedsMon, 	
@@ -34,12 +43,15 @@ sequence SiStripSourcesRealData = {
     SiStripMonitorCluster, 
     QualityMon,
     TrackMon,
-    DQMMonitorTrackResiduals
+    SiStripMonitorTrack,
+    MonitorTrackResiduals,
+    TrackMon
 }
 sequence SiStripSourcesSimData = { 	
     SiStripMonitorDigiSim, 
     SiStripMonitorCluster, 
     QualityMon,
-    TrackMon,
-    DQMMonitorTrackResiduals
+    SiStripMonitorTrack,
+    MonitorTrackResiduals,
+    TrackMon
 }
