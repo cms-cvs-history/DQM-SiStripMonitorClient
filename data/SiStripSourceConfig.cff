@@ -1,6 +1,7 @@
 #### SiStripMonitorPedestal ###
 include "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
 replace PedsMon.OutputMEsInRootFile = false
+replace PedsMon.StripQualityLabel ="test1"
 
 #### SiStripMonitorDigi ####
 module SiStripMonitorDigiReal = SiStripMonitorDigi from "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi_RealData.cfi"
@@ -19,13 +20,12 @@ replace SiStripMonitorCluster.SelectAllDetectors = true
 
 #### SiStripMonitorQuality ####
 include "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
-replace QualityMon.dataLabel = ""
+replace QualityMon.StripQualityLabel = "test1"
 
 #### SiStripMonitorTrack ####
 include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
 replace SiStripMonitorTrack.TrackProducer= "TrackRefitter"
 replace SiStripMonitorTrack.TrackLabel= ""
-replace SiStripMonitorTrack.TrackInfo = "trackinfo"
 replace SiStripMonitorTrack.Cluster_src = siStripClusters
 
 #### TrackerMonitorTrack ####
@@ -37,15 +37,11 @@ include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
 
 
 
-sequence SiStripSourcesRealData = {
+sequence SiStripSourcesRealDataTIF = {
     PedsMon, 	
     SiStripMonitorDigiReal, 
-    SiStripMonitorCluster, 
-    QualityMon,
-    TrackMon,
-    SiStripMonitorTrack,
-    MonitorTrackResiduals,
-    TrackMon
+    SiStripMonitorCluster,
+    QualityMon
 }
 sequence SiStripSourcesSimData = { 	
     SiStripMonitorDigiSim, 

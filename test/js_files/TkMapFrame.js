@@ -30,7 +30,7 @@ TkMapFrame.getURLWithLID = function()
    url += "urn:xdaq-application:lid=27/moduleWeb?module=SiStripAnalyser&";
    return url;
  } catch (errorMessage) {
-   alert("[TkMapFrame.getURLWithLID] Exeuction/syntax error: " + errorMessage ) ;
+   alert("[TkMapFrame.getURLWithLID] Exeuction/syntax error: " + errorMessage );
  }   
 }
 TkMapFrame.requestMPlot = function(detid) { 
@@ -53,6 +53,6 @@ TkMapFrame.requestMPlot = function(detid) {
                {
                   method: 'get',
                   parameters: '',
-                  onComplete: canvas.processIMGCPlots // <-- call-back function
+                  onComplete: canvas.processImageURLs // <-- call-back function
                });
 }

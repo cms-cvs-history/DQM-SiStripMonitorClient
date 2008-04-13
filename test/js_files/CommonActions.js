@@ -2,6 +2,7 @@ window.onload=function(){
   initTabs('dhtmlgoodies_tabView1', Array('Shifter View', 'Summary View','Alarm View', 'Expert View'), 0, '99.5%','100%');
 
   document.onkeypress = CommonActions.stopRKey;
+  CommonActions.CreateTkStrustures();
   CommonActions.ShowProgress('visible', 'Histograms ');
   CommonActions.ShowButtons(true);
   CommonActions.ShowTabs('hidden');  
@@ -135,6 +136,63 @@ CommonActions.OpenTrackerMapFrame = function()
 {
   var win = window.open('TrackerMapFrame.html');
   win.focus();            
+}
+//
+// -- Create Tracker Structure options
+//
+CommonActions.CreateTkStrustures = function()
+{
+   var tk_struct = new Array("TIB/layer_1",
+                             "TIB/layer_2", 
+                             "TIB/layer_3",
+                             "TIB/layer_4",
+                             "TOB/layer_1", 
+                             "TOB/layer_2",
+                             "TOB/layer_3",
+                             "TOB/layer_4", 
+                             "TOB/layer_5",
+                             "TOB/layer_6",
+                             "TEC/side_1/wheel_1",
+                             "TEC/side_1/wheel_2",
+                             "TEC/side_1/wheel_3",
+                             "TEC/side_1/wheel_4",
+                             "TEC/side_1/wheel_5",
+                             "TEC/side_1/wheel_6",
+                             "TEC/side_1/wheel_7",
+                             "TEC/side_1/wheel_8",
+                             "TEC/side_1/wheel_9",
+                             "TEC/side_2/wheel_1",
+                             "TEC/side_2/wheel_2",
+                             "TEC/side_2/wheel_3",
+                             "TEC/side_2/wheel_4",
+                             "TEC/side_2/wheel_5",
+                             "TEC/side_2/wheel_6",
+                             "TEC/side_2/wheel_7",
+                             "TEC/side_2/wheel_8",
+                             "TEC/side_2/wheel_9",
+                             "TID/side_1/wheel_1",
+                             "TID/side_1/wheel_2",
+                             "TID/side_1/wheel_3",
+                             "TID/side_2/wheel_1",
+                             "TID/side_2/wheel_2",
+                             "TID/side_2/wheel_3");
+
+
+
+    var aobj            = $('structure_name');
+    aobj.options.length = 0;
+    var bobj            = $('structure_for_alarm');
+    bobj.options.length = 0;
+    
+    for (var i = 0; i < tk_struct.length; i++) {
+      var opt_val = "MechanicalView/" + tk_struct[i];
+      var option1 = new Option(tk_struct[i], opt_val); 
+      var option2 = new Option(tk_struct[i], opt_val); 
+      aobj.add(option1, null);
+      bobj.add(option2, null);
+    }
+    aobj.selectedIndex = 0;
+    bobj.selectedIndex = 0;
 }
 
 

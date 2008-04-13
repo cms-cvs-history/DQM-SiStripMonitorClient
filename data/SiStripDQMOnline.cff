@@ -52,10 +52,10 @@ sequence SiStripDQMOnSimData = {
     dqmEnv , 
     dqmSaver 
 }
-sequence SiStripDQMOnRealData = {
-    SiStripSourcesRealData ,
+sequence SiStripDQMOnRealDataTIF = {
+    SiStripSourcesRealDataTIF,
     qTester,
-    SiStripOnlineDQMClient ,
-    dqmEnv , 
+    SiStripOnlineDQMClient,
+    dqmEnv ,
     dqmSaver 
 }
