@@ -1,7 +1,14 @@
 #### SiStripMonitorPedestal ###
-include "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
-replace PedsMon.OutputMEsInRootFile = false
-replace PedsMon.StripQualityLabel ="test1"
+module CondDBMonSim = PedsMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
+replace CondDBMonSim.OutputMEsInRootFile = false
+replace CondDBMonSim.StripQualityLabel =""
+replace CondDBMonSim.RunTypeFlag = "ConDBPlotsOnly"
+
+module CondDBMonReal = PedsMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
+replace CondDBMonReal.OutputMEsInRootFile = false
+replace CondDBMonReal.StripQualityLabel ="test1"
+replace CondDBMonReal.RunTypeFlag = "ConDBPlotsOnly"
+
 
 #### SiStripMonitorDigi ####
 module SiStripMonitorDigiReal = SiStripMonitorDigi from "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi_RealData.cfi"
@@ -19,8 +26,11 @@ replace SiStripMonitorCluster.OutputMEsInRootFile = false
 replace SiStripMonitorCluster.SelectAllDetectors = true
 
 #### SiStripMonitorQuality ####
-include "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
-replace QualityMon.StripQualityLabel = "test1"
+module QualityMonReal = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
+replace QualityMonReal.StripQualityLabel = "test1"
+
+module QualityMonSim   = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
+replace QualityMonSim.StripQualityLabel = ""
 
 #### SiStripMonitorTrack ####
 include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
@@ -38,15 +48,15 @@ include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
 
 
 sequence SiStripSourcesRealDataTIF = {
-    PedsMon, 	
+    CondDBMonReal, 	
     SiStripMonitorDigiReal, 
     SiStripMonitorCluster,
-    QualityMon
+    QualityMonReal
 }
 sequence SiStripSourcesSimData = { 	
     SiStripMonitorDigiSim, 
     SiStripMonitorCluster, 
-    QualityMon,
+    QualityMonSim,
     SiStripMonitorTrack,
     MonitorTrackResiduals,
     TrackMon

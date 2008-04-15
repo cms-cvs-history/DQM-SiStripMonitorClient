@@ -47,8 +47,8 @@ sequence SiStripDQMOffSimData = {
     dqmEnv , 
     dqmSaver 
 }
-sequence SiStripDQMOffRealData = {
-    SiStripSourcesRealData ,
+sequence SiStripDQMOffRealDataTIF = {
+    SiStripSourcesRealDataTIF ,
     qTester,
     SiStripOfflineDQMClient ,
     dqmEnv , 
