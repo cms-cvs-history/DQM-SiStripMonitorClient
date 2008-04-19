@@ -21,9 +21,9 @@ replace SiStripMonitorDigiSim.SelectAllDetectors = true
 
 #### SiStripMonitorCluster ####
 include "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
-replace SiStripMonitorCluster.FillSignalNoiseHistos = false
 replace SiStripMonitorCluster.OutputMEsInRootFile = false
 replace SiStripMonitorCluster.SelectAllDetectors = true
+replace SiStripMonitorTrack.FolderName = "SiStrip/Tracks"
 
 #### SiStripMonitorQuality ####
 module QualityMonReal = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
@@ -43,6 +43,7 @@ include "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
 
 #### TrackingMonitor ####
 include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+replace TrackMon.FolderName="SiStrip/Tracks"
 
 
 
