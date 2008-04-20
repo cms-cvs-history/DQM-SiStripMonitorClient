@@ -1,0 +1,53 @@
+#### SiStripMonitorPedestal ###
+module CondDBMonSim = PedsMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
+replace CondDBMonSim.OutputMEsInRootFile = false
+replace CondDBMonSim.StripQualityLabel =""
+replace CondDBMonSim.RunTypeFlag = "ConDBPlotsOnly"
+
+module CondDBMonReal = PedsMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
+replace CondDBMonReal.OutputMEsInRootFile = false
+replace CondDBMonReal.StripQualityLabel ="test1"
+replace CondDBMonReal.RunTypeFlag = "ConDBPlotsOnly"
+
+
+#### SiStripMonitorDigi ####
+module SiStripMonitorDigiReal = SiStripMonitorDigi from "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi_RealData.cfi"
+# use the following flag to select all detectors (e.g. for mtcc data). by default is false
+replace SiStripMonitorDigiReal.SelectAllDetectors = true
+
+module SiStripMonitorDigiSim = SiStripMonitorDigi from "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi_SimData.cfi"
+# use the following flag to select all detectors (e.g. for mtcc data). by default is false
+replace SiStripMonitorDigiSim.SelectAllDetectors = true
+
+#### SiStripMonitorCluster ####
+include "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
+replace SiStripMonitorCluster.OutputMEsInRootFile = false
+replace SiStripMonitorCluster.SelectAllDetectors = true
+
+#### SiStripMonitorQuality ####
+module QualityMonReal = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
+replace QualityMonReal.StripQualityLabel = "test1"
+
+module QualityMonSim   = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
+replace QualityMonSim.StripQualityLabel = ""
+
+#### SiStripMonitorTrack ####
+include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+replace SiStripMonitorTrack.TrackProducer= "globalCosmicMuons"
+replace SiStripMonitorTrack.TrackLabel= ""
+replace SiStripMonitorTrack.Cluster_src = siStripClusters
+replace SiStripMonitorTrack.FolderName = "SiStrip/Tracks"
+
+
+#### TrackerMonitorTrack ####
+include "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
+replace MonitorTrackResiduals.Tracks = "globalCosmicMuons"
+replace MonitorTrackResiduals.trajectoryInput = "globalCosmicMuons"
+replace MonitorTrackResiduals.OutputMEsInRootFile = false
+
+
+#### TrackingMonitor ####
+include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+replace TrackMon.TrackProducer = "globalCosmicMuons"
+replace TrackMon.AlgoName="TrackP5"
+replace TrackMon.FolderName="SiStrip/Tracks"

@@ -1,0 +1,29 @@
+
+
+#### SiStripMonitorTrack ####
+include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+replace SiStripMonitorTrack.TrackProducer= "globalCosmicMuons"
+replace SiStripMonitorTrack.TrackLabel= ""
+replace SiStripMonitorTrack.Cluster_src = siStripClusters
+replace SiStripMonitorTrack.Mod_On = 0
+replace SiStripMonitorTrack.FolderName = "SiStrip/Tracks"
+
+#### TrackerMonitorTrack ####
+include "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
+replace MonitorTrackResiduals.Tracks = "globalCosmicMuons"
+replace MonitorTrackResiduals.trajectoryInput = "globalCosmicMuons"
+replace MonitorTrackResiduals.OutputMEsInRootFile = false
+replace MonitorTrackResiduals.Mod_On = false
+
+#### TrackingMonitor ####
+include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+replace TrackMon.TrackProducer = "globalCosmicMuons"
+replace TrackMon.AlgoName="CosmicTk"
+replace TrackMon.FolderName="SiStrip/Tracks"
+
+
+sequence SiStripDQMSource = {
+   SiStripMonitorTrack,
+#   MonitorTrackResiduals,
+   TrackMon
+}
