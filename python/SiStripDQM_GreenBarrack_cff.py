@@ -12,7 +12,7 @@ import FWCore.ParameterSet.Config as cms
 from DQMServices.Core.DQM_cfg import *
 #  DQM Online Environment #####
 # use include file for dqmEnv dqmSaver
-from DQMServices.Components.DQMEnvironment_cfi import *
+from DQMServices.Components.test.dqm_onlineEnv_cfi import *
 #--------------------------
 # STRIP DQM Source and Client
 #--------------------------
@@ -28,23 +28,23 @@ qTester = cms.EDFilter("QualityTester",
 ModuleWebRegistry = cms.Service("ModuleWebRegistry")
 
 SiStripDQMOnSimData = cms.Sequence(SiStripSourcesSimData*qTester*SiStripOnlineDQMClient*dqmEnv*dqmSaver)
-SiStripDQMOnRealDataTIF = cms.Sequence(SiStripSourcesRealDataTIF*qTester*SiStripOnlineDQMClient*dqmEnv*dqmSaver)
+SiStripDQMOnRealData = cms.Sequence(SiStripSourcesRealDataTIF*qTester*SiStripOnlineDQMClient*dqmEnv*dqmSaver)
+SiStripDQMOffRealDataTIF = cms.Sequence(cms.SequencePlaceholder("SiStripSourcesRealData")*qTester*SiStripOfflineDQMClient*dqmEnv*dqmSaver)
+SiStripDQMOffSimData = cms.Sequence(SiStripSourcesSimData*qTester*SiStripOfflineDQMClient*dqmEnv*dqmSaver)
+SiStripDQMOffSimDataTest = cms.Sequence(SiStripMonitorDigiSim*SiStripMonitorCluster*cms.SequencePlaceholder("QualityMon")*SiStripMonitorTrack*MonitorTrackResiduals*TrackMon*qTester*SiStripOfflineDQMClient*dqmEnv*dqmSaver)
 DQMStore.referenceFileName = 'Reference.root'
-# Possible conventions are "Online", "Offline" and "RelVal".
-# Default is "Offline"
-dqmSaver.convention = 'Online'
-#replace dqmSaver.workflow      = "/A/B/C"
-# replace dqmSaver.dirName       = "."
-# This is the filename prefix
-dqmSaver.producer = 'DQM'
-# (this goes into the foldername)
+# put your subsystem name here: 
+# DT, Ecal, Hcal, SiStrip, Pixel, RPC, CSC, L1T 
+# (this goes into the filename)
+dqmSaver.fileName = 'SiStrip'
+dqmSaver.dirName = '/home/cmstkmtc/DQMoutput'
+# # (this goes into the foldername)
 dqmEnv.subSystemFolder = 'SiStrip'
-# Ignore run number for MC data
-# replace dqmSaver.forceRunNumber  = -1
-# optionally change fileSaving  conditions
-dqmSaver.saveByLumiSection = 1
-# replace dqmSaver.saveByMinute = -1
-# replace dqmSaver.saveByEvent =  -1
-dqmSaver.saveByRun = 1
-dqmSaver.saveAtJobEnd = True
+#  DQM File Saving (optionally change fileSaving condition) #####
+dqmSaver.prescaleLS = -1
+dqmSaver.prescaleTime = -1 ## in minutes
+
+dqmSaver.prescaleEvt = -1
+dqmSaver.saveAtRunEnd = True
+dqmSaver.saveAtJobEnd = False
 
