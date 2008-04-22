@@ -45,9 +45,20 @@ include "DQMServices/Core/data/DQM.cfg"
 include "DQM/SiStripMonitorClient/data/SiStripSourceConfigTier0.cff"
 
 
-sequence SiStripDQMTier0 = {
-    SiStripDQMSource,
+sequence SiStripDQMTest_cosmicTk = {
+    SiStripDQMTier0_cosmicTk,
     dqmEnv , 
     dqmSaver 
 }
 
+sequence SiStripDQMTest_ckf = {
+    SiStripDQMTier0_ckf,
+    dqmEnv , 
+    dqmSaver 
+}
+
+sequence SiStripDQMTest_rs = {
+    SiStripDQMTier0_rs,
+    dqmEnv , 
+    dqmSaver 
+}
