@@ -33,7 +33,7 @@ replace QualityMonSim.StripQualityLabel = ""
 
 #### SiStripMonitorTrack ####
 include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
-replace SiStripMonitorTrack.TrackProducer= "globalCosmicMuons"
+replace SiStripMonitorTrack.TrackProducer= "cosmictrackfinderP5"
 replace SiStripMonitorTrack.TrackLabel= ""
 replace SiStripMonitorTrack.Cluster_src = siStripClusters
 replace SiStripMonitorTrack.FolderName = "SiStrip/Tracks"
@@ -41,13 +41,13 @@ replace SiStripMonitorTrack.FolderName = "SiStrip/Tracks"
 
 #### TrackerMonitorTrack ####
 include "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
-replace MonitorTrackResiduals.Tracks = "globalCosmicMuons"
-replace MonitorTrackResiduals.trajectoryInput = "globalCosmicMuons"
+replace MonitorTrackResiduals.Tracks = cosmictrackfinderP5
+replace MonitorTrackResiduals.trajectoryInput = "cosmictrackfinderP5"
 replace MonitorTrackResiduals.OutputMEsInRootFile = false
 
 
 #### TrackingMonitor ####
 include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
-replace TrackMon.TrackProducer = "globalCosmicMuons"
-replace TrackMon.AlgoName="TrackP5"
+replace TrackMon.TrackProducer = "cosmictrackfinderP5"
+replace TrackMon.AlgoName="CosmicTk"
 replace TrackMon.FolderName="SiStrip/Tracks"
