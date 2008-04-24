@@ -22,22 +22,22 @@ replace SiStripMonitorTrack_rs.FolderName = "SiStrip/Tracks"
 #### TrackerMonitorTrack ####
 ## Cosmic Track Finder
 module MonitorTrackResiduals_cosmicTk = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
-replace MonitorTrackResiduals_cosmicTk.Tracks = cosmictrackfinderP5
-###???replace MonitorTrackResiduals_cosmicTk.trajectoryInput = "globalCosmicMuons"
+// replace MonitorTrackResiduals_cosmicTk.Tracks = cosmictrackfinderP5 // This configurable is not read by the module code!
+replace MonitorTrackResiduals_cosmicTk.trajectoryInput = "cosmictrackfinderP5"
 replace MonitorTrackResiduals_cosmicTk.OutputMEsInRootFile = false
 replace MonitorTrackResiduals_cosmicTk.Mod_On = false
 
 ## CKF Tracks
 module MonitorTrackResiduals_ckf = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
-replace MonitorTrackResiduals_ckf.Tracks = ctfWithMaterialTracksP5
-###???replace MonitorTrackResiduals_ckf.trajectoryInput = "ctfWithMaterialTracksP5"
+// replace MonitorTrackResiduals_ckf.Tracks = ctfWithMaterialTracksP5 // This configurable is not read by the module code!
+replace MonitorTrackResiduals_ckf.trajectoryInput = "ctfWithMaterialTracksP5"
 replace MonitorTrackResiduals_ckf.OutputMEsInRootFile = false
 replace MonitorTrackResiduals_ckf.Mod_On = false
 
 ## Road Search  Tracks
 module MonitorTrackResiduals_rs = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
-replace MonitorTrackResiduals_rs.Tracks = rsWithMaterialTracksP5
-###???replace MonitorTrackResiduals_rs.trajectoryInput = "rsWithMaterialTracksP5"
+// replace MonitorTrackResiduals_rs.Tracks = rsWithMaterialTracksP5 // This configurable is not read by the module code!
+replace MonitorTrackResiduals_rs.trajectoryInput = "rsWithMaterialTracksP5"
 replace MonitorTrackResiduals_rs.OutputMEsInRootFile = false
 replace MonitorTrackResiduals_rs.Mod_On = false
 
@@ -69,19 +69,27 @@ replace TrackMon_rs.TkSizeBin=25
 
 sequence SiStripDQMTier0_cosmicTk = {
    SiStripMonitorTrack_cosmicTk,
-#   MonitorTrackResiduals_cosmicTk,
+   MonitorTrackResiduals_cosmicTk,
    TrackMon_cosmicTk
 }
 
 sequence SiStripDQMTier0_ckf = {
    SiStripMonitorTrack_ckf,
-#   MonitorTrackResiduals_ckf,
+   MonitorTrackResiduals_ckf,
    TrackMon_ckf
 }
 
 sequence SiStripDQMTier0_rs = {
    SiStripMonitorTrack_rs,
-#   MonitorTrackResiduals_rs,
+   MonitorTrackResiduals_rs,
+   TrackMon_rs
+}
+
+sequence SiStripDQMTier0 = {
+   SiStripMonitorTrack_cosmicTk,
+   MonitorTrackResiduals_cosmicTk,
+   TrackMon_cosmicTk,
+   TrackMon_ckf,
    TrackMon_rs
 }
 

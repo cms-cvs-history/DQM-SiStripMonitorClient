@@ -32,22 +32,74 @@ module QualityMonSim   = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStr
 replace QualityMonSim.StripQualityLabel = ""
 
 #### SiStripMonitorTrack ####
-include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
-replace SiStripMonitorTrack.TrackProducer= "cosmictrackfinderP5"
-replace SiStripMonitorTrack.TrackLabel= ""
-replace SiStripMonitorTrack.Cluster_src = siStripClusters
-replace SiStripMonitorTrack.FolderName = "SiStrip/Tracks"
+## Cosmic Track Finder
+module SiStripMonitorTrack_cosmicTk = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+replace SiStripMonitorTrack_cosmicTk.TrackProducer= "cosmictrackfinderP5"
+replace SiStripMonitorTrack_cosmicTk.FolderName = "SiStrip/Tracks"
 
+## CKF Tracks
+module SiStripMonitorTrack_ckf = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+replace SiStripMonitorTrack_ckf.TrackProducer= "ctfWithMaterialTracksP5"
+replace SiStripMonitorTrack_ckf.FolderName = "SiStrip/Tracks"
+
+## Road Search  Tracks
+module SiStripMonitorTrack_rs = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+replace SiStripMonitorTrack_rs.TrackProducer= "rsWithMaterialTracksP5"
+replace SiStripMonitorTrack_rs.FolderName = "SiStrip/Tracks"
+
+## Merged Tracks
+module SiStripMonitorTrack_p5 = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+replace SiStripMonitorTrack_p5.TrackProducer= "trackCollectionP5"
+replace SiStripMonitorTrack_p5.FolderName = "SiStrip/Tracks"
 
 #### TrackerMonitorTrack ####
-include "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
-replace MonitorTrackResiduals.Tracks = cosmictrackfinderP5
-replace MonitorTrackResiduals.trajectoryInput = "cosmictrackfinderP5"
-replace MonitorTrackResiduals.OutputMEsInRootFile = false
+## Cosmic Track Finder
+module MonitorTrackResiduals_cosmicTk = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
+replace MonitorTrackResiduals_cosmicTk.Tracks = cosmictrackfinderP5
+replace MonitorTrackResiduals_cosmicTk.trajectoryInput = "cosmictrackfinderP5"
+replace MonitorTrackResiduals_cosmicTk.OutputMEsInRootFile = false
+
+## CKF Tracks
+module MonitorTrackResiduals_ckf = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
+replace MonitorTrackResiduals_ckf.Tracks = ctfWithMaterialTracksP5
+replace MonitorTrackResiduals_ckf.trajectoryInput = "ctfWithMaterialTracksP5"
+replace MonitorTrackResiduals_ckf.OutputMEsInRootFile = false
+
+## Road Search  Tracks
+module MonitorTrackResiduals_rs = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
+replace MonitorTrackResiduals_rs.Tracks = rsWithMaterialTracksP5
+replace MonitorTrackResiduals_rs.trajectoryInput = "rsWithMaterialTracksP5"
+replace MonitorTrackResiduals_rs.OutputMEsInRootFile = false
+
+## Merged Tracks
+module MonitorTrackResiduals_p5 = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
+replace MonitorTrackResiduals_p5.Tracks = trackCollectionP5
+replace MonitorTrackResiduals_p5.trajectoryInput = "trackCollectionP5"
+replace MonitorTrackResiduals_p5.OutputMEsInRootFile = false
 
 
 #### TrackingMonitor ####
-include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
-replace TrackMon.TrackProducer = "cosmictrackfinderP5"
-replace TrackMon.AlgoName="CosmicTk"
-replace TrackMon.FolderName="SiStrip/Tracks"
+## Cosmic Track Finder
+module TrackMon_cosmicTk = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+replace TrackMon_cosmicTk.TrackProducer = "cosmictrackfinderP5"
+replace TrackMon_cosmicTk.AlgoName="CosmicTk"
+replace TrackMon_cosmicTk.FolderName="SiStrip/Tracks"
+replace TrackMon_cosmicTk.TkSizeMax = 25
+replace TrackMon_cosmicTk.TkSizeBin=25
+
+## CKF Tracks
+module TrackMon_ckf = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+replace TrackMon_ckf.TrackProducer = "ctfWithMaterialTracksP5"
+replace TrackMon_ckf.AlgoName="CKFTk"
+replace TrackMon_ckf.FolderName="SiStrip/Tracks"
+replace TrackMon_ckf.TkSizeMax = 25
+replace TrackMon_ckf.TkSizeBin=25
+
+## Road Search  Tracks
+module TrackMon_rs = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+replace TrackMon_rs.TrackProducer = "rsWithMaterialTracksP5"
+replace TrackMon_rs.AlgoName="RSTk"
+replace TrackMon_rs.FolderName="SiStrip/Tracks"
+replace TrackMon_rs.TkSizeMax = 25
+replace TrackMon_rs.TkSizeBin=25
+

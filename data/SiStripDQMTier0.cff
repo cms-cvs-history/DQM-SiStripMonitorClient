@@ -62,3 +62,9 @@ sequence SiStripDQMTest_rs = {
     dqmEnv , 
     dqmSaver 
 }
+
+sequence SiStripDQMTest = {
+    SiStripDQMTier0,
+    dqmEnv , 
+    dqmSaver 
+}
