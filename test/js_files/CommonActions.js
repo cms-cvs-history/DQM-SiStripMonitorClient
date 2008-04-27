@@ -1,5 +1,5 @@
 window.onload=function(){
-  initTabs('dhtmlgoodies_tabView1', Array('Shifter View', 'Summary View','Alarm View', 'Expert View'), 0, '99.5%','100%');
+  initTabs('dhtmlgoodies_tabView1', Array('Shifter View', ' HW Error View ', 'Summary View','Alarm View', 'Expert View'), 0, '99.5%','100%');
 
   document.onkeypress = CommonActions.stopRKey;
   CommonActions.CreateTkStrustures();
