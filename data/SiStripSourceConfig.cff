@@ -1,3 +1,8 @@
+#### Hardware Monitor ####
+include "DQM/SiStripMonitorHardware/test/buffer-hack.cfi"
+replace HardwareMonitor.rootFile=""
+replace HardwareMonitor.buildAllHistograms = false
+
 #### SiStripMonitorPedestal ###
 module CondDBMonSim = PedsMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
 replace CondDBMonSim.OutputMEsInRootFile = false
@@ -46,15 +51,15 @@ include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
 replace TrackMon.FolderName="SiStrip/Tracks"
 
 
-
-
 sequence SiStripSourcesRealDataTIF = {
+    HardwareMonitor,
     CondDBMonReal, 	
     SiStripMonitorDigiReal, 
     SiStripMonitorCluster,
     QualityMonReal
 }
-sequence SiStripSourcesSimData = { 	
+sequence SiStripSourcesSimData = { 
+    HardwareMonitor,
     SiStripMonitorDigiSim, 
     SiStripMonitorCluster, 
     QualityMonSim,
