@@ -1,4 +1,5 @@
 #include "DQM/SiStripMonitorClient/interface/SiStripUtility.h"
+#include "DQMServices/Core/interface/QTestStatus.h"
 using namespace std;
 //
 // Get a list of MEs in a folder
