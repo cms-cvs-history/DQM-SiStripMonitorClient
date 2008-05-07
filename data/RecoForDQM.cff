@@ -5,7 +5,7 @@ include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression_Sim
 ##### Digitiserr ####
 
 include "EventFilter/SiStripRawToDigi/data/SiStripDigis.cfi"
-replace siStripDigis.ProductLabel="source"
+replace SiStripDigis.ProductLabel="source"
 
 ##### Cluster Finder ####
 
@@ -31,7 +31,7 @@ sequence RecoModulesForSimData = {
 }
 
 sequence RecoModulesForTIFData = {
-    siStripDigis,
+    SiStripDigis,
     siStripZeroSuppression,
     siStripClusters
 }
