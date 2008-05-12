@@ -1,0 +1,27 @@
+##### Digitiser ####
+
+include "EventFilter/SiStripRawToDigi/data/SiStripDigis.cfi"
+
+##### Zero Suppression  ####
+
+include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression.cfi"
+
+
+##### Cluster Finder ####
+
+include "RecoLocalTracker/SiStripClusterizer/data/SiStripClusterizer.cfi"
+
+include "RecoLocalTracker/SiStripRecHitConverter/data/SiStripRecHitMatcher.cfi"
+
+#### TrackRefitter ####
+
+include "RecoTracker/TrackProducer/data/RefitterWithMaterial.cff"
+replace TrackRefitter.TrajectoryInEvent = true
+  
+sequence RecoModulesForSimData = {
+    siStripDigis,
+    siStripZeroSuppression,
+    siStripClusters
+#    TrackRefitter
+}
+
