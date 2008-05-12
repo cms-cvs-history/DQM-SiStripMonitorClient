@@ -11,18 +11,21 @@ replace CondDBMonReal.RunTypeFlag = "ConDBPlotsOnly"
 
 
 #### SiStripMonitorDigi ####
-module SiStripMonitorDigiReal = SiStripMonitorDigi from "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi_RealData.cfi"
+include "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi.cfi"
 # use the following flag to select all detectors (e.g. for mtcc data). by default is false
-replace SiStripMonitorDigiReal.SelectAllDetectors = true
+replace SiStripMonitorDigi.SelectAllDetectors = true
 
-module SiStripMonitorDigiSim = SiStripMonitorDigi from "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi_SimData.cfi"
-# use the following flag to select all detectors (e.g. for mtcc data). by default is false
-replace SiStripMonitorDigiSim.SelectAllDetectors = true
 
 #### SiStripMonitorCluster ####
-include "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
-replace SiStripMonitorCluster.OutputMEsInRootFile = false
-replace SiStripMonitorCluster.SelectAllDetectors = true
+module SiStripMonitorClusterReal = SiStripMonitorCluster from  "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
+replace SiStripMonitorClusterReal.OutputMEsInRootFile = false
+replace SiStripMonitorClusterReal.SelectAllDetectors = true
+replace SiStripMonitorClusterReal.StripQualityLabel = "test1"
+
+module SiStripMonitorClusterSim = SiStripMonitorCluster from  "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
+replace SiStripMonitorClusterSim.OutputMEsInRootFile = false
+replace SiStripMonitorClusterSim.SelectAllDetectors = true
+replace SiStripMonitorClusterSim.StripQualityLabel = ""
 
 #### SiStripMonitorQuality ####
 module QualityMonReal = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
@@ -81,7 +84,7 @@ replace MonitorTrackResiduals_p5.OutputMEsInRootFile = false
 #### TrackingMonitor ####
 ## Cosmic Track Finder
 module TrackMon_cosmicTk = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
-replace TrackMon_cosmicTk.TrackProducer = "cosmictrackfinderP5"
+replace TrackMon_cosmicTk.TrackProducer = cosmictrackfinderP5
 replace TrackMon_cosmicTk.AlgoName="CosmicTk"
 replace TrackMon_cosmicTk.FolderName="SiStrip/Tracks"
 replace TrackMon_cosmicTk.TkSizeMax = 25
@@ -89,7 +92,7 @@ replace TrackMon_cosmicTk.TkSizeBin=25
 
 ## CKF Tracks
 module TrackMon_ckf = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
-replace TrackMon_ckf.TrackProducer = "ctfWithMaterialTracksP5"
+replace TrackMon_ckf.TrackProducer = ctfWithMaterialTracksP5
 replace TrackMon_ckf.AlgoName="CKFTk"
 replace TrackMon_ckf.FolderName="SiStrip/Tracks"
 replace TrackMon_ckf.TkSizeMax = 25
@@ -97,7 +100,7 @@ replace TrackMon_ckf.TkSizeBin=25
 
 ## Road Search  Tracks
 module TrackMon_rs = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
-replace TrackMon_rs.TrackProducer = "rsWithMaterialTracksP5"
+replace TrackMon_rs.TrackProducer = rsWithMaterialTracksP5
 replace TrackMon_rs.AlgoName="RSTk"
 replace TrackMon_rs.FolderName="SiStrip/Tracks"
 replace TrackMon_rs.TkSizeMax = 25
