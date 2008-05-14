@@ -183,9 +183,9 @@ CommonActions.CreateTkStrustures = function()
 
 
 
-    var aobj            = $('structure_name');
+    var aobj            = $('summ_struc_name');
     aobj.options.length = 0;
-    var bobj            = $('structure_for_alarm');
+    var bobj            = $('alarm_struc_name');
     bobj.options.length = 0;
     
     for (var i = 0; i < tk_struct.length; i++) {
