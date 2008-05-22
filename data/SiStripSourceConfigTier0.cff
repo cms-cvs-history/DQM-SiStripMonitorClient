@@ -44,7 +44,7 @@ replace MonitorTrackResiduals_rs.Mod_On = false
 #### TrackingMonitor ####
 ## Cosmic Track Finder
 module TrackMon_cosmicTk = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
-replace TrackMon_cosmicTk.TrackProducer = cosmictrackfinderP5
+replace TrackMon_cosmicTk.TrackProducer = "cosmictrackfinderP5"
 replace TrackMon_cosmicTk.AlgoName="CosmicTk"
 replace TrackMon_cosmicTk.FolderName="SiStrip/Tracks"
 replace TrackMon_cosmicTk.TkSizeMax = 25
@@ -52,7 +52,7 @@ replace TrackMon_cosmicTk.TkSizeBin=25
 
 ## CKF Tracks
 module TrackMon_ckf = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
-replace TrackMon_ckf.TrackProducer = ctfWithMaterialTracksP5
+replace TrackMon_ckf.TrackProducer = "ctfWithMaterialTracksP5"
 replace TrackMon_ckf.AlgoName="CKFTk"
 replace TrackMon_ckf.FolderName="SiStrip/Tracks"
 replace TrackMon_ckf.TkSizeMax = 25
@@ -60,7 +60,7 @@ replace TrackMon_ckf.TkSizeBin=25
 
 ## Road Search  Tracks
 module TrackMon_rs = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
-replace TrackMon_rs.TrackProducer = rsWithMaterialTracksP5
+replace TrackMon_rs.TrackProducer = "rsWithMaterialTracksP5"
 replace TrackMon_rs.AlgoName="RSTk"
 replace TrackMon_rs.FolderName="SiStrip/Tracks"
 replace TrackMon_rs.TkSizeMax = 25

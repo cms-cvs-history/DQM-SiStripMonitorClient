@@ -1,51 +1,53 @@
 import FWCore.ParameterSet.Config as cms
 
-from DQM.SiStripMonitorHardware.test.buffer_hack_cfi import *
-import DQM.SiStripMonitorPedestals.SiStripMonitorPedestals_cfi
+import copy
+from DQM.SiStripMonitorPedestals.SiStripMonitorPedestals_cfi import *
 # SiStripMonitorPedestal ###
-CondDBMonSim = DQM.SiStripMonitorPedestals.SiStripMonitorPedestals_cfi.PedsMon.clone()
-import DQM.SiStripMonitorPedestals.SiStripMonitorPedestals_cfi
-CondDBMonReal = DQM.SiStripMonitorPedestals.SiStripMonitorPedestals_cfi.PedsMon.clone()
-# SiStripMonitorDigi #####
-from DQM.SiStripMonitorDigi.SiStripMonitorDigi_cfi import *
-import DQM.SiStripMonitorCluster.SiStripMonitorCluster_cfi
+CondDBMonSim = copy.deepcopy(PedsMon)
+import copy
+from DQM.SiStripMonitorPedestals.SiStripMonitorPedestals_cfi import *
+CondDBMonReal = copy.deepcopy(PedsMon)
+import copy
+from DQM.SiStripMonitorDigi.SiStripMonitorDigi_RealData_cfi import *
+# SiStripMonitorDigi ####
+SiStripMonitorDigiReal = copy.deepcopy(SiStripMonitorDigi)
+import copy
+from DQM.SiStripMonitorDigi.SiStripMonitorDigi_SimData_cfi import *
+SiStripMonitorDigiSim = copy.deepcopy(SiStripMonitorDigi)
 # SiStripMonitorCluster ####
-SiStripMonitorClusterReal = DQM.SiStripMonitorCluster.SiStripMonitorCluster_cfi.SiStripMonitorCluster.clone()
-import DQM.SiStripMonitorCluster.SiStripMonitorCluster_cfi
-SiStripMonitorClusterSim = DQM.SiStripMonitorCluster.SiStripMonitorCluster_cfi.SiStripMonitorCluster.clone()
-import DQM.SiStripMonitorPedestals.SiStripMonitorQuality_cfi
+from DQM.SiStripMonitorCluster.SiStripMonitorCluster_cfi import *
+import copy
+from DQM.SiStripMonitorPedestals.SiStripMonitorQuality_cfi import *
 # SiStripMonitorQuality ####
-QualityMonReal = DQM.SiStripMonitorPedestals.SiStripMonitorQuality_cfi.QualityMon.clone()
-import DQM.SiStripMonitorPedestals.SiStripMonitorQuality_cfi
-QualityMonSim = DQM.SiStripMonitorPedestals.SiStripMonitorQuality_cfi.QualityMon.clone()
+QualityMonReal = copy.deepcopy(QualityMon)
+import copy
+from DQM.SiStripMonitorPedestals.SiStripMonitorQuality_cfi import *
+QualityMonSim = copy.deepcopy(QualityMon)
 # SiStripMonitorTrack ####
 from DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi import *
 # TrackerMonitorTrack ####
 from DQM.TrackerMonitorTrack.MonitorTrackResiduals_cfi import *
 # TrackingMonitor ####
 from DQM.TrackingMonitor.TrackingMonitor_cfi import *
-SiStripSourcesRealDataTIF = cms.Sequence(HardwareMonitor*CondDBMonReal*SiStripMonitorDigi*SiStripMonitorClusterReal*QualityMonReal)
-SiStripSourcesSimData = cms.Sequence(HardwareMonitor*SiStripMonitorDigi*SiStripMonitorClusterSim*QualityMonSim*TrackMon)
-HardwareMonitor.rootFile = ''
-HardwareMonitor.buildAllHistograms = False
+SiStripSourcesRealDataTIF = cms.Sequence(CondDBMonReal*SiStripMonitorDigiReal*SiStripMonitorCluster*QualityMonReal)
+SiStripSourcesSimData = cms.Sequence(SiStripMonitorDigiSim*SiStripMonitorCluster*QualityMonSim*SiStripMonitorTrack*MonitorTrackResiduals*TrackMon)
 CondDBMonSim.OutputMEsInRootFile = False
 CondDBMonSim.StripQualityLabel = ''
 CondDBMonSim.RunTypeFlag = 'ConDBPlotsOnly'
 CondDBMonReal.OutputMEsInRootFile = False
 CondDBMonReal.StripQualityLabel = 'test1'
 CondDBMonReal.RunTypeFlag = 'ConDBPlotsOnly'
-SiStripMonitorDigi.SelectAllDetectors = True
-SiStripMonitorClusterReal.OutputMEsInRootFile = False
-SiStripMonitorClusterReal.SelectAllDetectors = True
-SiStripMonitorClusterReal.StripQualityLabel = 'test1'
-SiStripMonitorClusterSim.OutputMEsInRootFile = False
-SiStripMonitorClusterSim.SelectAllDetectors = True
-SiStripMonitorClusterSim.StripQualityLabel = ''
+# use the following flag to select all detectors (e.g. for mtcc data). by default is false
+SiStripMonitorDigiReal.SelectAllDetectors = True
+# use the following flag to select all detectors (e.g. for mtcc data). by default is false
+SiStripMonitorDigiSim.SelectAllDetectors = True
+SiStripMonitorCluster.OutputMEsInRootFile = False
+SiStripMonitorCluster.SelectAllDetectors = True
+SiStripMonitorTrack.FolderName = 'SiStrip/Tracks'
 QualityMonReal.StripQualityLabel = 'test1'
 QualityMonSim.StripQualityLabel = ''
 SiStripMonitorTrack.TrackProducer = 'TrackRefitter'
 SiStripMonitorTrack.TrackLabel = ''
 SiStripMonitorTrack.Cluster_src = 'siStripClusters'
-SiStripMonitorTrack.FolderName = 'SiStrip/Tracks'
 TrackMon.FolderName = 'SiStrip/Tracks'
 
