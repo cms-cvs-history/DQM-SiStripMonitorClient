@@ -28,7 +28,7 @@ include "DQMServices/Components/test/dqm_onlineEnv.cfi"
 module qTester = QualityTester {
     untracked FileInPath qtList = "DQM/SiStripMonitorClient/data/sistrip_qualitytest_config.xml"
     untracked bool getQualityTestsFromFile = true	        
-    untracked int32 QualityTestPrescaler = 200
+    untracked int32 prescaleFactor = 1
 }
 
 #--------------------------
