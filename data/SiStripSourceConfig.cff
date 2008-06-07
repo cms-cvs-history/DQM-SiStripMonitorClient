@@ -2,6 +2,7 @@
 include "DQM/SiStripMonitorHardware/test/buffer-hack.cfi"
 replace HardwareMonitor.rootFile=""
 replace HardwareMonitor.buildAllHistograms = false
+replace HardwareMonitor.preSwapOn = false
 
 #### SiStripMonitorPedestal ###
 module CondDBMonSim = PedsMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
