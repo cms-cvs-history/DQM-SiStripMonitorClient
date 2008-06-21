@@ -15,6 +15,10 @@ replace CondDBMonReal.OutputMEsInRootFile = false
 replace CondDBMonReal.StripQualityLabel ="test1"
 replace CondDBMonReal.RunTypeFlag = "ConDBPlotsOnly"
 
+module PedsMonReal = PedsMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
+replace PedsMonReal.OutputMEsInRootFile = false
+replace PedsMonReal.StripQualityLabel ="test1"
+replace PedsMonReal.RunTypeFlag = "CalculatedPlotsOnly"
 
 #### SiStripMonitorDigi #####
 include "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi.cfi"
@@ -38,33 +42,61 @@ module QualityMonSim   = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStr
 replace QualityMonSim.StripQualityLabel = ""
 
 #### SiStripMonitorTrack ####
-include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
-replace SiStripMonitorTrack.TrackProducer= "TrackRefitter"
-replace SiStripMonitorTrack.TrackLabel= ""
-replace SiStripMonitorTrack.Cluster_src = siStripClusters
-replace SiStripMonitorTrack.FolderName = "SiStrip/Tracks"
+module SiStripMonitorTrackSim = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+replace SiStripMonitorTrackSim.TrackProducer= "TrackRefitter"
+replace SiStripMonitorTrackSim.TrackLabel= ""
+replace SiStripMonitorTrackSim.Cluster_src = siStripClusters
+replace SiStripMonitorTrackSim.FolderName = "SiStrip/Tracks"
+
+module SiStripMonitorTrackReal = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+replace SiStripMonitorTrackReal.TrackProducer= "ctfWithMaterialTracksP5"
+replace SiStripMonitorTrackReal.TrackLabel= ""
+replace SiStripMonitorTrackReal.Cluster_src = siStripClusters
+replace SiStripMonitorTrackReal.FolderName = "SiStrip/Tracks"
 
 #### TrackerMonitorTrack ####
-include "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
+module MonitorTrackResidualsSim = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
+
+module MonitorTrackResidualsReal = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
+replace MonitorTrackResidualsReal.Tracks = ctfWithMaterialTracksP5
+replace MonitorTrackResidualsReal.trajectoryInput = "ctfWithMaterialTracksP5"
+replace MonitorTrackResidualsReal.OutputMEsInRootFile = false
 
 #### TrackingMonitor ####
-include "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
-replace TrackMon.FolderName="SiStrip/Tracks"
+module TrackMonSim = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+replace TrackMonSim.FolderName="SiStrip/Tracks"
 
+module TrackMonReal = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+replace TrackMonReal.TrackProducer = ctfWithMaterialTracksP5
+replace TrackMonReal.FolderName="SiStrip/Tracks"
+replace TrackMonReal.AlgoName="CKFTk"
+replace TrackMonReal.TkSizeMax = 25
+replace TrackMonReal.TkSizeBin=25
 
 sequence SiStripSourcesRealDataTIF = {
     HardwareMonitor,
     CondDBMonReal, 	
     SiStripMonitorDigi,
     SiStripMonitorClusterReal,
-    QualityMonReal
+    SiStripMonitorTrackReal,
+    MonitorTrackResidualsReal,
+    TrackMonReal
 }
-sequence SiStripSourcesSimData = { 
+sequence SiStripSourcesRealData = {
     HardwareMonitor,
+    PedsMonReal, 	
+    SiStripMonitorDigi,
+    SiStripMonitorClusterReal,
+    SiStripMonitorTrackReal,
+    MonitorTrackResidualsReal,
+    TrackMonReal
+}
+
+sequence SiStripSourcesSimData = { 
     SiStripMonitorDigi, 
     SiStripMonitorClusterSim, 
     QualityMonSim,
-#    SiStripMonitorTrack,
-#    MonitorTrackResiduals,
-    TrackMon
+    SiStripMonitorTrackSim,
+    MonitorTrackResidualsSim,
+    TrackMonSim
 }

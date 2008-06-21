@@ -2,26 +2,34 @@
 
 include "EventFilter/SiStripRawToDigi/data/SiStripDigis.cfi"
 replace siStripDigis.ProductLabel="source"
+include "EventFilter/SiPixelRawToDigi/data/SiPixelRawToDigi.cfi"
+replace siPixelDigis.InputLabel = "source"
 
-##### Zero Suppression  ####
-
-include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression.cfi"
-
-
-##### Cluster Finder ####
-
-include "RecoLocalTracker/SiStripClusterizer/data/SiStripClusterizer.cfi"
+##### Local Reco ####    
+include "RecoLocalTracker/Configuration/data/RecoLocalTracker_Cosmics.cff"
 replace siStripClusters.SiStripQualityLabel="test1"
 
-include "RecoLocalTracker/SiStripRecHitConverter/data/SiStripRecHitMatcher.cfi"
 
-#### TrackRefitter ####
+##### Track Reconstruction ########
+include "RecoTracker/Configuration/data/RecoTrackerP5.cff"
+include "RecoVertex/BeamSpotProducer/data/BeamSpot.cff"
 
-include "RecoTracker/TrackProducer/data/RefitterWithMaterial.cff"
-replace TrackRefitter.TrajectoryInEvent = true
-  
+es_source BeamSpotEarlyCollision = PoolDBESSource {
+    string connect =  "frontier://Frontier/CMS_COND_20X_BEAMSPOT"
+    PSet DBParameters = {
+	untracked int32 messageLevel = 0
+    }
+    VPSet toGet = {
+	{ string record = "BeamSpotObjectsRcd"
+	    string tag = "EarlyCollision_5p3cm_mc" }
+    }
+    string timetype = "runtime"
+}
+
 sequence RecoModulesForTIFData = {
+    siPixelDigis,
     siStripDigis,
-    siStripZeroSuppression,
-    siStripClusters
+    offlineBeamSpot,
+    trackerlocalreco,
+    ctftracksP5
 }

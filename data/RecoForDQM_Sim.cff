@@ -18,10 +18,25 @@ include "RecoLocalTracker/SiStripRecHitConverter/data/SiStripRecHitMatcher.cfi"
 include "RecoTracker/TrackProducer/data/RefitterWithMaterial.cff"
 replace TrackRefitter.TrajectoryInEvent = true
   
+include "RecoVertex/BeamSpotProducer/data/BeamSpot.cff"
+
+es_source BeamSpotEarlyCollision = PoolDBESSource {
+    string connect =  "frontier://Frontier/CMS_COND_20X_BEAMSPOT"
+    PSet DBParameters = {
+	untracked int32 messageLevel = 0
+    }
+    VPSet toGet = {
+	{ string record = "BeamSpotObjectsRcd"
+	    string tag = "EarlyCollision_5p3cm_mc" }
+    }
+    string timetype = "runtime"
+}
+
 sequence RecoModulesForSimData = {
     siStripDigis,
     siStripZeroSuppression,
-    siStripClusters
-#    TrackRefitter
+    siStripClusters,
+    offlineBeamSpot,
+    TrackRefitter
 }
 
