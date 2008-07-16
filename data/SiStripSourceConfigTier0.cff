@@ -86,8 +86,8 @@ sequence SiStripDQMTier0_rs = {
 }
 
 sequence SiStripDQMTier0 = {
-   SiStripMonitorTrack_cosmicTk,
-   MonitorTrackResiduals_cosmicTk,
+   SiStripMonitorTrack_ckf,
+   MonitorTrackResiduals_ckf,
    TrackMon_cosmicTk,
    TrackMon_ckf,
    TrackMon_rs
