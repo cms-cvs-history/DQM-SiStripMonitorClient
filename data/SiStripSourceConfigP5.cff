@@ -10,7 +10,7 @@ include "DQM/SiStripMonitorSummary/data/SiStripMonitorCondData.cfi"
 
 #### SiStripMonitorDigi ####
 include "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi_SimData.cfi"
-replace SiStripMonitorDigiSim.SelectAllDetectors = true
+replace SiStripMonitorDigi.SelectAllDetectors = true
 
 #### SiStripMonitorCluster ####
 include "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
