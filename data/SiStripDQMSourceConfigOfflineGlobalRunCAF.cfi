@@ -40,24 +40,18 @@
   replace MonitorTrackResidualsCAF_rs.OutputMEsInRootFile = false
   
   # TrackingMonitor
-  module TrackMonCAF_cosmicTk = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+  module TrackMonCAF_cosmicTk = TrackerCosmicTrackMon from "DQM/TrackingMonitor/data/TrackerCosmicsTrackingMonitor.cfi"
   replace TrackMonCAF_cosmicTk.TrackProducer = cosmictrackfinderP5
   replace TrackMonCAF_cosmicTk.AlgoName      = "CosmicTk"
   replace TrackMonCAF_cosmicTk.FolderName    = "SiStrip/Tracks"
-  replace TrackMonCAF_cosmicTk.TkSizeMax     = 25
-  replace TrackMonCAF_cosmicTk.TkSizeBin     = 25
-  module TrackMonCAF_ckf = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+  module TrackMonCAF_ckf = TrackerCosmicTrackMon from "DQM/TrackingMonitor/data/TrackerCosmicsTrackingMonitor.cfi"
   replace TrackMonCAF_ckf.TrackProducer = ctfWithMaterialTracksP5
   replace TrackMonCAF_ckf.AlgoName      = "CKFTk"
   replace TrackMonCAF_ckf.FolderName    = "SiStrip/Tracks"
-  replace TrackMonCAF_ckf.TkSizeMax     = 25
-  replace TrackMonCAF_ckf.TkSizeBin     = 25
-  module TrackMonCAF_rs = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+  module TrackMonCAF_rs = TrackerCosmicTrackMon from "DQM/TrackingMonitor/data/TrackerCosmicsTrackingMonitor.cfi"
   replace TrackMonCAF_rs.TrackProducer = rsWithMaterialTracksP5
   replace TrackMonCAF_rs.AlgoName      = "RSTk"
   replace TrackMonCAF_rs.FolderName    = "SiStrip/Tracks"
-  replace TrackMonCAF_rs.TkSizeMax     = 25
-  replace TrackMonCAF_rs.TkSizeBin     = 25
   
   ## Scheduling
   
