@@ -5,41 +5,27 @@ replace HardwareMonitor.buildAllHistograms = false
 replace HardwareMonitor.preSwapOn = false
 
 #### SiStripMonitorPedestal ###
-module CondDBMonSim = PedsMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
-replace CondDBMonSim.OutputMEsInRootFile = false
-replace CondDBMonSim.StripQualityLabel =""
-replace CondDBMonSim.RunTypeFlag = "ConDBPlotsOnly"
+include "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
+replace PedsMon.OutputMEsInRootFile = false
+replace PedsMon.StripQualityLabel =""
+replace PedsMon.RunTypeFlag = "CalculatedPlotsOnly"
 
-module CondDBMonReal = PedsMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
-replace CondDBMonReal.OutputMEsInRootFile = false
-replace CondDBMonReal.StripQualityLabel ="test1"
-replace CondDBMonReal.RunTypeFlag = "ConDBPlotsOnly"
+#### Condition DB Monitoring ###
+include "DQM/SiStripMonitorSummary/data/SiStripMonitorCondData.cfi"
 
-module PedsMonReal = PedsMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorPedestals.cfi"
-replace PedsMonReal.OutputMEsInRootFile = false
-replace PedsMonReal.StripQualityLabel ="test1"
-replace PedsMonReal.RunTypeFlag = "CalculatedPlotsOnly"
+#### SiStripMonitorQuality ####
+include "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
+replace QualityMon.StripQualityLabel = ""
 
 #### SiStripMonitorDigi #####
 include "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi.cfi"
 replace SiStripMonitorDigi.SelectAllDetectors = true
 
 #### SiStripMonitorCluster ####
-module SiStripMonitorClusterReal = SiStripMonitorCluster from  "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
-replace SiStripMonitorClusterReal.OutputMEsInRootFile = false
-replace SiStripMonitorClusterReal.SelectAllDetectors = true
-replace SiStripMonitorClusterReal.StripQualityLabel = "test1"
-
-module SiStripMonitorClusterSim = SiStripMonitorCluster from  "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
-replace SiStripMonitorClusterSim.OutputMEsInRootFile = false
-replace SiStripMonitorClusterSim.SelectAllDetectors = true
-replace SiStripMonitorClusterSim.StripQualityLabel = ""
-#### SiStripMonitorQuality ####
-module QualityMonReal = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
-replace QualityMonReal.StripQualityLabel = "test1"
-
-module QualityMonSim   = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
-replace QualityMonSim.StripQualityLabel = ""
+include "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
+replace SiStripMonitorCluster.OutputMEsInRootFile = false
+replace SiStripMonitorCluster.SelectAllDetectors = true
+replace SiStripMonitorCluster.StripQualityLabel = ""
 
 #### SiStripMonitorTrack ####
 module SiStripMonitorTrackSim = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
@@ -66,37 +52,25 @@ replace MonitorTrackResidualsReal.OutputMEsInRootFile = false
 module TrackMonSim = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
 replace TrackMonSim.FolderName="SiStrip/Tracks"
 
-module TrackMonReal = TrackMon from "DQM/TrackingMonitor/data/TrackingMonitor.cfi"
+module TrackMonReal = TrackerCosmicTrackMon from "DQM/TrackingMonitor/data/TrackerCosmicsTrackingMonitor.cfi"
 replace TrackMonReal.TrackProducer = ctfWithMaterialTracksP5
 replace TrackMonReal.FolderName="SiStrip/Tracks"
 replace TrackMonReal.AlgoName="CKFTk"
-replace TrackMonReal.TkSizeMax = 25
-replace TrackMonReal.TkSizeBin=25
 
-sequence SiStripSourcesRealDataTIF = {
-    HardwareMonitor,
-    CondDBMonReal, 	
-    SiStripMonitorDigi,
-    SiStripMonitorClusterReal,
-    SiStripMonitorTrackReal,
-    MonitorTrackResidualsReal,
-    TrackMonReal
-}
-sequence SiStripSourcesRealData = {
-    HardwareMonitor,
-    PedsMonReal, 	
-    SiStripMonitorDigi,
-    SiStripMonitorClusterReal,
-    SiStripMonitorTrackReal,
-    MonitorTrackResidualsReal,
-    TrackMonReal
-}
 
 sequence SiStripSourcesSimData = { 
     SiStripMonitorDigi, 
-    SiStripMonitorClusterSim, 
-    QualityMonSim,
+    SiStripMonitorCluster,
     SiStripMonitorTrackSim,
     MonitorTrackResidualsSim,
     TrackMonSim
+}
+sequence SiStripSourcesRealData = { 
+    CondDataMonitoring,
+    QualityMon,
+    SiStripMonitorDigi, 
+    SiStripMonitorCluster, 
+    SiStripMonitorTrackReal,
+    MonitorTrackResidualsReal,
+    TrackMonReal
 }

@@ -1,6 +1,0 @@
-# SiStripOfflineDQM
-module modSiStripOfflineDQM = SiStripOfflineDQM {
-  untracked bool   bVerbose	            = false
-  untracked int32  nQTestEventsDelay    = 10
-
-}

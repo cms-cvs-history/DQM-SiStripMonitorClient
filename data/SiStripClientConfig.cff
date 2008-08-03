@@ -1,8 +1,10 @@
 ####  SiStripMonitorAnalyser ####
+# for Online running
 module onlineAnalyser = SiStripAnalyser {
     untracked int32  StaticUpdateFrequency = 1
     untracked int32  TkMapCreationFrequency = 1
     untracked int32  SummaryCreationFrequency = 1
+    untracked bool   GlobalStatusFilling = true
     PSet TkmapParameters =
     {
 	untracked string trackerdatPath="CommonTools/TrackerMap/data/"
@@ -10,10 +12,12 @@ module onlineAnalyser = SiStripAnalyser {
 	untracked bool loadFedCabling=true
     }
 }
+# for Offline running
 module offlineAnalyser = SiStripAnalyser {
     untracked int32  StaticUpdateFrequency = -1
     untracked int32  TkMapCreationFrequency = -1
     untracked int32  SummaryCreationFrequency = 1
+    untracked bool   GlobalStatusFilling = true
     PSet TkmapParameters =
     {
 	untracked string trackerdatPath="CommonTools/TrackerMap/data/"
@@ -21,6 +25,8 @@ module offlineAnalyser = SiStripAnalyser {
 	untracked bool loadFedCabling=true
     }
 }
+
+## Sequence
 sequence SiStripOnlineDQMClient = {
     onlineAnalyser
 } 
