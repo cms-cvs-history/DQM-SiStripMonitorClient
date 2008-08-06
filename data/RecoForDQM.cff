@@ -17,9 +17,8 @@ replace CTF_P5_MeasurementTracker.pixelClusterProducer = ""
 replace RS_P5_MeasurementTracker.pixelClusterProducer = ''
 
 sequence RecoForDQM = {
-    siPixelDigis,
     siStripDigis,
     offlineBeamSpot,
-    trackerlocalreco,
+    striptrackerlocalreco,
     ctftracksP5
 }
