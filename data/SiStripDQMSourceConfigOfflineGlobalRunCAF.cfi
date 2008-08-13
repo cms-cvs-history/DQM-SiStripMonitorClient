@@ -1,6 +1,6 @@
   ## SiStrip DQM Source
   
-  # SiStripMonitoDigi
+  # SiStripMonitorDigi
   module SiStripMonitorDigiCAF = SiStripMonitorDigi from "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi.cfi"
   replace SiStripMonitorDigiCAF.SelectAllDetectors = true
 
@@ -8,7 +8,7 @@
   module SiStripMonitorClusterCAF = SiStripMonitorCluster from "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
   replace SiStripMonitorClusterCAF.OutputMEsInRootFile = false
   replace SiStripMonitorClusterCAF.SelectAllDetectors  = true
-  replace SiStripMonitorClusterCAF.StripQualityLabel = ""
+  replace SiStripMonitorClusterCAF.StripQualityLabel   = ""
 
   # SiStripMonitorQuality
   module QualityMonCAF = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"

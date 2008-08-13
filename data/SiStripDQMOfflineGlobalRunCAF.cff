@@ -25,4 +25,3 @@
   include "DQM/SiStripMonitorClient/data/SiStripDQMRecoConfigOfflineGlobalRunCAF.cfi"  
   include "DQM/SiStripMonitorClient/data/SiStripDQMSourceConfigOfflineGlobalRunCAF.cfi"  
   include "DQM/SiStripMonitorClient/data/SiStripDQMClientConfigOfflineGlobalRunCAF.cfi"  
-
