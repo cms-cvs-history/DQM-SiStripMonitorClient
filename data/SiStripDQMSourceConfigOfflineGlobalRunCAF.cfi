@@ -1,6 +1,6 @@
   ## SiStrip DQM Source
   
-  # SiStripMonitoDigi
+  # SiStripMonitorDigi
   module SiStripMonitorDigiCAF = SiStripMonitorDigi from "DQM/SiStripMonitorDigi/data/SiStripMonitorDigi.cfi"
   replace SiStripMonitorDigiCAF.SelectAllDetectors = true
 
@@ -8,55 +8,55 @@
   module SiStripMonitorClusterCAF = SiStripMonitorCluster from "DQM/SiStripMonitorCluster/data/SiStripMonitorCluster.cfi"
   replace SiStripMonitorClusterCAF.OutputMEsInRootFile = false
   replace SiStripMonitorClusterCAF.SelectAllDetectors  = true
-  replace SiStripMonitorClusterCAF.StripQualityLabel = ""
+  replace SiStripMonitorClusterCAF.StripQualityLabel   = ""
 
   # SiStripMonitorQuality
   module QualityMonCAF = QualityMon from "DQM/SiStripMonitorPedestals/data/SiStripMonitorQuality.cfi"
   replace QualityMonCAF.StripQualityLabel = ""
   
   # SiStripMonitorTrack
-  # Clone for Cosmic Track Finder
+  # clone for cosmic track finder
   module SiStripMonitorTrackCAF_cosmicTk = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
   replace SiStripMonitorTrackCAF_cosmicTk.TrackProducer = "cosmictrackfinderP5Refitter"
   replace SiStripMonitorTrackCAF_cosmicTk.FolderName    = "SiStrip/Tracks"
-  # Clone for CTF Track Finder
+  # clone for CTF track finder
   module SiStripMonitorTrackCAF_ckf = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
   replace SiStripMonitorTrackCAF_ckf.TrackProducer = "ctfWithMaterialTracksP5Refitter"
   replace SiStripMonitorTrackCAF_ckf.FolderName    = "SiStrip/Tracks"
-  # Clone for RS Track Finder
+  # clone for RS track finder
   module SiStripMonitorTrackCAF_rs = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
   replace SiStripMonitorTrackCAF_rs.TrackProducer = "rsWithMaterialTracksP5Refitter"
   replace SiStripMonitorTrackCAF_rs.FolderName    = "SiStrip/Tracks"
   
   # TrackerMonitorTrack
-  # Clone for Cosmic Track Finder
+  # clone for cosmic track finder
   module MonitorTrackResidualsCAF_cosmicTk = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
   replace MonitorTrackResidualsCAF_cosmicTk.Tracks              = cosmictrackfinderP5
   replace MonitorTrackResidualsCAF_cosmicTk.trajectoryInput     = "cosmictrackfinderP5Refitter"
   replace MonitorTrackResidualsCAF_cosmicTk.OutputMEsInRootFile = false
-  # Clone for CTF Track Finder
+  # clone for CTF track finder
   module MonitorTrackResidualsCAF_ckf = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
   replace MonitorTrackResidualsCAF_ckf.Tracks              = ctfWithMaterialTracksP5
   replace MonitorTrackResidualsCAF_ckf.trajectoryInput     = "ctfWithMaterialTracksP5Refitter"
   replace MonitorTrackResidualsCAF_ckf.OutputMEsInRootFile = false
-  # Clone for RS Track Finder  
+  # clone for RS track finder  
   module MonitorTrackResidualsCAF_rs = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"
   replace MonitorTrackResidualsCAF_rs.Tracks              = rsWithMaterialTracksP5
   replace MonitorTrackResidualsCAF_rs.trajectoryInput     = "rsWithMaterialTracksP5Refitter"
   replace MonitorTrackResidualsCAF_rs.OutputMEsInRootFile = false
   
   # TrackingMonitor
-  # Clone for Cosmic Track Finder
+  # clone for cosmic track finder
   module TrackMonCAF_cosmicTk = TrackerCosmicTrackMon from "DQM/TrackingMonitor/data/TrackerCosmicsTrackingMonitor.cfi"
   replace TrackMonCAF_cosmicTk.TrackProducer = cosmictrackfinderP5
   replace TrackMonCAF_cosmicTk.AlgoName      = "CosmicTk"
   replace TrackMonCAF_cosmicTk.FolderName    = "SiStrip/Tracks"
-  # Clone for CTF Track Finder
+  # clone for CTF track finder
   module TrackMonCAF_ckf = TrackerCosmicTrackMon from "DQM/TrackingMonitor/data/TrackerCosmicsTrackingMonitor.cfi"
   replace TrackMonCAF_ckf.TrackProducer = ctfWithMaterialTracksP5
   replace TrackMonCAF_ckf.AlgoName      = "CKFTk"
   replace TrackMonCAF_ckf.FolderName    = "SiStrip/Tracks"
-  # Clone for RS Track Finder
+  # clone for RS track finder
   module TrackMonCAF_rs = TrackerCosmicTrackMon from "DQM/TrackingMonitor/data/TrackerCosmicsTrackingMonitor.cfi"
   replace TrackMonCAF_rs.TrackProducer = rsWithMaterialTracksP5
   replace TrackMonCAF_rs.AlgoName      = "RSTk"
