@@ -33,12 +33,14 @@ replace SiStripMonitorTrackSim.TrackProducer= "TrackRefitter"
 replace SiStripMonitorTrackSim.TrackLabel= ""
 replace SiStripMonitorTrackSim.Cluster_src = siStripClusters
 replace SiStripMonitorTrackSim.FolderName = "SiStrip/Tracks"
+replace SiStripMonitorTrackSim.Mod_On      = true
 
 module SiStripMonitorTrackReal = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
 replace SiStripMonitorTrackReal.TrackProducer= "ctfWithMaterialTracksP5"
 replace SiStripMonitorTrackReal.TrackLabel= ""
 replace SiStripMonitorTrackReal.Cluster_src = siStripClusters
 replace SiStripMonitorTrackReal.FolderName = "SiStrip/Tracks"
+replace SiStripMonitorTrackReal.Mod_On      = true
 
 #### TrackerMonitorTrack ####
 module MonitorTrackResidualsSim = MonitorTrackResiduals from "DQM/TrackerMonitorTrack/data/MonitorTrackResiduals.cfi"

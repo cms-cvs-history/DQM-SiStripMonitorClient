@@ -24,18 +24,21 @@ replace SiStripMonitorClusterSim.StripQualityLabel = "test1"
 #### SiStripMonitorTrack ####
 ## Cosmic Track Finder
 module SiStripMonitorTrack_cosmicTk = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
-replace SiStripMonitorTrack_cosmicTk.TrackProducer= "cosmictrackfinderP5"
-replace SiStripMonitorTrack_cosmicTk.FolderName = "SiStrip/Tracks"
+replace SiStripMonitorTrack_cosmicTk.TrackProducer = "cosmictrackfinderP5"
+replace SiStripMonitorTrack_cosmicTk.FolderName    = "SiStrip/Tracks"
+replace SiStripMonitorTrack_cosmocTk.Mod_On        = true
 
 ## CKF Tracks
 module SiStripMonitorTrack_ckf = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
-replace SiStripMonitorTrack_ckf.TrackProducer= "ctfWithMaterialTracksP5"
-replace SiStripMonitorTrack_ckf.FolderName = "SiStrip/Tracks"
+replace SiStripMonitorTrack_ckf.TrackProducer = "ctfWithMaterialTracksP5"
+replace SiStripMonitorTrack_ckf.FolderName    = "SiStrip/Tracks"
+replace SiStripMonitorTrack_ckf.Mod_On        = true
 
 ## Road Search  Tracks
 module SiStripMonitorTrack_rs = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
-replace SiStripMonitorTrack_rs.TrackProducer= "rsWithMaterialTracksP5"
-replace SiStripMonitorTrack_rs.FolderName = "SiStrip/Tracks"
+replace SiStripMonitorTrack_rs.TrackProducer = "rsWithMaterialTracksP5"
+replace SiStripMonitorTrack_rs.FolderName    = "SiStrip/Tracks"
+replace SiStripMonitorTrack_rs.Mod_On        = true
 
 ## Merged Tracks
 module SiStripMonitorTrack_p5 = SiStripMonitorTrack from "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
