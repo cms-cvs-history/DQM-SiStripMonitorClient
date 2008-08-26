@@ -21,8 +21,9 @@
   
   sequence SiStripDQMRecoFromRaw = {
     siStripDigis         ,
+    siPixelDigis         ,
     offlineBeamSpot      ,
-    striptrackerlocalreco,
+    trackerlocalreco,
     tracksP5
   }
   

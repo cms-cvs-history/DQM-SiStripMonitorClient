@@ -13,12 +13,11 @@ replace siStripClusters.SiStripQualityLabel=""
 ##### Track Reconstruction ########
 include "RecoTracker/Configuration/data/RecoTrackerP5.cff"
 include "RecoVertex/BeamSpotProducer/data/BeamSpot.cff"
-replace CTF_P5_MeasurementTracker.pixelClusterProducer = ""
-replace RS_P5_MeasurementTracker.pixelClusterProducer = ''
 
 sequence RecoForDQM = {
     siStripDigis,
+    siPixelDigis,
     offlineBeamSpot,
-    striptrackerlocalreco,
+    trackerlocalreco,
     ctftracksP5
 }
