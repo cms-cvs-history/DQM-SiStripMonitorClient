@@ -100,7 +100,7 @@
   }        
   sequence SiStripDQMSourceGlobalRunCAF_reduced = {
     SiStripDQMSourceGlobalRunCAF_common &
-    TrackMonCAF_cosmicTk                & // SiStripMonirorTrack and  MonitorTrackResiduals switched off
+    TrackMonCAF_cosmicTk                & // SiStripMonitorTrack and MonitorTrackResiduals switched off
     SiStripDQMSourceGlobalRunCAF_ckf    &
-    TrackMonCAF_rs                        // SiStripMonirorTrack and  MonitorTrackResiduals switched off
+    TrackMonCAF_rs                        // SiStripMonitorTrack and MonitorTrackResiduals switched off
   }        
