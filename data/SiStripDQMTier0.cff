@@ -42,7 +42,7 @@ include "DQMServices/Core/data/DQM.cfg"
 #--------------------------
 #### STRIP DQM Source and Client
 #--------------------------
-include "DQM/SiStripMonitorClient/data/SiStripSourceConfigTier0.cff"
+include "DQM/SiStripMonitorClient/data/SiStripSourceConfigTier0_Cosmic.cff"
 
 
 sequence SiStripDQMTest_cosmicTk = {

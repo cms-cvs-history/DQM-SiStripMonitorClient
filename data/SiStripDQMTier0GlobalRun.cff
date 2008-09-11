@@ -13,36 +13,28 @@
   #-------------------------------------------------
   
   # source
-  include "DQM/SiStripMonitorClient/data/SiStripSourceConfigTier0.cff"
+  include "DQM/SiStripMonitorClient/data/SiStripSourceConfigTier0_Cosmic.cff"
   
   #-------------------------------------------------
   # Scheduling
   #-------------------------------------------------
   
   sequence SiStripDQMTest_cosmicTk = {
-    # from "DQM/SiStripMonitorClient/scripts/SiStripSourceConfigTier0.cff"
     SiStripDQMTier0_cosmicTk,
-    # from "DQMServices/Components/data/MEtoEDMConverter.cfi"
     MEtoEDMConverter 
   }
   
   sequence SiStripDQMTest_ckf = {
-    # from "DQM/SiStripMonitorClient/scripts/SiStripSourceConfigTier0.cff"
     SiStripDQMTier0_ckf,
-    # from "DQMServices/Components/data/MEtoEDMConverter.cfi"
     MEtoEDMConverter 
   }
   
   sequence SiStripDQMTest_rs = {
-    # from "DQM/SiStripMonitorClient/scripts/SiStripSourceConfigTier0.cff"
     SiStripDQMTier0_rs,
-    # from "DQMServices/Components/data/MEtoEDMConverter.cfi"
     MEtoEDMConverter 
   }
   
   sequence SiStripDQMTest = {
-    # from "DQM/SiStripMonitorClient/scripts/SiStripSourceConfigTier0.cff"
     SiStripDQMTier0,
-    # from "DQMServices/Components/data/MEtoEDMConverter.cfi"
     MEtoEDMConverter 
   }
