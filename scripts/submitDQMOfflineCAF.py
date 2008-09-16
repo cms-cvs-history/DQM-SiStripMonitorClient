@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# $Id: submitDQMOfflineCAF.py,v 1.19 2008/09/12 20:08:43 vadler Exp $
+# $Id: submitDQMOfflineCAF.py,v 1.20 2008/09/14 12:28:54 vadler Exp $
 #
 
 ## CMSSW/DQM/SiStripMonitorClient/scripts/submitDQMOfflineCAF.py
@@ -74,7 +74,7 @@ STR_textUsage            = """ CMSSW/DQM/SiStripMonitorClient/scripts/submitDQMO
       
      -d, --dataset PRIMARY_DATASET
          specify dataset for DBS query;
-         default: /Cosmics/Commissioning08-EW35_3T_v1/RECO
+         required by funtion letters '-s' and '-c'
    
      -P, --Python TRUE/FALSE
          use or use not Python configuration of CMSSW jobs;
@@ -528,43 +528,43 @@ str_nJobs = str(Int_jobs)
 print '> submitDQMOfflineCAF.py > input files for run ' + Str_run + ':   ' + str(int_nInputFiles)
 print
 
-# magnetic field
-# extract time stamps of the run
-str_cmsmonParams  = urllib.urlencode({'RUN':Str_run})
-file_cmsmonOutput = urllib.urlopen("http://cmsmon.cern.ch/cmsdb/servlet/RunSummary", str_cmsmonParams)
-str_timeBegin     = ''
-str_timeEnd       = ''
-for str_cmsmonOutput in file_cmsmonOutput.readlines():
-  if str_cmsmonOutput.find('HREF=Component?RUN=' + Str_run + '&NAME=TRACKER') >= 0:
-    lstr_timeQuery = str_cmsmonOutput.split('HREF=Component?RUN=' + Str_run + '&NAME=TRACKER&')[1].split('>TRACKER')[0].split('&')
-    for str_timeQuery in lstr_timeQuery:
-      str_nameStamp = str_timeQuery.split('=')[0]
-      lstr_timeDate = str_timeQuery.split('=')[1].split('_')[0].split('.')
-      lstr_timeTime = str_timeQuery.split('=')[1].split('_')[1].split(':')
-      dt_stampOld   = datetime.datetime(int(lstr_timeDate[0]),int(lstr_timeDate[1]),int(lstr_timeDate[2]),int(lstr_timeTime[0]),int(lstr_timeTime[1]),int(lstr_timeTime[2]))
-      dt_stampNew   = dt_stampOld - TD_shiftUTC
-      str_timeStamp = str(dt_stampNew).replace('-','.') 
-      if str_nameStamp == 'TIME_BEGIN':
-        str_timeBegin = str_timeStamp
-      elif str_nameStamp == 'TIME_END':
-        str_timeEnd = str_timeStamp
-# get magnetic field itself
-str_cmsmonParams  = urllib.urlencode({'TIME_BEGIN':str_timeBegin, 'TIME_END':str_timeEnd})
-file_cmsmonOutput = urllib.urlopen("http://cmsmon.cern.ch/cmsdb/servlet/MagnetHistory", str_cmsmonParams)
-float_avMagMeasure = -999.0
-for str_cmsmonOutput in file_cmsmonOutput.readlines():
-  if str_cmsmonOutput.find('BFIELD, Tesla') >= 0:
-    float_avMagMeasure = float(str_cmsmonOutput.split('</A>')[0].split('>')[-1])
-# determine corresponding configuration file to be included
+# # magnetic field
+# # extract time stamps of the run
+# str_cmsmonParams  = urllib.urlencode({'RUN':Str_run})
+# file_cmsmonOutput = urllib.urlopen("http://cmsmon.cern.ch/cmsdb/servlet/RunSummary", str_cmsmonParams)
+# str_timeBegin     = ''
+# str_timeEnd       = ''
+# for str_cmsmonOutput in file_cmsmonOutput.readlines():
+#   if str_cmsmonOutput.find('HREF=Component?RUN=' + Str_run + '&NAME=TRACKER') >= 0:
+#     lstr_timeQuery = str_cmsmonOutput.split('HREF=Component?RUN=' + Str_run + '&NAME=TRACKER&')[1].split('>TRACKER')[0].split('&')
+#     for str_timeQuery in lstr_timeQuery:
+#       str_nameStamp = str_timeQuery.split('=')[0]
+#       lstr_timeDate = str_timeQuery.split('=')[1].split('_')[0].split('.')
+#       lstr_timeTime = str_timeQuery.split('=')[1].split('_')[1].split(':')
+#       dt_stampOld   = datetime.datetime(int(lstr_timeDate[0]),int(lstr_timeDate[1]),int(lstr_timeDate[2]),int(lstr_timeTime[0]),int(lstr_timeTime[1]),int(lstr_timeTime[2]))
+#       dt_stampNew   = dt_stampOld - TD_shiftUTC
+#       str_timeStamp = str(dt_stampNew).replace('-','.') 
+#       if str_nameStamp == 'TIME_BEGIN':
+#         str_timeBegin = str_timeStamp
+#       elif str_nameStamp == 'TIME_END':
+#         str_timeEnd = str_timeStamp
+# # get magnetic field itself
+# str_cmsmonParams  = urllib.urlencode({'TIME_BEGIN':str_timeBegin, 'TIME_END':str_timeEnd})
+# file_cmsmonOutput = urllib.urlopen("http://cmsmon.cern.ch/cmsdb/servlet/MagnetHistory", str_cmsmonParams)
+# float_avMagMeasure = -999.0
+# for str_cmsmonOutput in file_cmsmonOutput.readlines():
+#   if str_cmsmonOutput.find('BFIELD, Tesla') >= 0:
+#     float_avMagMeasure = float(str_cmsmonOutput.split('</A>')[0].split('>')[-1])
+# # determine corresponding configuration file to be included
 float_magField = 0.0
 str_magField   = '0'
-for float_valueMagField in LFLOAT_valueMagField:
-  if math.fabs(float_valueMagField-float_avMagMeasure) < math.fabs(float_magField-float_avMagMeasure):
-    float_magField = float_valueMagField
-    str_magField   = str(int(float_magField*10))
-print '> submitDQMOfflineCAF.py > (average) magnetic field in run ' + Str_run + ':   ' + str(float_avMagMeasure) + ' T'
-print '                           using ' + str(float_magField) + ' T for configuration'
-print
+# for float_valueMagField in LFLOAT_valueMagField:
+#   if math.fabs(float_valueMagField-float_avMagMeasure) < math.fabs(float_magField-float_avMagMeasure):
+#     float_magField = float_valueMagField
+#     str_magField   = str(int(float_magField*10))
+# print '> submitDQMOfflineCAF.py > (average) magnetic field in run ' + Str_run + ':   ' + str(float_avMagMeasure) + ' T'
+# print '                           using ' + str(float_magField) + ' T for configuration'
+# print
 str_magField += 'T'
 if not Bool_Python:
   str_magField = str(float_magField)
