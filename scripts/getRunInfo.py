@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# $Id:$
+# $Id: getRunInfo.py,v 1.3.2.2 2008/10/21 11:33:24 vadler Exp $
 #
 
 ## CMSSW/DQM/SiStripMonitorClient/scripts/getRunInfo.py
@@ -21,31 +21,24 @@ import datetime
 
 LSTR_arguments = sys.argv[1:]
 # numbers
-TD_shiftUTC = datetime.timedelta(hours = 2) # positive for timezones with later time than UTC
-INT_offset  = 8
+INT_offset = 8
 # strings
-STR_SiStrip             = 'SIST'
-STR_wwwDBSData          = 'https://cmsweb.cern.ch/dbs_discovery/getData'
-STR_headDatasets        = 'datasets'
-STR_headFiles           = 'available data files'
-LSTR_summaryKeys        = ['BField', 'HLT Version', 'L1 Rate', 'HLT Rate', 'L1 Triggers', 'HLT Triggers', 'LHC Fill', 'LHC Energy', 'Initial Lumi', 'Ending Lumi', 'Run Lumi', 'Run Live Lumi']
-LSTR_summaryKeysTrigger = ['L1 Key', 'HLT Key']   
+STR_SiStrip      = 'SIST'
+STR_wwwDBSData   = 'https://cmsweb.cern.ch/dbs_discovery/getData'
+STR_headDatasets = 'datasets'
+STR_headFiles    = 'available data files'
 
 # Globals
 
 global Str_run
 global Dict_cmsmonRunRegistry
-global Dict_cmsmonRunSummary
 global Dict_dbsDatasets
 global Dict_dbsEvents
-global Lstr_hltPaths
 # initialise
 Str_run                = sys.argv[1]
 Dict_cmsmonRunRegistry = {}
-Dict_cmsmonRunSummary  = {}
 Dict_dbsDatasets       = {}
 Dict_dbsEvents         = {}
-Lstr_hltPaths          = []
 
 ## FUNCTIONS
 
@@ -175,59 +168,6 @@ for str_dbsDatasets in lstr_dbsDatasets:
   Dict_dbsEvents[str_dbsDatasets] = str(int_events)
   if len(str_dbsDatasets) > int_maxLenDbsDatasets:
     int_maxLenDbsDatasets = len(str_dbsDatasets)
-      
-# get run summary
-str_cmsmonRunSummary  = urllib.urlencode({'RUN':Str_run})
-file_cmsmonRunSummary = urllib.urlopen("http://cmsmon.cern.ch/cmsdb/servlet/RunSummary", str_cmsmonRunSummary)
-lstr_cmsmonRunSummary = []
-for str_cmsmonRunSummary in file_cmsmonRunSummary.readlines():
-  lstr_cmsmonRunSummary.append(str_cmsmonRunSummary) # store run summary information
-  for str_summaryKeys in LSTR_summaryKeys:
-    if str_cmsmonRunSummary.find(str_summaryKeys) >= 0:
-      Dict_cmsmonRunSummary[str_summaryKeys] = str_cmsmonRunSummary.split('</TD></TR>')[0].split('>')[-1]
-      break
-  for str_summaryKeysTrigger in LSTR_summaryKeysTrigger:
-    if str_cmsmonRunSummary.find(str_summaryKeysTrigger) >= 0:
-      Dict_cmsmonRunSummary[str_summaryKeysTrigger] = str_cmsmonRunSummary.split('</A></TD></TR>')[0].split('>')[-1]
-      if str_summaryKeysTrigger == 'HLT Key':
-         Dict_cmsmonRunSummary['HLT Config ID'] = str_cmsmonRunSummary.split('HLTConfiguration?KEY=')[1].split('>')[0]
-
-# Determine further information
-
-# get magnetic field
-float_avMagMeasure = -999.0
-dt_newStart        = datetime.datetime(2000,1,1,0,0,0)
-dt_newEnd          = datetime.datetime(2000,1,1,0,0,0)
-if ( Dict_cmsmonRunRegistry.has_key('START_TIME') and Dict_cmsmonRunRegistry.has_key('END_TIME') ):
-  lstr_dateStart = Dict_cmsmonRunRegistry['START_TIME'].split(' ')[0].split('.')
-  lstr_timeStart = Dict_cmsmonRunRegistry['START_TIME'].split(' ')[1].split(':')
-  lstr_dateEnd   = Dict_cmsmonRunRegistry['END_TIME'].split(' ')[0].split('.')
-  lstr_timeEnd   = Dict_cmsmonRunRegistry['END_TIME'].split(' ')[1].split(':')
-  dt_oldStart    = datetime.datetime(int(lstr_dateStart[0]),int(lstr_dateStart[1]),int(lstr_dateStart[2]),int(lstr_timeStart[0]),int(lstr_timeStart[1]),int(lstr_timeStart[2]))
-  dt_oldEnd      = datetime.datetime(int(lstr_dateEnd[0]),  int(lstr_dateEnd[1]),  int(lstr_dateEnd[2]),  int(lstr_timeEnd[0]),  int(lstr_timeEnd[1]),  int(lstr_timeEnd[2]))
-  dt_newStart    = dt_oldStart - TD_shiftUTC
-  dt_newEnd      = dt_oldEnd   - TD_shiftUTC
-  str_cmsmonMagnetHistory  = urllib.urlencode({'TIME_BEGIN':dt_newStart, 'TIME_END':dt_newEnd})
-  file_cmsmonMagnetHistory = urllib.urlopen("http://cmsmon.cern.ch/cmsdb/servlet/MagnetHistory", str_cmsmonMagnetHistory)
-  float_avMagMeasure = -999.0
-  for str_cmsmonMagnetHistory in file_cmsmonMagnetHistory.readlines():
-    if str_cmsmonMagnetHistory.find('BFIELD, Tesla') >= 0:
-      float_avMagMeasure = float(str_cmsmonMagnetHistory.split('</A>')[0].split('>')[-1])
-else:
-  print '> getRunInfo.py > cannot determine magnetic field due to missing time information' 
-# get HLT configuration
-str_cmsmonHLTConfig  = urllib.urlencode({'KEY':Dict_cmsmonRunSummary['HLT Config ID']})
-file_cmsmonHLTConfig = urllib.urlopen("http://cmsmon.cern.ch/cmsdb/servlet/HLTConfiguration", str_cmsmonHLTConfig)
-lstr_cmsmonHLTConfig = []
-bool_foundPaths      = False
-for str_cmsmonHLTConfig in file_cmsmonHLTConfig.readlines():
-  lstr_cmsmonHLTConfig.append(str_cmsmonHLTConfig)
-  if str_cmsmonHLTConfig.find('<H3>Paths</H3>') >= 0:
-    bool_foundPaths = True
-  if bool_foundPaths and str_cmsmonHLTConfig.find('<HR><H3>') >= 0:
-    bool_foundPaths = False
-  if bool_foundPaths and str_cmsmonHLTConfig.startswith('<TR><TD ALIGN=RIGHT>'):
-    Lstr_hltPaths.append(str_cmsmonHLTConfig.split('</TD>')[1].split('<TD>')[-1])
     
 # Print information
 
@@ -270,9 +210,9 @@ if bool_runRegistry:
     print '> getRunInfo.py > DQM online shifter\'s comment : ' + Dict_cmsmonRunRegistry['ONLINE_COMMENT']
   if 'OFFLINE_COMMENT' in Dict_cmsmonRunRegistry:
     print '> getRunInfo.py > DQM offline shifter\'s comment: ' + Dict_cmsmonRunRegistry['OFFLINE_COMMENT']
-print
 
 # from DBS
+print
 print '> getRunInfo.py > * information from DBS *'
 print
 str_print = '> getRunInfo.py > ' + STR_headDatasets
@@ -296,36 +236,4 @@ for str_dbsDatasets in lstr_dbsDatasets:
   for int_i in range(INT_offset-len(Dict_dbsEvents[str_dbsDatasets])):
     str_print += ' '
   print str_print + Dict_dbsEvents[str_dbsDatasets] + ' events)'
-print
-  
-# from RunSummary
-print '> getRunInfo.py > * information from run summary *'
-print
-for str_summaryKey in Dict_cmsmonRunSummary.keys():
-  print '> getRunInfo.py > ' + str_summaryKey + '\t: ' + Dict_cmsmonRunSummary[str_summaryKey]
-print
-
-# from HLT configuration
-print '> getRunInfo.py > * information from HLT configuration *'
-print
-print '> getRunInfo.py > HLT paths included:'
-print '> -----------------------------------'
-for str_hltPaths in Lstr_hltPaths:
-  if str_hltPaths.find('CandHLTTrackerCosmics') >= 0 or str_hltPaths.find('HLT_TrackerCosmics') >= 0: 
-    print '                  ' + str_hltPaths + ' \t<====== FOR SURE!'
-  elif str_hltPaths.find('Tracker') >= 0:
-    print '                  ' + str_hltPaths + ' \t<====== maybe?'
-  else:
-    print '                  ' + str_hltPaths
-print
-
-# from magnet history
-print '> getRunInfo.py > * information from magnet history *'
-print
-print '> getRunInfo.py > run start time (UTC)    : ' + str(dt_newStart)
-print '> getRunInfo.py > run end   time (UTC)    : ' + str(dt_newEnd)
-if float_avMagMeasure >= 0.0:
-  print '> getRunInfo.py > (average) magnetic field: ' + str(float_avMagMeasure) + ' T'
-else:
-  print '> getRunInfo.py > cannot determine magnetic field (most probably due to missing time information)' 
-print
+print  
