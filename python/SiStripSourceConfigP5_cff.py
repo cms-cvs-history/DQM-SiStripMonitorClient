@@ -10,7 +10,6 @@ from DQM.SiStripMonitorSummary.SiStripMonitorCondData_cfi import *
 # SiStripMonitorDigi ####
 from DQM.SiStripMonitorDigi.SiStripMonitorDigi_cfi import *
 SiStripMonitorDigi.SelectAllDetectors = True
-SiStripMonitorDigi.TProfTotalNumberOfDigis.subdetswitchon = True
 
 # SiStripMonitorCluster ####
 # Clone for Sim Data
