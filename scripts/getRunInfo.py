@@ -15,21 +15,17 @@ import sys
 import os
 import string
 import urllib
-import time
 import datetime
-import getpass
 
 # Constants
 
 # numbers
-TD_shiftUTC = datetime.timedelta(hours = 2) # positive for timezones with later time than UTC
-INT_offset  = 8
+INT_offset = 8
 # strings
-STR_p5           = 'cmsusr0.cern.ch'
 STR_SiStrip      = 'SIST'
 STR_wwwDBSData   = 'https://cmsweb.cern.ch/dbs_discovery/getData'
-LSTR_dbsInstances = ['cms_dbs_prod_global'    ,
-                     'cms_dbs_caf_analysis_01']
+LSTR_dbsInstances = ['cms_dbs_caf_analysis_01',
+                     'cms_dbs_prod_global'    ]
 STR_headDatasets = 'datasets'
 STR_headFiles    = 'available data files'
 DICT_htmlTags    = {}
@@ -53,17 +49,15 @@ DICT_htmlTags['OFFLINE_COMMENT'] = 'DQM offline shifter\'s comment'
 
 # Globals
 
-global Str_passwd
-global Str_userID
 global Str_run
-global Dict_runRegistry
+global Dict_cmsmonRunRegistry
 global DictDict_dbsDatasets
 global DictDict_dbsEvents
 global Dict_dbsDatasets
 global Dict_maxLenDbsDatasets
 # initialise
 Str_run                = sys.argv[1]
-Dict_runRegistry = {}
+Dict_cmsmonRunRegistry = {}
 DictDict_dbsDatasets   = {}
 DictDict_dbsEvents     = {}
 Dict_dbsDatasets       = {}
@@ -135,15 +129,15 @@ def Func_FillInfoRunRegistry():
   """ Func_FillInfoRunRegistry():
   Retrieves run info from RunRegistry and fills it into containers
   """  
-  str_runRegistry     = urllib.urlencode({'format':'xml', 'intpl':'xml', 'qtype':'RUN_NUMBER', 'sortname':'RUN_NUMBER'})
-  file_runRegistry    = urllib.urlopen("http://pccmsdqm04.cern.ch/runregistry/runregisterdata", str_runRegistry)
-  str_runRegistryLong = ''
-  for str_runRegistry in file_runRegistry.readlines():
-    str_runRegistryLong += str_runRegistry.splitlines()[0]
+  str_cmsmonRunRegistry     = urllib.urlencode({'format':'xml', 'intpl':'xml', 'qtype':'RUN_NUMBER', 'sortname':'RUN_NUMBER'})
+  file_cmsmonRunRegistry    = urllib.urlopen("http://pccmsdqm04.cern.ch/runregistry/runregisterdata", str_cmsmonRunRegistry)
+  str_cmsmonRunRegistryLong = ''
+  for str_cmsmonRunRegistry in file_cmsmonRunRegistry.readlines():
+    str_cmsmonRunRegistryLong += str_cmsmonRunRegistry.splitlines()[0]
   bool_foundRun = False
   str_cmsmonRun = ''
-  for int_runIndex in range(1,int(str_runRegistryLong.split('<RUNS')[1].split('>')[0].split('total=\"')[1].split('\"')[0])):
-    str_cmsmonRun = Func_GetHtmlTagValue('RUN', str_runRegistryLong, int_runIndex)
+  for int_runIndex in range(1,int(str_cmsmonRunRegistryLong.split('<RUNS')[1].split('>')[0].split('total=\"')[1].split('\"')[0])):
+    str_cmsmonRun = Func_GetHtmlTagValue('RUN', str_cmsmonRunRegistryLong, int_runIndex)
     if Func_GetHtmlTagValue('NUMBER', str_cmsmonRun) == Str_run:
       bool_foundRun = True
       break
@@ -153,8 +147,8 @@ def Func_FillInfoRunRegistry():
   dict_cmsmonHtmlTags = Func_GetHtmlTags(str_cmsmonRun)
   for str_cmsmonHtmlTag in dict_cmsmonHtmlTags.keys():
     if dict_cmsmonHtmlTags[str_cmsmonHtmlTag] == False:
-      Dict_runRegistry[str_cmsmonHtmlTag] = Func_GetHtmlTagValue(str_cmsmonHtmlTag, str_cmsmonRun)
-  if Dict_runRegistry['SUBSYSTEMS'].find(STR_SiStrip) < 0:
+      Dict_cmsmonRunRegistry[str_cmsmonHtmlTag] = Func_GetHtmlTagValue(str_cmsmonHtmlTag, str_cmsmonRun)
+  if Dict_cmsmonRunRegistry['SUBSYSTEMS'].find(STR_SiStrip) < 0:
     print '> getRunInfo.py > SiStrip was not in this run'
     return False
   return True
@@ -205,139 +199,53 @@ print
 print '> getRunInfo.py > information on run \t*** %s ***' %(Str_run)
 print
 
-# Enter online password
-
-Str_userID = getpass.getuser()
-Str_passwd = getpass.getpass('> getRunInfo.py > '+Str_userID+'@'+STR_p5+'\'s password: ')
-
 # Get run information from the web
 
 # get run RunRegistry entries
 bool_runRegistry = Func_FillInfoRunRegistry()
 
-# # print run RunRegistry info
-# if bool_runRegistry:
-#   print
-#   print '> getRunInfo.py > * information from run registry *'
-#   print
-#   for str_htmlTag in DICT_htmlTags.keys():
-#     if str_htmlTag in Dict_runRegistry:
-#       print '> getRunInfo.py > %s: %s'    %(DICT_htmlTags[str_htmlTag],Dict_runRegistry[str_htmlTag])
-  
-# get run RunSummary entries
-print 'DEBUG run summary'
-pid_runSummary, fd_runSummary = os.forkpty()
-if pid_runSummary == 0:
-  os.execv('/usr/bin/ssh', ['/usr/bin/ssh', '-l', Str_userID, STR_p5] + ['rm', '-f', '*' + '&&' + 'wget', '\"http://cmswbm/cmsdb/servlet/RunSummary?RUN='+Str_run+'\"'])
-else:
-  time.sleep(1)
-  os.read(fd_runSummary, 1000)
-  time.sleep(1)
-  os.write(fd_runSummary, Str_passwd)
-  time.sleep(1)
-  s = os.read(fd_runSummary,1 )
-  s = os.read(fd_runSummary,1 )
+# get run DBS entries
+for str_dbsInstance in LSTR_dbsInstances:
+  Func_FillInfoDBS(str_dbsInstance)
 
-os.system('scp '+Str_userID+'@'+STR_p5+':~/RunSummary* test/')
-str_hltID = ''
-file_runSummary = file('test/RunSummary?RUN='+Str_run,'r')
-for str_runSummary in file_runSummary.readlines():
-  if str_runSummary.find('HLT Key') >= 0:
-     str_hltID = str_runSummary.split('HLTConfiguration?KEY=')[1].split('>')[0]
-print 'DEBUG str_hltID: %s' %(str_hltID)
-  
-dt_newStart = datetime.datetime(2000,1,1,0,0,0)
-dt_newEnd   = datetime.datetime(2000,1,1,0,0,0)
-if ( Dict_runRegistry.has_key('START_TIME') and Dict_runRegistry.has_key('END_TIME') ):
-  lstr_dateStart = Dict_runRegistry['START_TIME'].split(' ')[0].split('.')
-  lstr_timeStart = Dict_runRegistry['START_TIME'].split(' ')[1].split(':')
-  lstr_dateEnd   = Dict_runRegistry['END_TIME'].split(' ')[0].split('.')
-  lstr_timeEnd   = Dict_runRegistry['END_TIME'].split(' ')[1].split(':')
-  dt_oldStart    = datetime.datetime(int(lstr_dateStart[0]),int(lstr_dateStart[1]),int(lstr_dateStart[2]),int(lstr_timeStart[0]),int(lstr_timeStart[1]),int(lstr_timeStart[2]))
-  dt_oldEnd      = datetime.datetime(int(lstr_dateEnd[0]),  int(lstr_dateEnd[1]),  int(lstr_dateEnd[2]),  int(lstr_timeEnd[0]),  int(lstr_timeEnd[1]),  int(lstr_timeEnd[2]))
-  dt_newStart    = dt_oldStart - TD_shiftUTC
-  dt_newEnd      = dt_oldEnd   - TD_shiftUTC
-  dt_start       = str(dt_newStart).replace('-','.')
-  dt_end         = str(dt_newEnd).replace('-','.')
-  print 'DEBUG start time: \t%s \t%s \t%s' %(Dict_runRegistry['START_TIME'],dt_newStart,dt_start)
-  print 'DEBUG end   time: \t%s \t%s \t%s' %(Dict_runRegistry['END_TIME'],dt_newEnd,dt_end)
-  print 'DEBUG magnet'
-  pid_magnetHistory, fd_magnetHistory = os.forkpty()
-  if pid_magnetHistory == 0:
-    os.execv('/usr/bin/ssh', ['/usr/bin/ssh', '-l', Str_userID, STR_p5] + ['wget', '\"http://cmswbm/cmsdb/servlet/MagnetHistory?TIME_BEGIN='+dt_start+'&TIME_END='+dt_end+'\"'])
-  else:
-    time.sleep(1)
-    os.read(fd_magnetHistory, 1000)
-    time.sleep(1)
-    os.write(fd_magnetHistory, Str_passwd)
-    time.sleep(1)
-    s = os.read(fd_magnetHistory,1 )
-    s = os.read(fd_magnetHistory,1 )
+# Print information
 
-if not str_hltID == '':
-  print 'DEBUG hlt'
-  pid_hlt, fd_hlt = os.forkpty()
-  if pid_hlt == 0:
-    os.execv('/usr/bin/ssh', ['/usr/bin/ssh', '-l', Str_userID, STR_p5] + ['wget', '\"http://cmswbm/cmsdb/servlet/HLTConfiguration?KEY='+str_hltID+'\"'])
-  else:
-    time.sleep(1)
-    os.read(fd_hlt, 1000)
-    time.sleep(1)
-    os.write(fd_hlt, Str_passwd)
-    time.sleep(1)
-    s = os.read(fd_hlt,1 )
-    s = os.read(fd_hlt,1 )
+# from run registry
+if bool_runRegistry:
+  print
+  print '> getRunInfo.py > * information from run registry *'
+  print
+  for str_htmlTag in DICT_htmlTags.keys():
+    if str_htmlTag in Dict_cmsmonRunRegistry:
+      print '> getRunInfo.py > %s: %s'    %(DICT_htmlTags[str_htmlTag],Dict_cmsmonRunRegistry[str_htmlTag])
 
-os.system('scp '+Str_userID+'@'+STR_p5+':~/* test/')
-# pid_scp, fd_scp = os.forkpty()
-# if pid_scp == 0:
-#   os.execv('/usr/bin/scp', ['/usr/bin/scp', Str_userID+'@'+STR_p5+':~/*', 'test/'])
-# else:
-#   time.sleep(1)
-#   os.read(fd_scp, 1000)
-#   time.sleep(1)
-#   os.write(fd_scp, Str_passwd)
-#   time.sleep(1)
-#   res = ''
-#   count = 0
-#   s = os.read(fd_scp,1 )
-#   while s:
-#     if count >= 50:
-#       break
-#     res += s
-#     s = os.read(fd_scp,1 )
-#     count += 1
-#   print res
-
-# # get run DBS entries
-# for str_dbsInstance in LSTR_dbsInstances:
-#   Func_FillInfoDBS(str_dbsInstance)
-# 
-# # print run DBS info
-# print
-# print '> getRunInfo.py > * information from DBS *'
-# print
-# for str_dbsInstance in LSTR_dbsInstances:
-#   print '> getRunInfo.py > DBS instance: %s' %(str_dbsInstance)
-#   str_print = '> getRunInfo.py > ' + STR_headDatasets
-#   for int_i in range(Dict_maxLenDbsDatasets[str_dbsInstance]-len(STR_headDatasets)):
-#     str_print += ' '
-#   str_print += ' '
-#   int_length = len(str_print)
-#   print '%s%s' %(str_print,STR_headFiles)
-#   str_print = '                  '
-#   for int_i in range(int_length-16+len(STR_headFiles)/2+INT_offset+8):
-#     str_print += '-'
-#   print str_print
-#   for str_dbsDataset in Dict_dbsDatasets[str_dbsInstance]:
-#     str_print = '                  ' + str_dbsDataset
-#     for int_i in range(Dict_maxLenDbsDatasets[str_dbsInstance]-len(str_dbsDataset)):
-#       str_print += ' '
-#     str_print += ' '
-#     for int_i in range(len(STR_headFiles)/2-len(DictDict_dbsDatasets[str_dbsInstance][str_dbsDataset])):
-#       str_print += ' '
-#     str_print += DictDict_dbsDatasets[str_dbsInstance][str_dbsDataset] + ' ('
-#     for int_i in range(INT_offset-len(DictDict_dbsEvents[str_dbsInstance][str_dbsDataset])):
-#       str_print += ' '
-#     print '%s%s events)' %(str_print,DictDict_dbsEvents[str_dbsInstance][str_dbsDataset])
-#   print  
+# from DBS
+print
+print '> getRunInfo.py > * information from DBS *'
+print
+for str_dbsInstance in LSTR_dbsInstances:
+  print '> getRunInfo.py > DBS instance: %s' %(str_dbsInstance)
+  if str_dbsInstance == LSTR_dbsInstances[0]:
+    print '                  (This is the instance used at CAF!)'
+  str_print = '> getRunInfo.py > ' + STR_headDatasets
+  for int_i in range(Dict_maxLenDbsDatasets[str_dbsInstance]-len(STR_headDatasets)):
+    str_print += ' '
+  str_print += ' '
+  int_length = len(str_print)
+  print '%s%s' %(str_print,STR_headFiles)
+  str_print = '                  '
+  for int_i in range(int_length-16+len(STR_headFiles)/2+INT_offset+8):
+    str_print += '-'
+  print str_print
+  for str_dbsDataset in Dict_dbsDatasets[str_dbsInstance]:
+    str_print = '                  ' + str_dbsDataset
+    for int_i in range(Dict_maxLenDbsDatasets[str_dbsInstance]-len(str_dbsDataset)):
+      str_print += ' '
+    str_print += ' '
+    for int_i in range(len(STR_headFiles)/2-len(DictDict_dbsDatasets[str_dbsInstance][str_dbsDataset])):
+      str_print += ' '
+    str_print += DictDict_dbsDatasets[str_dbsInstance][str_dbsDataset] + ' ('
+    for int_i in range(INT_offset-len(DictDict_dbsEvents[str_dbsInstance][str_dbsDataset])):
+      str_print += ' '
+    print '%s%s events)' %(str_print,DictDict_dbsEvents[str_dbsInstance][str_dbsDataset])
+  print  
