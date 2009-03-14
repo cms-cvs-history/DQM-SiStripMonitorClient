@@ -27,7 +27,7 @@ TkMapFrame.getURLWithLID = function()
    var s0          = (url.lastIndexOf(":")+1);
    var s1          = url.lastIndexOf("/");
    var port_number = url.substring(s0, s1);
-   url += "urn:xdaq-application:lid=27/moduleWeb?module=SiStripAnalyser&";
+   url += "urn:xdaq-application:lid=50/moduleWeb?module=SiStripAnalyser&";
    return url;
  } catch (errorMessage) {
    alert("[TkMapFrame.getURLWithLID] Exeuction/syntax error: " + errorMessage );

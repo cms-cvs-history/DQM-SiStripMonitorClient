@@ -7,6 +7,7 @@ window.onload=function(){
 
   document.onkeypress = CommonActions.stopRKey;
   CommonActions.CreateTkStrustures();
+  CommonActions.ReadTkMapOptions();
   CommonActions.ShowProgress('visible', 'Histograms ');
   CommonActions.ShowButtons(true);
   CommonActions.ShowTabs('hidden');  
@@ -198,5 +199,46 @@ CommonActions.CreateTkStrustures = function()
     aobj.selectedIndex = 0;
     bobj.selectedIndex = 0;
 }
+//
+// Read Options for Tracker Map Creation
+//
+CommonActions.ReadTkMapOptions = function() {
+  var url          = WebLib.getApplicationURL();
+  url              = url + "/sistrip_tkmap_option.xml"; 
+  var retVal = new Ajax.Request(url,
+                               {           
+                  		method: 'get',	  
+ 			        parameters: '', 
+ 			        onSuccess: CommonActions.FillTkMapOptions
+ 			       });
+}
+//
+// Fill Options for Tracker Map Creation
+//
+CommonActions.FillTkMapOptions = function(transport) {
+    try 
+    {
+      var doc   = transport.responseXML;
+      var root  = doc.documentElement;
 
+      // TkMap Option Select Box
+      var aobj  = $('tkmap_option');
+      aobj.options.length = 0;
+      var mrows = root.getElementsByTagName('TkMapOption');
+      for (var i = 0; i < mrows.length; i++) {
+        var mnum = mrows[i].childNodes[0].nodeValue;
+        var aoption = new Option(mnum, mnum);
+        try 
+        {
+          aobj.add(aoption, null);
+        }
+        catch (e) {
+          aobj.add(aoption, -1);
+        }
+      }
+    }
+    catch (err) {
+      alert ("[CommonActions.FillTkMapOptions] Error detail: " + err.message); 
+    }
+}
 
