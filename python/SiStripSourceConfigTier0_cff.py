@@ -15,6 +15,12 @@ from DQM.SiStripMonitorHardware.siStripFEDMonitor_Tier0_cff import *
 # SiStripMonitorDigi ####
 from DQM.SiStripMonitorDigi.SiStripMonitorDigi_cfi import *
 SiStripMonitorDigi.Mod_On = False
+SiStripMonitorDigi.TProfDigiApvCycle.subdetswitchon = True
+
+# SiStripMonitorCluster ####
+from DQM.SiStripMonitorCluster.SiStripMonitorCluster_cfi import *
+SiStripMonitorCluster.Mod_On = False
+SiStripMonitorCluster.TProfClustersApvCycle.subdetswitchon = True
 
 # SiStripMonitorTrack ####
 from DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi import *
@@ -30,12 +36,8 @@ MonitorTrackResiduals.Mod_On = False
 
 # TrackingMonitor ####
 from DQM.TrackingMonitor.TrackingMonitor_cfi import *
-TrackMon.TrackProducer = 'generalTracks'
-TrackMon.AlgoName = 'CKFTk'
-TrackMon.FolderName = 'Tracking/TrackParameters'
-TrackMon.doSeedParameterHistos = True
-TrackMon.doBeamSpotPlots       = True
-TrackMon.BSFolderName          = 'Tracking/TrackParameters/BeamSpotParameters'
+TrackMon.FolderName          = 'Tracking/TrackParameters'
+TrackMon.BSFolderName        = 'Tracking/TrackParameters/BeamSpotParameters'
 
 # DQM Services
 dqmInfoSiStrip = cms.EDFilter("DQMEventInfo",
