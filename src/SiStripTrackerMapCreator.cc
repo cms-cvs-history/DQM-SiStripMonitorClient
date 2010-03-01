@@ -45,7 +45,6 @@ void SiStripTrackerMapCreator::create(const edm::ParameterSet & tkmapPset,
   tkMapMin = 0.0; 
 
   if (map_type == "QTestAlarm") {
-    trackerMap_->fillc_all_blank();
     const vector<uint16_t>& feds = fedcabling->feds(); 
     uint32_t detId_save = 0;
     for(vector<unsigned short>::const_iterator ifed = feds.begin(); 
@@ -62,7 +61,6 @@ void SiStripTrackerMapCreator::create(const edm::ParameterSet & tkmapPset,
       }
     } 
   } else {
-    trackerMap_->fill_all_blank();
     setTkMapFromHistogram(dqm_store, map_type);
     setTkMapRange(map_type);
   }

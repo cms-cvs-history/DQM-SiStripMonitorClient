@@ -13,9 +13,6 @@ SiStripAnalyser = cms.EDFilter("SiStripAnalyser",
     RawDataTag               = cms.untracked.InputTag("source"),                              
     TkmapParameters = cms.PSet(
         loadFedCabling = cms.untracked.bool(True),
-        loadFecCabling = cms.untracked.bool(True),
-        loadLVCabling  = cms.untracked.bool(True),
-        loadHVCabling  = cms.untracked.bool(True),
         trackerdatPath = cms.untracked.string('CommonTools/TrackerMap/data/'),
         trackermaptxtPath = cms.untracked.string('DQM/Integration/test/TkMap/')
     ),
