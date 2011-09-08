@@ -79,6 +79,8 @@ TrackerCollisionTrackMon.l1Algorithms  = cms.vstring(
 TrackerCollisionTrackMon.andOrL1       = cms.bool( False )
 TrackerCollisionTrackMon.errorReplyL1  = cms.bool( True )
 
+from DQM.TrackingMonitor.TrackingMonitorSeedNumber_cff import *
+
 # DQM Services
 dqmInfoSiStrip = cms.EDAnalyzer("DQMEventInfo",
     subSystemFolder = cms.untracked.string('SiStrip')
@@ -95,6 +97,9 @@ from  DPGAnalysis.SiStripTools.eventwithhistoryproducerfroml1abc_cfi import *
 from DPGAnalysis.SiStripTools.apvcyclephaseproducerfroml1ts2011_cfi import *
 
 # Sequence
-SiStripDQMTier0 = cms.Sequence(APVPhases*consecutiveHEs*siStripFEDCheck*siStripFEDMonitor*SiStripMonitorDigi*SiStripMonitorCluster*SiStripMonitorTrack*MonitorTrackResiduals*TrackerCollisionTrackMon*dqmInfoSiStrip)
-
-
+SiStripDQMTier0 = cms.Sequence(
+    APVPhases*consecutiveHEs*siStripFEDCheck*siStripFEDMonitor*SiStripMonitorDigi*SiStripMonitorCluster
+    *SiStripMonitorTrack*MonitorTrackResiduals
+    *TrackerCollisionTrackMon
+    *TrackMonStep0*TrackMonStep1*TrackMonStep2*TrackMonStep3*TrackMonStep4*TrackMonStep5*TrackMonStep6
+    *dqmInfoSiStrip)
