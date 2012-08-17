@@ -177,14 +177,14 @@ TrackerCollisionIterTrackingLogMessageMonMB.andOrHlt = cms.bool(True)
 # temporary patch in order to have BXlumi 
 from RecoLuminosity.LumiProducer.lumiProducer_cff import *
 
-from PhysicsTools.SelectorUtils.pvSelector_cfi import pvSelector
+#from PhysicsTools.SelectorUtils.pvSelector_cfi import pvSelector
 # temporary test in order to temporary produce the "goodPrimaryVertexCollection"
-goodOfflinePrimaryVertices = cms.EDFilter(
-    "PrimaryVertexObjectFilter",
-    filterParams = pvSelector.clone( minNdof = cms.double(4.0), maxZ = cms.double(24.0) ),
-    src=cms.InputTag('offlinePrimaryVertices'),
-    filter = cms.bool(False)
-)
+#goodOfflinePrimaryVertices = cms.EDFilter(
+#    "PrimaryVertexObjectFilter",
+#    filterParams = pvSelector.clone( minNdof = cms.double(4.0), maxZ = cms.double(24.0) ),
+#    src=cms.InputTag('offlinePrimaryVertices'),
+#    filter = cms.bool(False)
+#)
 
 # Sequence
 SiStripDQMTier0 = cms.Sequence(
