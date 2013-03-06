@@ -206,7 +206,7 @@ int SiStripUtility::getMEStatus(MonitorElement* me, int& bad_channels) {
 //
 void SiStripUtility::getMEValue(MonitorElement* me, std::string & val){
   val = "";
-  if (me &&  me->kind()==MonitorElement::DQM_KIND_REAL) {
+  if (me && ( me->kind()==MonitorElement::DQM_KIND_REAL || me->kind()==MonitorElement::DQM_KIND_INT ) ) {
     val = me->valueString();
     val = val.substr(val.find("=")+1);
   }
@@ -224,8 +224,11 @@ bool SiStripUtility::goToDir(DQMStore * dqm_store, std::string name) {
   for (std::vector<std::string>::const_iterator ic = subDirVec.begin();
        ic != subDirVec.end(); ic++) {
     std::string fname = (*ic);
-    if ((fname.find("Reference") != std::string::npos) ||
-         (fname.find("AlCaReco") != std::string::npos)) continue;
+    if (
+	(fname.find("Reference") != std::string::npos) ||
+	(fname.find("AlCaReco")  != std::string::npos) ||
+	(fname.find("HLT")       != std::string::npos)
+	) continue;
     dqm_store->cd(fname);
     if (!goToDir(dqm_store, name))  dqm_store->goUp();
     else return true;
