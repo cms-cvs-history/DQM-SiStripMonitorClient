@@ -129,6 +129,7 @@ TrackerCollisionTrackMonMB.hltDBKey = cms.string("Tracker_MB")
 TrackerCollisionTrackMonMB.errorReplyHlt  = cms.bool( False )
 TrackerCollisionTrackMonMB.andOrHlt = cms.bool(True) 
 
+# import default (2012 iterative tracking) setting for Seed monitoring
 from DQM.TrackingMonitor.TrackingMonitorSeedNumber_cff import *
 
 # DQM Services
@@ -305,50 +306,48 @@ trackingDQMgoodOfflinePrimaryVertices.filter = cms.bool(False)
 SiStripDQMTier0 = cms.Sequence(
     APVPhases*consecutiveHEs*siStripFEDCheck*siStripFEDMonitor*SiStripMonitorDigi*SiStripMonitorClusterBPTX
     *SiStripMonitorTrackCommon*MonitorTrackResiduals
-    # dEdx monitoring
-#    *RefitterForDedxDQMDeDx * dedxDQMHarm2SP * dedxDQMHarm2SO * dedxDQMHarm2PO * dEdxMonCommon
+    ## dEdx MONITORING
      * dedxDQMHarm2SP * dedxDQMHarm2SO * dedxDQMHarm2PO * dEdxMonCommon    
-
 #    # temporary patch in order to have BXlumi
 #    * lumiProducer
     # temporary test in order to have the "goodPrimaryVertexCollection"
 #    * trackingDQMgoodOfflinePrimaryVertices
     *TrackerCollisionTrackMonCommon
-    *TrackMonStep0*TrackMonStep1*TrackMonStep2*TrackMonStep3*TrackMonStep4*TrackMonStep5*TrackMonStep6
-     # MessageLog
+    ## SEED MONITORING
+#    *TrackMonStep0*TrackMonStep1*TrackMonStep2*TrackMonStep3*TrackMonStep4*TrackMonStep5*TrackMonStep6*TrackMonStep9*TrackMonStep10
+    * trkmon
+    ## MESSAGE LOG MONITORING
     * LocalRecoLogMessageMonCommon * ClusterizerLogMessageMonCommon * SeedingLogMessageMonCommon * TrackCandidateLogMessageMonCommon * TrackFinderLogMessageMonCommon
     *dqmInfoSiStrip)
 
 SiStripDQMTier0Common = cms.Sequence(
     APVPhases*consecutiveHEs*siStripFEDCheck*siStripFEDMonitor*SiStripMonitorDigi*SiStripMonitorClusterBPTX        
     *SiStripMonitorTrackCommon
-    # dEdx monitoring
-#    *RefitterForDedxDQMDeDx * dedxDQMHarm2SP * dedxDQMHarm2SO * dedxDQMHarm2PO * dEdxMonCommon
+    ## dEdx MONITORING
      * dedxDQMHarm2SP * dedxDQMHarm2SO * dedxDQMHarm2PO * dEdxMonCommon    
-
 #    # temporary patch in order to have BXlumi
 #    * lumiProducer
 #    # temporary test in order to have the "goodPrimaryVertexCollection"
 #    * trackingDQMgoodOfflinePrimaryVertices
     *TrackerCollisionTrackMonCommon
-    *TrackMonStep0*TrackMonStep1*TrackMonStep2*TrackMonStep3*TrackMonStep4*TrackMonStep5*TrackMonStep6
-    # MessageLog
+    ## SEED MONITORING
+    * trkmon
+    ## MESSAGE LOG MONITORING
     * LocalRecoLogMessageMonCommon * ClusterizerLogMessageMonCommon * SeedingLogMessageMonCommon * TrackCandidateLogMessageMonCommon * TrackFinderLogMessageMonCommon
     *dqmInfoSiStrip)
 
 SiStripDQMTier0MinBias = cms.Sequence(
     APVPhases*consecutiveHEs*siStripFEDCheck*siStripFEDMonitor*SiStripMonitorDigi*SiStripMonitorClusterBPTX
     *SiStripMonitorTrackMB*MonitorTrackResiduals
-    # dEdx monitoring
-#    *RefitterForDedxDQMDeDx * dedxDQMHarm2SP * dedxDQMHarm2SO * dedxDQMHarm2PO * dEdxMonMB
+    ## dEdx MONITORING
      * dedxDQMHarm2SP * dedxDQMHarm2SO * dedxDQMHarm2PO * dEdxMonMB    
-
 #    * lumiProducer
 #    # temporary test in order to have the "goodPrimaryVertexCollection"
 #    * trackingDQMgoodOfflinePrimaryVertices
     *TrackerCollisionTrackMonMB
-    *TrackMonStep0*TrackMonStep1*TrackMonStep2*TrackMonStep3*TrackMonStep4*TrackMonStep5*TrackMonStep6
-    # MessageLog
+    ## SEED MONITORING
+    * trkmon
+    ## MESSAGE LOG MONITORING
     * LocalRecoLogMessageMonMB * ClusterizerLogMessageMonMB * SeedingLogMessageMonMB * TrackCandidateLogMessageMonMB * TrackFinderLogMessageMonMB
     *dqmInfoSiStrip)
 
